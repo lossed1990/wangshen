@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuexin.wangshen.dao.HelloWorldDAO" >
+
+  <!-- 获取所有的错误码信息 -->
+  <resultMap id="Result_GetErrorCodeInfoList" type="com.xuexin.wangshen.model.pojo.ZoneeErrorCodeInfoInPojo" >
+    <result column="EI_Id_Int" property="nErrorCode" jdbcType="INTEGER" />
+    <result column="EI_ErrorInfo_VarC" property="strErrorInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="GetErrorCodeInfoList" resultMap="Result_GetErrorCodeInfoList" statementType="STATEMENT" >
+   	SELECT EI_Id_Int, EI_ErrorInfo_VarC FROM Global_ErrorInfo
+  </select>
+
+</mapper>

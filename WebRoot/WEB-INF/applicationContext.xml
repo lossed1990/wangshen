@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd       
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd           
+      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd 
+      http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd 
+      http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd 
+      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd">
+    
+    <!-- 数据库配置文件 -->
+	<context:property-placeholder location="classpath:mysql.properties" />
+	
+	<!-- 数据源连接池 c3p0-->
+	<bean id="sqlServerDS" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${sqlserver.driverClassName}" />
+		<property name="jdbcUrl" value="${sqlserver.url}" />
+		<property name="user" value="${sqlserver.user}" />
+		<property name="password" value="${sqlserver.pass}" />
+		<property name="minPoolSize" value="5"/>  
+        <property name="maxPoolSize" value="50"/>  
+        <property name="initialPoolSize" value="10"/>  
+        <property name="maxIdleTime" value="60"/>  
+        <property name="idleConnectionTestPeriod" value="60"/>  
+        <property name="maxStatements" value="100"/>
+        <property name="maxStatementsPerConnection" value="100"/>
+        <property name="preferredTestQuery" value="SELECT 1"/>
+	</bean>
+	
+	<!-- Spring数据库事物管理 -->
+	<bean id="sqlServertransactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="sqlServerDS" />
+	</bean>
+
+	<tx:advice id="userTxAdvice" transaction-manager="sqlServertransactionManager">
+		<tx:attributes>
+			<tx:method name="delete*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" no-rollback-for="java.lang.RuntimeException" />
+			<tx:method name="insert*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.RuntimeException" />
+			<tx:method name="update*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="find*" propagation="SUPPORTS" />
+			<tx:method name="get*" propagation="SUPPORTS" />
+			<tx:method name="select*" propagation="SUPPORTS" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- Spring整合mybatis -->
+	<bean id="sqlServerSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="sqlServerDS" />
+		<property name="configLocation" value="/WEB-INF/mybatisConfig.xml" />
+		<property name="mapperLocations" value="classpath:mybatis/mssql/*.xml" />
+	</bean>
+	
+	<!-- 自动扫描Mapper对应class路径 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.xuexin.wangshen.dao" />
+	</bean>
+    
+    <!-- Annotation方式配置services -->
+	<context:component-scan base-package="com.xuexin.wangshen.service" />
+	
+</beans> 
