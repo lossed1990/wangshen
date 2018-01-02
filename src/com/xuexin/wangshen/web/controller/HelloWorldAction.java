@@ -10,11 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.xuexin.wangshen.model.pojo.HelloTestDataDO;
-import com.xuexin.wangshen.model.pojo.ZoneeErrorCodeInfoInDO;
-import com.xuexin.wangshen.service.HelloService;
+import com.xuexin.wangshen.model.pojo.ErrorInfoDO;
+import com.xuexin.wangshen.service.GlobalService;
 
 @Controller
 @RequestMapping("/test")
@@ -22,31 +20,18 @@ public class HelloWorldAction {
 	
 	private static Logger logger = LoggerFactory.getLogger(HelloWorldAction.class);
 	
-	@Resource(name="helloService")
-	private HelloService service;
+	@Resource(name="globalService")
+	private GlobalService service_global;
 	
-	    @RequestMapping(value = "/helloFreeMarker.page", method=RequestMethod.GET)
+	    @RequestMapping(value = "/helloWorld.page", method=RequestMethod.GET)
 	    public String testFreemarker(Model model) {
 	    	
 	    	logger.info("transfer to FreeMarker view");
 	    	
-	        List<HelloTestDataDO> data = service.GetTestData();
-	        
-	        List<ZoneeErrorCodeInfoInDO> data2 = service.GetAllErrorInfo();
-	        
+	        List<ErrorInfoDO> data = service_global.listAllErrorCodeInfo();
+	        	        
 	        model.addAttribute("data", data);
-	        model.addAttribute("data2", data2);
+
 	        return "HelloWorld";
 	    }
-
-	    @RequestMapping(value = "/helloFastJson.json", method=RequestMethod.GET)
-	    @ResponseBody
-	    public List<HelloTestDataDO> testFastJson() {
-	    	
-	    	logger.info("transfer to FastJson view in a good time");
-	    	
-	    	List<HelloTestDataDO> data = service.GetTestData();
-	        
-	        return data;
-	     } 
 }

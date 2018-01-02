@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuexin.wangshen.dao.ErrorInfoDAO">
+
+	<!-- 获取所有的错误码信息 -->
+	<resultMap id="RM_ErrorInfo" type="com.xuexin.wangshen.model.pojo.ErrorInfoDO">
+		<result column="c_errorcode" property="strErrorCode" jdbcType="CHAR" />
+		<result column="vc_errorinfo" property="strErrorInfo" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="listErrorCodeInfo" resultMap="RM_ErrorInfo"	statementType="STATEMENT">
+		SELECT
+			c_errorcode,
+			vc_errorinfo
+		FROM g_errorinfo;
+	</select>
+
+</mapper>

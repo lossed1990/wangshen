@@ -44,14 +44,6 @@
 	<!-- 配置dispatch servlet -->
 	<servlet-mapping>
 		<servlet-name>annotationMVC</servlet-name>
-		<url-pattern>*.r</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>annotationMVC</servlet-name>
-		<url-pattern>*.w</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>annotationMVC</servlet-name>
 		<url-pattern>*.json</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
