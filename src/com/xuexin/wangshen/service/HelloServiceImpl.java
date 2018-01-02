@@ -9,8 +9,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.xuexin.wangshen.dao.HelloWorldDAO;
-import com.xuexin.wangshen.model.pojo.HelloTestData;
-import com.xuexin.wangshen.model.pojo.ZoneeErrorCodeInfoInPojo;
+import com.xuexin.wangshen.model.pojo.HelloTestDataDO;
+import com.xuexin.wangshen.model.pojo.ZoneeErrorCodeInfoInDO;
 
 @Service("helloService")
 public class HelloServiceImpl implements HelloService {
@@ -19,19 +19,19 @@ public class HelloServiceImpl implements HelloService {
 	private HelloWorldDAO dao; 
 
 	@Override
-	public List<HelloTestData> GetTestData() {
+	public List<HelloTestDataDO> GetTestData() {
 		
 		//make test  data
-		List<HelloTestData> lstData = new ArrayList<HelloTestData>();
+		List<HelloTestDataDO> lstData = new ArrayList<HelloTestDataDO>();
 		
-		HelloTestData data1 = new HelloTestData();
+		HelloTestDataDO data1 = new HelloTestDataDO();
 		data1.setbIsMale(false);
 		data1.setnAge(20);
 		data1.setStrAddr("大连路长阳路");
 		data1.setStrName("张长策");
 		data1.setDtNow(new Date(new java.util.Date().getTime()));
 		
-		HelloTestData data2 = new HelloTestData();
+		HelloTestDataDO data2 = new HelloTestDataDO();
 		data2.setbIsMale(true);
 		data2.setnAge(29);
 		data2.setStrAddr("四平路赤峰路");
@@ -45,7 +45,7 @@ public class HelloServiceImpl implements HelloService {
 	}
 
 	@Override
-	public List<ZoneeErrorCodeInfoInPojo> GetAllErrorInfo() {
+	public List<ZoneeErrorCodeInfoInDO> GetAllErrorInfo() {
 		
 		return dao.GetErrorCodeInfoList();
 	}

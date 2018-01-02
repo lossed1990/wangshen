@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.xuexin.wangshen.model.pojo.MonitorUserProfile;
+import com.xuexin.wangshen.model.pojo.MonitorUserProfileVO;
 import com.xuexin.wangshen.service.MonitorService;
 
 @Controller
@@ -25,7 +25,7 @@ public class MonitorPageAction {
 	
 	@RequestMapping(value = "/GetUserProfileByName.r",method=RequestMethod.GET)
 	@ResponseBody
-	public List<MonitorUserProfile> GetUserProfileByName(String strUsername)
+	public List<MonitorUserProfileVO> GetUserProfileByName(String strUsername)
 	{
 		return service.GetUserProfileByUserName(strUsername);
 	}

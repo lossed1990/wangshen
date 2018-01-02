@@ -2,18 +2,18 @@ package com.xuexin.wangshen.service;
 
 import java.util.List;
 
-import com.xuexin.wangshen.model.pojo.HelloTestData;
-import com.xuexin.wangshen.model.pojo.ZoneeErrorCodeInfoInPojo;
+import com.xuexin.wangshen.model.pojo.HelloTestDataDO;
+import com.xuexin.wangshen.model.pojo.ZoneeErrorCodeInfoInDO;
 
 public interface HelloService {
 		
 	/*
 	 * 测试接口
 	 */
-	List<HelloTestData> GetTestData();
+	List<HelloTestDataDO> GetTestData();
 	
 	/*
 	 * 测试持久层
 	 */
-	List<ZoneeErrorCodeInfoInPojo> GetAllErrorInfo();
+	List<ZoneeErrorCodeInfoInDO> GetAllErrorInfo();
 }

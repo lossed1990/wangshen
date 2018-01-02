@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.xuexin.wangshen.model.pojo.HelloTestData;
-import com.xuexin.wangshen.model.pojo.ZoneeErrorCodeInfoInPojo;
+import com.xuexin.wangshen.model.pojo.HelloTestDataDO;
+import com.xuexin.wangshen.model.pojo.ZoneeErrorCodeInfoInDO;
 import com.xuexin.wangshen.service.HelloService;
 
 @Controller
@@ -30,9 +30,9 @@ public class HelloWorldAction {
 	    	
 	    	logger.info("transfer to FreeMarker view");
 	    	
-	        List<HelloTestData> data = service.GetTestData();
+	        List<HelloTestDataDO> data = service.GetTestData();
 	        
-	        List<ZoneeErrorCodeInfoInPojo> data2 = service.GetAllErrorInfo();
+	        List<ZoneeErrorCodeInfoInDO> data2 = service.GetAllErrorInfo();
 	        
 	        model.addAttribute("data", data);
 	        model.addAttribute("data2", data2);
@@ -41,11 +41,11 @@ public class HelloWorldAction {
 
 	    @RequestMapping(value = "/helloFastJson.json", method=RequestMethod.GET)
 	    @ResponseBody
-	    public List<HelloTestData> testFastJson() {
+	    public List<HelloTestDataDO> testFastJson() {
 	    	
 	    	logger.info("transfer to FastJson view in a good time");
 	    	
-	    	List<HelloTestData> data = service.GetTestData();
+	    	List<HelloTestDataDO> data = service.GetTestData();
 	        
 	        return data;
 	     } 

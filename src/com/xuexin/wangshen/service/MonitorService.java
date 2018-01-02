@@ -2,9 +2,9 @@ package com.xuexin.wangshen.service;
 
 import java.util.List;
 
-import com.xuexin.wangshen.model.pojo.MonitorUserProfile;
+import com.xuexin.wangshen.model.pojo.MonitorUserProfileVO;
 
 public interface MonitorService {
 
-	public List<MonitorUserProfile> GetUserProfileByUserName(String strUsername);
+	public List<MonitorUserProfileVO> GetUserProfileByUserName(String strUsername);
 }

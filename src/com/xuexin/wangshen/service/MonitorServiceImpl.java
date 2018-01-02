@@ -6,15 +6,15 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.xuexin.wangshen.model.pojo.MonitorUserProfile;
+import com.xuexin.wangshen.model.pojo.MonitorUserProfileVO;
 import com.xuexin.wangshen.util.HttpClientHelper;
 
 @Service("monitorService")
 public class MonitorServiceImpl implements MonitorService {
 
-	public List<MonitorUserProfile> GetUserProfileByUserName(String strUsername) {
+	public List<MonitorUserProfileVO> GetUserProfileByUserName(String strUsername) {
 		
-		MonitorUserProfile a = new MonitorUserProfile();
+		MonitorUserProfileVO a = new MonitorUserProfileVO();
 		a.setStrUserName("someone");
 		String jsonNumber = JSON.toJSONString(a);       // 100
 		
@@ -25,9 +25,9 @@ public class MonitorServiceImpl implements MonitorService {
 		boolean bret  = http.IsReponseJSON();
 		http.CleanUp();
 		
-		List<MonitorUserProfile> lstResult = new ArrayList<MonitorUserProfile>();
+		List<MonitorUserProfileVO> lstResult = new ArrayList<MonitorUserProfileVO>();
 		
-		lstResult.add(new MonitorUserProfile());
+		lstResult.add(new MonitorUserProfileVO());
 		
 		return lstResult;
 	}
