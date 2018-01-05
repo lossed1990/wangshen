@@ -14,23 +14,21 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.xuexin.wangshen.service.GlobalService;
 
 @Controller
-@RequestMapping("/test")
-public class AdminAction {
+@RequestMapping("/resumetmpl")
+public class ResumeTemplatesAction {
 	
-	private static Logger logger = LoggerFactory.getLogger(AdminAction.class);
+	private static Logger logger = LoggerFactory.getLogger(ResumeTemplatesAction.class);
 	
 	@Resource(name="globalService")
 	private GlobalService service_global;
 	
-	    @RequestMapping(value = "/admin.page", method=RequestMethod.GET)
-	    public String testFreemarker(Model model) {
+		//列出简历模板
+	    @RequestMapping(value = "/resumetemplates-list.page", method=RequestMethod.GET)
+	    public String resumeTemplateList(Model model) {
 	    	
 	    	logger.info("transfer to FreeMarker view");
 	    	
-	        //List<ErrorInfoDO> data = service_global.listAllErrorCodeInfo();
-	        	        
-	        //model.addAttribute("data", data);
 
-	        return "Admin";
+	        return "page_resumetemplates_list";
 	    }
 }

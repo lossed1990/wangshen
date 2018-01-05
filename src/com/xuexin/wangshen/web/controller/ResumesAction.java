@@ -14,23 +14,32 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.xuexin.wangshen.service.GlobalService;
 
 @Controller
-@RequestMapping("/test")
-public class LoginAction {
+@RequestMapping("/resume")
+public class ResumesAction {
 	
-	private static Logger logger = LoggerFactory.getLogger(LoginAction.class);
+	private static Logger logger = LoggerFactory.getLogger(ResumesAction.class);
 	
 	@Resource(name="globalService")
 	private GlobalService service_global;
 	
-	    @RequestMapping(value = "/login.page", method=RequestMethod.GET)
-	    public String testFreemarker(Model model) {
+		//用户添加简历
+	    @RequestMapping(value = "/resume-add.page", method=RequestMethod.GET)
+	    public String resumeAdd(Model model) {
 	    	
 	    	logger.info("transfer to FreeMarker view");
 	    	
-	        //List<ErrorInfoDO> data = service_global.listAllErrorCodeInfo();
-	        	        
-	        //model.addAttribute("data", data);
 
-	        return "Login";
+	        return "page_resume_add";
+	    }
+	    
+	    //浏览所有简历
+	    @RequestMapping(value = "/resume-list.page", method=RequestMethod.GET)
+	    public String resumeList(Model model) {
+	    	
+	    	logger.info("transfer to FreeMarker view");
+	    	
+
+
+	        return "page_resume_list";
 	    }
 }

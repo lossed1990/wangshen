@@ -14,23 +14,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.xuexin.wangshen.service.GlobalService;
 
 @Controller
-@RequestMapping("/test")
-public class ResumeAddAction {
+@RequestMapping("/config")
+public class SystemConfigAction {
 	
-	private static Logger logger = LoggerFactory.getLogger(ResumeAddAction.class);
+	private static Logger logger = LoggerFactory.getLogger(SystemConfigAction.class);
 	
 	@Resource(name="globalService")
 	private GlobalService service_global;
 	
-	    @RequestMapping(value = "/resumeadd.page", method=RequestMethod.GET)
-	    public String testFreemarker(Model model) {
-	    	
-	    	logger.info("transfer to FreeMarker view");
-	    	
-	        //List<ErrorInfoDO> data = service_global.listAllErrorCodeInfo();
-	        	        
-	        //model.addAttribute("data", data);
+    //广告设置
+    @RequestMapping(value = "/ads-edit.page", method=RequestMethod.GET)
+    public String adsEdit(Model model) {
+    	
+    	logger.info("transfer to FreeMarker view");
+    	
 
-	        return "ResumeAdd";
-	    }
+
+        return "page_ads_edit";
+    }
 }
