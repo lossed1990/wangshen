@@ -1,7 +1,7 @@
 <!-- footer content -->
 <footer>
     <div class="pull-right">
-        Copyright &copy;2017 上海天跃科技股份有限公司 <!--Template by Colorlib-->
+        Copyright &copy;2018 江苏学信职业培训学院 All Rights Reserved
     </div>
     <div class="clearfix"></div>
 </footer>

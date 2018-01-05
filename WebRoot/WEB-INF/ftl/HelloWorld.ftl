@@ -15,45 +15,98 @@
         <!-- page content -->
         <div class="right_col" role="main">
             <div class="">
-                <div class="page-title">
-                    <div class="title_left">
-                        <h3>用户配置页面</h3>
-                    </div>
-
-                    <div class="title_right">
-                        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
-                            &nbsp;
-                        </div>
-                    </div>
-                </div>
-
-                <div class="clearfix"></div>
-
                 <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-12">
                         <div class="x_panel">
-
-                            <div class="clearfix"></div>
+                            <div class="x_title">
+                                <h2>新建简历 <small> 您可以从以下银行模板中选择一个进行新建简历 </small></h2>
+                                <div class="clearfix"></div>
+                            </div>
                             <div class="x_content">
-
-                                #此处开始添加自己的页面内容
-                                <p/>
-                                XXXXXXXXXXXXXXXXXXX
-                                XXXXXXXXXXXXXXXX
-
-                                
-
-                                <table class="table table-striped">
-									   <#list data as label>
-									        <tr>
-									            <td>${label.strErrorCode}</td>
-									            <td>${label.strErrorInfo}</td>
-									        </tr>
-									   </#list>
-                                </table>
-
-                                #此处结束添加自己的内容
-
+                                <div class="row">
+                                    <!-- begin 一个入口示例 --> 
+                                    <div class="col-md-55">
+                                        <div class="thumbnail">
+                                            <div class="image view view-first">
+                                                <img style="width: 100%; display: block;" src="${path}/image/media.jpg" alt="image" />
+                                                <div class="mask">
+                                                    <p>新建简历</p>
+                                                    <div class="tools tools-bottom">
+                                                        <a href="#"><i class="fa fa-pencil"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="caption">
+                                                <p>中国银行</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end 一个入口示例 --> 
+                                    <div class="col-md-55">
+                                        <div class="thumbnail">
+                                            <div class="image view view-first">
+                                                <img style="width: 100%; display: block;" src="${path}/image/media.jpg" alt="image" />
+                                                <div class="mask">
+                                                    <p>新建简历</p>
+                                                    <div class="tools tools-bottom">
+                                                        <a href="#"><i class="fa fa-pencil"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="caption">
+                                                <p>中国农业银行</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-55">
+                                        <div class="thumbnail">
+                                            <div class="image view view-first">
+                                                <img style="width: 100%; display: block;" src="${path}/image/media.jpg" alt="image" />
+                                                <div class="mask">
+                                                    <p>新建简历</p>
+                                                    <div class="tools tools-bottom">
+                                                        <a href="#"><i class="fa fa-pencil"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="caption">
+                                                <p>中国建设银行</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-55">
+                                        <div class="thumbnail">
+                                            <div class="image view view-first">
+                                                <img style="width: 100%; display: block;" src="${path}/image/media.jpg" alt="image" />
+                                                <div class="mask">
+                                                    <p>新建简历</p>
+                                                    <div class="tools tools-bottom">
+                                                        <a href="#"><i class="fa fa-pencil"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="caption">
+                                                <p>中国交通银行</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-55">
+                                        <div class="thumbnail">
+                                            <div class="image view view-first">
+                                                <img style="width: 100%; display: block;" src="${path}/image/media.jpg" alt="image" />
+                                                <div class="mask">
+                                                    <p>新建简历</p>
+                                                    <div class="tools tools-bottom">
+                                                        <a href="#"><i class="fa fa-pencil"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="caption">
+                                                <p>招商银行</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
