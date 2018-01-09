@@ -1,7 +1,15 @@
 <#assign path=request.contextPath />
 
 <!-- jQuery -->
-<script src="${path}/js/jquery-2.2.4.min.js"></script>
+<#if JQUERY_VERSION??>
+	<#if JQUERY_VERSION == 1>
+		<script src="${path}/js/jquery-1.11.1.min.js"></script>
+	<#elseif JQUERY_VERSION == 3>
+		<script src="${path}/js/jquery-3.1.1.min.js"></script>
+	</#if>
+<#else>
+	<script src="${path}/js/jquery-2.2.4.min.js"></script>
+</#if>
 <!-- Bootstrap -->
 <script src="${path}/js/bootstrap.min.js"></script>
 <!-- FastClick -->
