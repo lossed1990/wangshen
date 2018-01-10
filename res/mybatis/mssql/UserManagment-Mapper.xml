@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuexin.wangshen.dao.UserManagmentDAO">
+
+	<!-- 添加用户信息 -->
+	<insert id="saveUser" parameterType="com.xuexin.wangshen.model.pojo.UserInfoDO" 
+			statementType="PREPARED" useGeneratedKeys="true" keyProperty="nUID">
+		INSERT INTO users
+		(
+		  un_uid
+		 ,c_username
+		 ,c_mobilenumder
+		 ,c_passhash
+		 ,dtime_registertime
+		 ,dtime_lastmodified
+		 ,bi_deleteflag
+		)
+		VALUES
+		(
+		  #{nUID} -- un_uid - INT(11) NOT NULL
+		 ,#{strUsername} -- c_username - CHAR(20)
+		 ,#{strMobileNum} -- c_mobilenumder - CHAR(20)
+		 ,#{strPassHash} -- c_passhash - VARCHAR(255) NOT NULL
+		 ,NOW() -- dtime_registertime - DATETIME NOT NULL
+		 ,NOW() -- dtime_lastmodified - DATETIME NOT NULL
+		 ,0 -- bi_deleteflag - BIT(1) NOT NULL
+		);
+	</insert>
+
+</mapper>

@@ -54,7 +54,7 @@
 	<!-- Spring整合mybatis -->
 	<bean id="sqlServerSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="sqlServerDS" />
-		<property name="configLocation" value="/WEB-INF/mybatisConfig.xml" />
+		<property name="configLocation" value="classpath:mybatisConfig.xml" />
 		<property name="mapperLocations" value="classpath:mybatis/mssql/*.xml" />
 	</bean>
 	
