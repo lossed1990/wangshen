@@ -17,5 +17,9 @@
 <!-- NProgress -->
 <script src="${path}/vendors/nprogress/nprogress.js"></script>
 
+<!-- daterangepicker -->
+<script type="text/javascript" src="${path}/js/moment.js"></script>
+<script type="text/javascript" src="${path}/js/daterangepicker.js"></script>
+
 <!-- Custom Theme Scripts -->
 <script src="${path}/js/custom.min.js"></script>

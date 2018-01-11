@@ -9,7 +9,9 @@
     <title>江苏学信职业培训学院银行网申模拟系统</title>
 
     <!-- Bootstrap -->
-    <link href="${path}/css/bootstrap.min.css" rel="stylesheet">
+    <!--  <link href="${path}/css/bootstrap.min.css" rel="stylesheet">  -->
+    <link href="${path}/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- Font Awesome -->
     <link href="${path}/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
@@ -26,6 +28,9 @@
 
     <!-- bootstrap-wysiwyg -->
     <link href="${path}/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
+
+    <!-- daterangepicker -->
+    <link rel="stylesheet" type="text/css" media="all" href="${path}/css/daterangepicker.css" />
 
     <!-- Custom Theme Style -->
     <link href="${path}/css/custom.min.css" rel="stylesheet">
