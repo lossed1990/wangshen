@@ -18,30 +18,42 @@
         <div class="right_col" role="main">
             <div class="">
                 <div class="row">
-                    <!--  个人基本信息  -->  
-                    <#include "div/div_resume_edit_personal.ftl" />
-                    <!--  教育背景  -->
-                    <#include "div/div_resume_edit_education.ftl" />
-                    <!--  获奖阶段  -->
-                    <#include "div/div_resume_edit_awards.ftl" />
-                    <!--  外语能力描述  -->
-                    <#include "div/div_resume_edit_language.ftl" />
-                    <!--  计算机能力描述  -->
-                    <#include "div/div_resume_edit_computer.ftl" />
-                    <!--  学生干部任职情况/学生工作  -->
-                    <#include "div/div_resume_edit_student_works.ftl" />
-                    <!--  培训经历  -->
-                    <#include "div/div_resume_edit_train.ftl" />
-                    <!--  实践经历  -->
-                    <#include "div/div_resume_edit_practice.ftl" />
-                    <!--  实习经历  -->
-                    <#include "div/div_resume_edit_work.ftl" />
-                    <!--  专业职业资格证书  -->
-                    <#include "div/div_resume_edit_certificate.ftl" />
-                    <!--  家庭背景与社会资源  -->
-                    <#include "div/div_resume_edit_family.ftl" />
-                    <!--  毕业论文及发表期刊  -->
-                    <#include "div/div_resume_edit_dissertation.ftl" />
+                    <!--  begin 个人基本信息  -->  
+                    <#include "div/div_resume_view_personal.ftl" />
+                    <!--  end 个人基本信息  -->
+                    <!--  begin 教育背景  -->
+                    <#include "div/div_resume_view_education.ftl" />
+                    <!--  end 教育背景  -->
+                    <!--  begin 获奖阶段  -->
+                    <#include "div/div_resume_view_awards.ftl" />
+                    <!--  end 获奖阶段  -->
+                    <!--  begin 外语能力描述  -->
+                    <#include "div/div_resume_view_language.ftl" />
+                    <!--  end 外语能力描述  -->
+                    <!--  begin 计算机能力描述  -->
+                    <#include "div/div_resume_view_computer.ftl" />
+                    <!--  end 计算机能力描述  -->
+                    <!--  begin 学生干部任职情况/学生工作  -->
+                    <#include "div/div_resume_view_student_works.ftl" />
+                    <!--  end 学生干部任职情况/学生工作  -->
+                    <!--  begin 培训经历  -->
+                    <#include "div/div_resume_view_train.ftl" />
+                    <!--  end 培训经历  -->
+                    <!--  begin 实践经历  -->
+                    <#include "div/div_resume_view_practice.ftl" />
+                    <!--  end 实践经历  -->
+                    <!--  begin 实习经历  -->
+                    <#include "div/div_resume_view_work.ftl" />
+                    <!--  end 实习经历  -->
+                    <!--  begin 专业职业资格证书  -->
+                    <#include "div/div_resume_view_certificate.ftl" />
+                    <!--  end 专业职业资格证书  -->
+                    <!--  begin 家庭背景与社会资源  -->
+                    <#include "div/div_resume_view_family.ftl" />
+                    <!--  end 家庭背景与社会资源  -->
+                    <!--  begin 毕业论文及发表期刊  -->
+                    <#include "div/div_resume_view_dissertation.ftl" />
+                    <!--  end 毕业论文及发表期刊  -->
                     <!--  begin 职业规划  -->
                     <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
