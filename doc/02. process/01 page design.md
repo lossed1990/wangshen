@@ -41,37 +41,91 @@
 - 评分展示界面：分值 + 每项分值柱状图 + 广告
            
 - - - -           
-## 页面编码
+## 页面文件名称
 - 注册 | 登陆界面  
-    - 【关联文件】 Login.ftl 
+    - 【关联文件】 page_user_login.ftl 
     - 【编码状态】 初步完成
 - 管理员主页
-    - 【关联文件】 Admin.ftl 
+    - 【关联文件】 page_admin_wellcome.ftl 
     - 【编码状态】 初步完成     
 - 学员主页  
-    - 【关联文件】 User.ftl 
+    - 【关联文件】 page_user_wellcome.ftl 
     - 【编码状态】 初步完成                  
 - 简历浏览界面
-    - 【关联文件】 ResumeAll.ftl 
+    - 【关联文件】 page_resume_list.ftl 
     - 【编码状态】 初步完成 
 - 简历预览界面
-    - 【关联文件】 Resume.ftl 
+    - 【关联文件】 page_resume_view.ftl 
     - 【编码状态】 未启动
 - 简历编辑界面
-    - 【关联文件】 ResumeEdit.ftl 
+    - 【编辑】 page_resume_edit.ftl     - 【预览】 page_resume_edit.ftl 
     - 【编码状态】 未启动
 - 简历模板浏览界面
-    - 【关联文件】 ResumeTemplateAll.ftl 
+    - 【关联文件】 page_resumetemplates_list.ftl 
     - 【编码状态】 初步完成
 - 简历模板编辑界面
-    - 【关联文件】 ResumeTemplateEdit.ftl 
+    - 【关联文件】 page_resumetemplates_edit.ftl 
     - 【编码状态】 未启动
 - 广告配置界面
-    - 【关联文件】 AdEdit.ftl 
+    - 【关联文件】 page_ads_edit.ftl 
     - 【编码状态】 初步完成
 - 新建简历界面
-    - 【关联文件】 ResumeAdd.ftl 
+    - 【关联文件】 page_resume_add.ftl 
     - 【编码状态】 初步完成
 - 评分展示界面
     - 【关联文件】 Score.ftl 
     - 【编码状态】 未启动
+
+### 1、简历编辑子界面
+- 个人基本信息
+    - 【编辑】 div_resume_edit_personal.ftl
+    - 【预览】 div_resume_view_personal.ftl
+- 教育背景
+    - 【编辑】 div_resume_edit_education.ftl
+    - 【预览】 div_resume_view_education.ftl
+- 获奖阶段
+    - 【编辑】 div_resume_edit_awards.ftl    
+    - 【预览】 div_resume_view_awards.ftl
+- 英语能力描述
+    - 【编辑】 div_resume_edit_language.ftl
+    - 【预览】 div_resume_view_language.ftl
+- 计算机能力描述
+    - 【编辑】 div_resume_edit_computer.ftl     
+    - 【预览】 div_resume_view_computer.ftl
+- 学生干部任职情况/学生工作
+    - 【编辑】 div_resume_edit_student_works.ftl     
+    - 【预览】 div_resume_view_student_works.ftl
+- 培训经历
+    - 【编辑】 div_resume_edit_train.ftl     
+    - 【预览】 div_resume_view_train.ftl
+- 实践经历
+    - 【编辑】 div_resume_edit_practice.ftl     
+    - 【预览】 div_resume_view_practice.ftl
+- 实习经历
+    - 【编辑】 div_resume_edit_work.ftl     
+    - 【预览】 div_resume_view_work.ftl
+- 专业职业资格证书
+    - 【编辑】 div_resume_edit_certificate.ftl     
+    - 【预览】 div_resume_view_certificate.ftl
+- 家庭背景与社会资源
+    - 【编辑】 div_resume_edit_family.ftl     
+    - 【预览】 div_resume_view_family.ftl
+- 毕业论文及发表期刊
+    - 【编辑】 div_resume_edit_dissertation.ftl     
+    - 【预览】 div_resume_view_dissertation.ftl
+- 职业规划
+    - 【编辑】 div_resume_edit.ftl     
+    - 【预览】 div_resume_edit.ftl
+- 自我评价
+    - 【编辑】 div_resume_edit.ftl     
+    - 【预览】 div_resume_edit.ftl
+- 特长爱好
+    - 【编辑】 div_resume_edit.ftl     
+    - 【预览】 div_resume_edit.ftl
+- 自荐信
+    - 【编辑】 div_resume_edit.ftl     
+    - 【预览】 div_resume_edit.ftl
+- 其他说明
+    - 【编辑】 div_resume_edit.ftl     
+    - 【预览】 div_resume_edit.ftl
+

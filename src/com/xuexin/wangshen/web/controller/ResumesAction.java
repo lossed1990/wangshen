@@ -43,7 +43,7 @@ public class ResumesAction {
 	        return "page_resume_list";
 	    }
 	    
-	    //编辑所有简历
+	    //编辑简历
 	    @RequestMapping(value = "/resume-edit.page", method=RequestMethod.GET)
 	    public String resumeEdit(Model model) {
 	    	
@@ -52,5 +52,16 @@ public class ResumesAction {
 
 
 	        return "page_resume_edit";
+	    }
+	    
+	    //预览简历
+	    @RequestMapping(value = "/resume-view.page", method=RequestMethod.GET)
+	    public String resumeView(Model model) {
+	    	
+	    	logger.info("transfer to FreeMarker view");
+	    	
+
+
+	        return "page_resume_view";
 	    }
 }
