@@ -56,10 +56,10 @@
     - 【编码状态】 初步完成 
 - 简历预览界面
     - 【关联文件】 page_resume_view.ftl 
-    - 【编码状态】 未启动
+    - 【编码状态】 初步完成
 - 简历编辑界面
-    - 【编辑】 page_resume_edit.ftl     - 【预览】 page_resume_edit.ftl 
-    - 【编码状态】 未启动
+    - 【关联文件】 page_resume_edit.ftl
+    - 【编码状态】 初步完成
 - 简历模板浏览界面
     - 【关联文件】 page_resumetemplates_list.ftl 
     - 【编码状态】 初步完成

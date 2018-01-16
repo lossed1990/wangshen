@@ -31,4 +31,14 @@ public class ResumeTemplatesAction {
 
 	        return "page_resumetemplates_list";
 	    }
+	    
+	    //编辑简历模板
+	    @RequestMapping(value = "/resumetemplates-edit.page", method=RequestMethod.GET)
+	    public String resumeTemplateEdit(Model model) {
+	    	
+	    	logger.info("transfer to FreeMarker view");
+	    	
+
+	        return "page_resumetemplates_edit";
+	    }
 }

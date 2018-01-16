@@ -32,6 +32,9 @@
     <!-- daterangepicker -->
     <link rel="stylesheet" type="text/css" media="all" href="${path}/css/daterangepicker.css" />
 
+    <!-- iCheck -->
+    <link href="${path}/vendors/iCheck/skins/flat/grey.css" rel="stylesheet">
+
     <!-- Custom Theme Style -->
     <link href="${path}/css/custom.min.css" rel="stylesheet">
 </head>
