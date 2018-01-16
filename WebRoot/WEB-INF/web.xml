@@ -73,5 +73,10 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	
+	<!-- 主页配置 -->
+	<welcome-file-list>
+    	<welcome-file>/user/login.page</welcome-file>
+  	</welcome-file-list>
 
 </web-app>

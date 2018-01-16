@@ -29,10 +29,10 @@ public class UserInfoServiceTest {
 		
 		UserInfoInputFormDTO userInput = new UserInfoInputFormDTO();
 		
-		userInput.setStrUserPhone("13312456897");
-		userInput.setStrPhoneValidateCode("3345");
-		userInput.setStrUserPass("abcdefg");
-		userInput.setStrUserConfirmPass("abcdefg");
+		userInput.setPhonenumber("15921614832");
+		userInput.setPhonevalidate("3345");
+		userInput.setPassword("abcdefg");
+		userInput.setConfirmPassword("abcdefg");
 		
 		assertEquals(user_service.saveUserInfo(userInput), ErrorDefines.E_OK);
 	}

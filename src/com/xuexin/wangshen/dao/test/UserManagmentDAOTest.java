@@ -29,10 +29,22 @@ public class UserManagmentDAOTest {
 	public void testSaveUser() {
 		
 		UserInfoDO user = new UserInfoDO();
-		user.setStrMobileNum("15921614839");
+		user.setStrMobileNum("15921614832");
 		user.setStrPassHash("XXXXXXXXX");
 		try {
 			assertEquals(userDAO.saveUser(user), 1);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testCountUserByPhoneNumber() {
+		
+		try {
+			assertEquals(userDAO.countUserByPhoneNumber("15921614832"), 1);
 		}
 		catch(Exception e)
 		{

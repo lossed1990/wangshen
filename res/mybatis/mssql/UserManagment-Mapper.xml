@@ -28,5 +28,37 @@
 		 ,0 -- bi_deleteflag - BIT(1) NOT NULL
 		);
 	</insert>
+	
+	<!-- 获取用户计数，通过手机号 -->
+	<select id="countUserByPhoneNumber" resultType="java.lang.Integer" 
+			parameterType="java.lang.String" statementType="PREPARED">
+		SELECT COUNT(*) FROM users 
+						WHERE c_mobilenumder = #{value} 
+						AND bi_deleteflag = 0;
+	</select>
+	
+	<!-- 获取用户信息，通过号码和密码 -->
+	<resultMap id="RM_UserInfo" type="com.xuexin.wangshen.model.pojo.UserInfoDO">
+		<result column="un_uid" property="nUID" jdbcType="INTEGER" />
+		<result column="c_username" property="strUsername" jdbcType="CHAR" />
+		<result column="c_mobilenumder" property="strMobileNum" jdbcType="CHAR" />
+		<result column="c_passhash" property="strPassHash" jdbcType="VARCHAR" />
+		<result column="dtime_registertime" property="tsRegisterTime" jdbcType="TIMESTAMP" />
+		<result column="dtime_lastmodified" property="tsLastModifiedTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<select id="getUserInfoByPhoneAndPass" resultMap="RM_UserInfo" statementType="PREPARED">
+		SELECT
+			  un_uid,
+			  c_username,
+			  c_mobilenumder,
+			  c_passhash,
+			  dtime_registertime,
+			  dtime_lastmodified
+			FROM users
+			WHERE bi_deleteflag = 0 
+			AND c_mobilenumder = #{strPhone} 
+			AND c_passhash = #{strPass};
+	</select>
 
 </mapper>
