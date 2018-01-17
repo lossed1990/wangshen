@@ -28,6 +28,7 @@
     </div>
 </div>
 
+
 <#include "inc/inc_commonjs.ftl" />
 
 <#include "inc/inc_datatablejs.ftl" />
@@ -43,8 +44,8 @@
         '籍贯',
         '政治面貌',
         '入党团时间',
-        '身高#5',
-        '体重#6',
+        '身高#1,5',
+        '体重#1,6',
         '血型',
         '婚姻状况',
         '生育状况',
