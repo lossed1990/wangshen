@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.xuexin.wangshen.model.pojo.AdminUserLoginInputFormDTO;
 import com.xuexin.wangshen.model.pojo.RemoteValiteResultDTO;
 import com.xuexin.wangshen.model.pojo.UserInfoDO;
 import com.xuexin.wangshen.model.pojo.UserInfoInputFormDTO;
@@ -42,7 +43,7 @@ public class UserAction {
 	    @RequestMapping(value = "/user-wellcome.page", method=RequestMethod.GET)
 	    public String userWellcome(Model model) {
 	    	
-	    	logger.info("transfer to FreeMarker view");
+
 	    	
 
 
@@ -53,32 +54,27 @@ public class UserAction {
 	    @RequestMapping(value = "/admin-wellcome.page", method=RequestMethod.GET)
 	    public String adminWellcome(Model model) {
 	    	
-	    	logger.info("transfer to FreeMarker view");
+
 
 
 	        return "page_admin_wellcome";
 	    }
 	    
-	    //用户登陆页
-	    @RequestMapping(value = "/login.page", method=RequestMethod.GET)
-	    public String userLogin(Model model, HttpSession session) {
-	    	
-	    	logger.info("transfer to FreeMarker view");
-	    	
-	    	//request.getSession(false);
-	    	
+	    //管理员登陆页GET
+	    @RequestMapping(value = "/admin-login.page", method=RequestMethod.GET)
+	    public String adminLogin(Model model, HttpSession session) { 	
 
-	        return "page_user_login";
+	        return "page_admin_login";
 	    }
 	    
-	    //用户登陆验证
-	    @RequestMapping(value = "/user-logincheck.page", method=RequestMethod.POST)
-	    public String userLoginCheck(Model model, @ModelAttribute("user") @Valid UserLoginInputFormDTO user, 
+	    //管理员登陆验证POST
+	    @RequestMapping(value = "/admin-login.page", method=RequestMethod.POST)
+	    public String adminLoginCheck(Model model, @ModelAttribute("user") @Valid AdminUserLoginInputFormDTO user, 
 	    		BindingResult bindingResult, HttpServletRequest request, HttpSession session) {
 	    	
 	    	//服务端输入验证已完成
 	    	if(bindingResult.hasErrors()) {
-	    		return "page_user_login_failed";
+	    		return "page_admin_login";
 	    	}
 	    	
 	    	//验证码
@@ -89,7 +85,54 @@ public class UserAction {
 	    								Integer.toHexString(ErrorDefines.E_SVR_CAPTCHA_ERROR), 
 	    								WebContextResouceBundleReader.getErrorDescription(ErrorDefines.E_SVR_CAPTCHA_ERROR, request));
 	    		
-	    		return "page_user_login_failed";
+	    		return "page_admin_login";
+	    	}
+	    		 
+	    	//管理员实际检查
+	    	UserInfoDO userinfo = service_user.getAdminInfo(user);
+	    	if(userinfo == null) {
+	    		
+	    		bindingResult.rejectValue("password", 
+						Integer.toHexString(ErrorDefines.E_SVR_LOGIN_MISMATCH), 
+						WebContextResouceBundleReader.getErrorDescription(ErrorDefines.E_SVR_LOGIN_MISMATCH, request));
+
+	    		return "page_admin_login";
+	    	}
+	    	
+	    	//通过检查
+	    	//TODO: 可以向session保存用户对象
+
+	    	//跳转到管理员欢迎页
+	        return "redirect:admin-wellcome.page";
+	    }
+	    
+	    //用户登陆页
+	    @RequestMapping(value = "/login.page", method=RequestMethod.GET)
+	    public String userLogin(Model model, HttpSession session) {
+	    	   	
+
+	        return "page_user_login";
+	    }
+	    
+	    //用户登陆验证
+	    @RequestMapping(value = "/login.page", method=RequestMethod.POST)
+	    public String userLoginCheck(Model model, @ModelAttribute("user") @Valid UserLoginInputFormDTO user, 
+	    		BindingResult bindingResult, HttpServletRequest request, HttpSession session) {
+	    	
+	    	//服务端输入验证已完成
+	    	if(bindingResult.hasErrors()) {
+	    		return "page_user_login";
+	    	}
+	    	
+	    	//验证码
+	    	String strSavedCap = session.getAttribute(NAME).toString();
+	    	if(strSavedCap.compareToIgnoreCase(user.getCaptcha()) != 0) {
+	    		
+	    		bindingResult.rejectValue("captcha", 
+	    								Integer.toHexString(ErrorDefines.E_SVR_CAPTCHA_ERROR), 
+	    								WebContextResouceBundleReader.getErrorDescription(ErrorDefines.E_SVR_CAPTCHA_ERROR, request));
+	    		
+	    		return "page_user_login";
 	    	}
 	    	
 	    	//检查用户存在性
@@ -99,26 +142,27 @@ public class UserAction {
 						Integer.toHexString(ErrorDefines.E_SVR_PHONE_NOEXIST), 
 						WebContextResouceBundleReader.getErrorDescription(ErrorDefines.E_SVR_PHONE_NOEXIST, request));
 
-	    		return "page_user_login_failed";
+	    		return "page_user_login";
 	    	}
 	 
 	    	//用户实际检查
 	    	UserInfoDO userinfo = service_user.getUserInfo(user);
 	    	if(userinfo == null) {
 	    		
-	    		bindingResult.rejectValue("phonenumber", 
+	    		bindingResult.rejectValue("password", 
 						Integer.toHexString(ErrorDefines.E_SVR_LOGIN_MISMATCH), 
 						WebContextResouceBundleReader.getErrorDescription(ErrorDefines.E_SVR_LOGIN_MISMATCH, request));
 
-	    		return "page_user_login_failed";
+	    		return "page_user_login";
 	    	}
 	    	
 	    	//通过检查
 	    	//TODO: 可以向session保存用户对象
 
-	        return "page_user_wellcome";
+	    	//跳转到用户欢迎页
+	        return "redirect:user-wellcome.page";
 	    }
-	    
+	    	    
 	    //用户注册
 	    @RequestMapping(value = "/user-register.page", method=RequestMethod.POST)
 	    public String userRegister(Model model, @ModelAttribute("user") @Valid UserInfoInputFormDTO user, 

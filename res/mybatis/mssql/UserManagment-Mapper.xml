@@ -60,5 +60,20 @@
 			AND c_mobilenumder = #{strPhone} 
 			AND c_passhash = #{strPass};
 	</select>
+	
+	<!-- 获取用户信息，通过用户名密码，用于管理员登陆 -->
+	<select id="getAdminInfoByUserAndPass" resultMap="RM_UserInfo" statementType="PREPARED">
+		SELECT
+			  un_uid,
+			  c_username,
+			  c_mobilenumder,
+			  c_passhash,
+			  dtime_registertime,
+			  dtime_lastmodified
+			FROM users
+			WHERE bi_deleteflag = 0 
+			AND c_username = #{strUsername} 
+			AND c_passhash = #{strPass};
+	</select>
 
 </mapper>

@@ -17,15 +17,27 @@
     <div class="login_wrapper">
         <div class="animate form login_form">
             <section class="login_content">
-                <form id="loginform" action="${path}/user/user-logincheck.page" method="POST"
+                <form id="loginform" action="${path}/user/login.page" method="POST"
                       enctype="application/x-www-form-urlencoded">
                     <h1><@spring.message code="page.user.login.login"/></h1>
                     <div class="form-group">
+                        <#if user??>
+                            <@spring.bind "user.phonenumber" />
+                            <#if spring.status.error>
+                                <li class="list-group-item list-group-item-danger"><@spring.showErrors "<br/>" /> </li>
+                            </#if>
+                        </#if>
                         <input type="text" class="form-control"
                                placeholder="<@spring.message code="page.user.reg.mobilenumber"/>" name="phonenumber"
                                required=""/>
                     </div>
                     <div class="form-group">
+                        <#if user??>
+                            <@spring.bind "user.password" />
+                            <#if spring.status.error>
+                                <li class="list-group-item list-group-item-danger"><@spring.showErrors "<br/>" /> </li>
+                            </#if>
+                        </#if>
                         <input type="password" class="form-control"
                                placeholder="<@spring.message code="page.user.reg.password"/>" name="password"
                                required=""/>
@@ -34,6 +46,12 @@
                     <div class="row form-group">
                         <div class="col-xs-6" style="padding-right: 0;">
 
+                            <#if user??>
+                                <@spring.bind "user.captcha" />
+                                <#if spring.status.error>
+                                <li class="list-group-item list-group-item-danger"><@spring.showErrors "<br/>" /> </li>
+                                </#if>
+                            </#if>
                             <input class="form-control" placeholder="<@spring.message code="page.user.login.captcha"/>"
                                    type="text" id="login_captcha" name="captcha"/>
 

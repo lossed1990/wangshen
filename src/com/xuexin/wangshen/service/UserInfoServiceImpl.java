@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.xuexin.wangshen.dao.UserManagmentDAO;
+import com.xuexin.wangshen.model.pojo.AdminUserLoginInputFormDTO;
 import com.xuexin.wangshen.model.pojo.UserInfoDO;
 import com.xuexin.wangshen.model.pojo.UserInfoInputFormDTO;
 import com.xuexin.wangshen.model.pojo.UserLoginInputFormDTO;
@@ -51,5 +52,12 @@ public class UserInfoServiceImpl implements UserInfoService {
 
 		//直接调用DAO，不匹配则返回null
 		return dao_userinfo.getUserInfoByPhoneAndPass(user.getPhonenumber(), user.getPassword());
+	}
+
+	@Override
+	public UserInfoDO getAdminInfo(AdminUserLoginInputFormDTO admin) {
+
+		//直接调用DAO，不匹配则返回null
+		return dao_userinfo.getAdminInfoByUserAndPass(admin.getAdminuser(), admin.getPassword());
 	}
 }

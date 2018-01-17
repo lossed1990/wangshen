@@ -20,4 +20,9 @@ public interface UserManagmentDAO {
 	 * 通过用户号码密码获取用户
 	 */
 	UserInfoDO getUserInfoByPhoneAndPass(@Param(value="strPhone")String strPhone, @Param(value="strPass")String strPass);
+	
+	/*
+	 * 通过用户名密码获取用户
+	 */
+	UserInfoDO getAdminInfoByUserAndPass(@Param(value="strUsername")String strUsername, @Param(value="strPass")String strPass);
 }
