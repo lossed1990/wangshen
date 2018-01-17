@@ -157,7 +157,7 @@ if (typeof Object.create !== 'function') {
                                         <h4 class="modal-title" id="myModalLabel">评分规则设置</h4>\
                                     </div>\
                                     <div class="modal-body">\
-                                        <table class="table table-striped table-bordered">\
+                                        <table class="table table-striped table-bordered" id="table_4">\
                                             <thead>\
                                                 <tr>\
                                                     <th>关键字</th>\
@@ -169,7 +169,7 @@ if (typeof Object.create !== 'function') {
                                                 <tr>\
                                                     <td>姓名</td>\
                                                     <td>1</td>\
-                                                    <td>删除</td>\
+                                                    <td><a id="delrow" href="#"><i class="fa fa-trash-o"></i>删除</a></td>\
                                                 </tr>\
                                             </tbody>\
                                         </table>\
@@ -184,7 +184,7 @@ if (typeof Object.create !== 'function') {
                                                 <div class="col-md-2 col-sm-2 col-xs-12">\
                                                     <input type="text" class="form-control" placeholder="" />\
                                                 </div>\
-                                                <button type="button" class="btn btn-default">新增</button>\
+                                                <button type="button" class="btn btn-default" id="btn_add_4">新增</button>\
                                             </div>\
                                         </div>\
                                     </div>\
@@ -309,6 +309,33 @@ if (typeof Object.create !== 'function') {
                         $('#modal_rule_7').modal();
                         break;
                 }
+            });
+
+            //table
+            var table4_columns = [ { 
+                "data": "key"
+            },        {    
+                "data": "score"
+            },        {  
+                "data":  null,
+                "className":   "center",
+                "defaultContent":   '<a id="delrow" href="#"><i class="fa fa-trash-o"></i>删除</a>'      
+            }];
+            var $table4 = $("#table_4").DataTable({
+                'columns': table4_columns
+            });
+            $('#btn_add_4').click(function() {
+                $table4.row.add({ 'key': '123', 'score': 111 }).draw(false);
+
+                var info = $table4.page.info();
+                var dataRows = info.recordsTotal;
+                console.log(dataRows);
+
+                console.log($table4.row(0).data());
+            });
+
+            $table4.on( 'click', 'a#delrow', function (even)  {
+                $table4.row( $(this).parents('tr') ).remove().draw(false); 
             });
         }
     };
