@@ -1,4 +1,5 @@
-## 页面设计
+# 页面设计
+## 一、页面概览及跳转流程
 - 学员注册界面
     - [Y] 注册成功界面
     - [N] 注册界面
@@ -41,7 +42,8 @@
 - 评分展示界面：分值 + 每项分值柱状图 + 广告
            
 - - - -           
-## 页面文件名称
+## 二、页面与源码文件对应关系
+### 1、主界面
 - 注册 | 登陆界面  
     - 【关联文件】 page_user_login.ftl 
     - 【编码状态】 初步完成
@@ -76,7 +78,7 @@
     - 【关联文件】 Score.ftl 
     - 【编码状态】 未启动
 
-### 1、简历编辑子界面
+### 2、简历编辑|预览子界面
 - 个人基本信息
     - 【编辑】 div_resume_edit_personal.ftl
     - 【预览】 div_resume_view_personal.ftl
@@ -128,4 +130,128 @@
 - 其他说明
     - 【编辑】 div_resume_edit.ftl     
     - 【预览】 div_resume_edit.ftl
-
+- - - -           
+## 三、评分规则协议
+- 是否填写 【type:1】
+```javascript
+{
+    "name":"是否填写",
+    "type":1,
+    "score":0
+}
+```
+- 是否为手机号 【type:2】
+```javascript
+{
+    "name":"手机号",
+    "type":2,
+    "score":0
+}
+```
+- 是否为身份证 【type:3】
+```javascript
+{
+    "name":"身份证",
+    "type":3,
+    "score":0
+}
+```
+- 关键词规则 【type:4】 备注：关键词有重合，例如“好”、“很好”，后台分别匹配加分，配置问题，不做特殊处理；
+```javascript
+{
+    "name":"关键词",
+    "type":4,
+    "rule":[
+        {
+            "key":"XXX",
+            "score":0
+        },
+        {
+            "key":"XXX1",
+            "score":0
+        }
+        ...
+    ],
+    "max":0
+}
+```
+- 身高规则 【type:5】 备注：身高范围有重合，默认匹配第一个范围。begin：大于；end：小于等于；flag：是否影响整体得分；
+```javascript
+{
+    "name":"身高",
+    "type":5,
+    "male":[
+        {
+            "begin":0,
+            "end":150,
+            "score":0,
+            "flag":true
+        },
+        {
+            "begin":150,
+            "end":180,
+            "score":0,
+            "flag":false
+        }
+        ...
+    ],
+    "Female":[
+        {
+            "begin":0,
+            "end":150,
+            "score":0,
+            "flag":true
+        },
+        {
+            "begin":150,
+            "end":180,
+            "score":0,
+            "flag":false
+        }
+        ...
+    ]
+}
+```
+- 体重规则 【type:6】 备注：体重范围有重合，默认匹配第一个范围。begin：大于；end：小于等于；flag：是否影响整体得分；
+```javascript
+{
+    "name":"体重",
+    "type":6,
+    "rule":[
+        {
+            "begin":0,
+            "end":150,
+            "score":0,
+            "flag":true
+        },
+        {
+            "begin":150,
+            "end":180,
+            "score":0,
+            "flag":false
+        }
+        ...
+    ]
+}
+```
+- 字数规则 【type：7】
+```javascript
+{
+    "name":"字数",
+    "type":7,
+    "rule":[
+        {
+            "begin":0,
+            "end":150,
+            "score":0
+        },
+        {
+            "begin":150,
+            "end":180,
+            "score":0
+        }
+        ...
+    ],
+    "max":0
+}
+```
