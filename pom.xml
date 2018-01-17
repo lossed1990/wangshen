@@ -22,6 +22,7 @@
         <jodatime.version>2.8</jodatime.version>
         <junit.version>4.12</junit.version>
         <hibernatevalidate.version>5.1.3.Final</hibernatevalidate.version>
+        <commonsfileupload.version>1.3.1</commonsfileupload.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -154,5 +155,10 @@
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernatevalidate.version}</version>
         </dependency>
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>${commonsfileupload.version}</version>
+		</dependency>
     </dependencies>
 </project>
