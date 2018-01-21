@@ -195,7 +195,7 @@
         }
         ...
     ],
-    "Female":[
+    "female":[
         {
             "begin":0,
             "end":150,
@@ -269,4 +269,389 @@
 $('#personal_scorerule').scorerule(['姓名','曾用名#1',...]);
 
 
+```
+## 五、简历模板相关接口
+### 1、新建简历模板(FORM POST 同步)
+```javascript
+{
+    templatename="模板名称",
+    templatecover_id="图片id"
+}
+```
+【结果】跳转“模板编辑界面”
+
+【备注】“模板编辑界面”通过request(temp_id)，获取模板ID
+
+### 2、启用|不启用模板（不删除简历）（JSON，异步）
+```javascript
+{
+    temp_id:"xxx"    
+    enable:true/false
+}
+```
+
+### 3、修改模板模板(JSON,异步)
+```javascript
+//请求参数
+{
+    key:"baseinfo"
+    baseinfo:{xxxxx}
+}
+//反馈参数：公共结构
+```
+
+### 4、删除模板（同时删除相关简历）（JSON,异步）
+```javascript
+//请求参数
+{
+    temp_id:"xxx"   
+}
+//反馈参数：公共结构
+```
+
+### 5、获取所有模板（概览）（同步，页面）
+
+### 6、获取模板详情（JSON，异步）
+    GET / temp_id=xxxxx
+    -》JSON
+
+## 六、简历相关接口
+### 1、删除简历(JSON,GET,异步)
+    GET / resume_id=xxxxxxx
+### 2、保存某一模块（JSON,POST，异步）
+```javascript
+//请求参数
+{
+    resume_id:"xxxxx-x-xxx",
+    section_name:"baseinfo",
+    value:{xxxxx}
+}
+//反馈参数：公共结构
+```
+
+### 3、获取某一字段详情(JSON, GET， 异步)
+    GET / resume_id=xxxxxx&section_name=xxxxxx
+
+### 4、获取简历详情(同步，页面)
+
+## 七、所有异步JSON返回
+```javascript
+{
+    "ok": true/false,
+    "errorinfo":"xxxxxx",
+    "result" : {
+        xxxx
+    }
+}
+```
+
+## 七、简历内容json协议
+```javascript
+{
+    "baseinfo":{
+        "name":"xxxx",
+        "old_name":"",
+        "sex":"男/女",
+        "birth_date":"1999-10-20",
+        "nation":"汉族",
+        "birthplace":"江苏盐城",
+        "party":"团员",
+        "party_entry_date":"1999-11-22",
+        "height_cm":180,
+        "weight_kg":100,
+        "bloodtype":"AB",
+        "marrage":"未婚",
+        "have_kid":"已育",
+        "heath":"健康",
+        "gaokao_place":"江苏",
+        "living_place":"江苏盐城",
+        "address":"xxxxxx",
+        "home_address":"xxxx",
+        "hukou_place":"xxxx",
+        "hukou_type":"xxxx",
+        "graduate_date":"1999-10-10",
+        "work_date":"1999-10-11",
+        "head_pic":"xxxxxxxx",
+        "live_pic":"xxxxx",
+        "student_pic":"xxxxxx",
+        "idcard_type":"xxxxxxx",
+        "idcard_num":"xxxxxxxxxx",
+        "email":"xxxxxx",
+        "fix_phone":"xxxxxx",
+        "mobile":"xxxxxxxx",
+        "postal":"xxxxx",
+        "emergency_contact":"xxxxx",
+        "emergency_phone":"xxxxxxx"
+    },
+    "education":{
+        "top_grade":"xxxxx",
+        "gaokao_level":"xxxxx",
+        "gaokao_point":111,
+        "edu_history":[
+            {
+                "sequence":1,
+                "start_date":"1999-10-10",
+                "end_date":"1999-10-10",
+                "stage":"高中",
+                "province":"湖北",
+                "school":"xxxx",
+                "institude":"学院",
+                "study":"专业",
+                "study_apect":"研究方向",
+                "gpa":"xxxxx",
+                "xuewei":"学位",
+                "study_type":"学习形式",
+                "edu_type":"教育类型",
+                "graduate_type":"xxxxx",
+                "graduate_pos":"毕业排名",
+                "scores":[
+                    {
+                    "xueke";"学科",
+                    "score":99
+                    }
+                    ,...
+                ]
+            },
+            ....
+        ]
+    },
+    "rewards":[
+        {
+            "name":"xxxx",
+            "level":"xxxx",
+            "source":"单位",
+            "times":"xxxx",
+            "date":"1922-10-10"
+        }
+    ],
+    "language":{
+        "level":"xxxx",
+        "score":"xxxxx",
+        "date":"1999-12-12",
+        "other":"xxxxx",
+        "local_lan":"xxxx",
+        "memo":"xxxx"
+    },
+    "computer":{
+        "name":"xxx",
+        "date":"1999-12-12",
+        "level":"xxxxxx"
+    },
+    "student_ganbu":[
+        {
+            "start_date":"1999-11-11",
+            "end_date":"1999-11-11",
+            "zhiwu_name":"xxxxx",
+            "zhiwu_type":"xxxxx",
+            "memo":"xxxxxx"
+        }
+    ],
+    "trainning":[
+        {
+            "start_date":"1999-11-11",
+            "end_date":"1999-11-11",
+            "name":"xxxxx",
+            "memo":"xxxxxx"
+        }
+    ],
+     "shijian":[
+        {
+            "start_date":"1999-11-11",
+            "end_date":"1999-11-11",
+            "name":"xxxxx",
+            "memo":"xxxxxx"
+        }
+    ],
+    "shixi":[
+        {
+            "start_date":"1999-11-11",
+            "end_date":"1999-11-11",
+            "hangye":"xxxxx",
+            "apartment":"xxxxxx",
+            "work":"xxxx",
+            "company_type":"xxxxx",
+            "work_type":"xxxxx",
+            "kpi_level":"xxx",
+            "work_memo":"xxxxx",
+            "salary":"xxxxxx",
+            "zhengming_people":"xxxx",
+            "zhengming_work":"xxxx",
+            "zhengming_phone":"xxxx",
+            "lizhi_info":"xxxxx"
+        }
+    ],
+    "zigezhengshu":[
+        {
+            "type":"xxxx",
+            "name":"xxxxx",
+            "got_date":"1999-10-10",
+            "source":"机构",
+            "cert_date":"认证时间",
+            "zhengshu_code":"xxxx",
+        }
+    ],
+    "family":[
+        {
+            "name":"xxx",
+            "sex":"xxxx",
+            "relation":"xxx",
+            "birthdate":"1999-10-10",
+            "status":"xxxxx",
+            "work_place":"xxxxx",
+            "work":"职务",
+            "zhengzhimianmao":"xxxxxx",
+            "edu_status":"xxxx"
+        }
+    ],
+    "dissertation":[
+        "name":"xxxx",
+        "level":"xxxxx",
+        "date":"xxxxx",
+        "author":"xxxxx",
+        "memo":"xxxx"
+    ],
+    "workplan":{
+        "plan":"xxxxx"
+    },
+    "selfjudge":{
+        "info":"xxxxx"
+    },
+    "speciality":{
+        "info":""
+    },
+    "selfrecomadation":{
+        "info":""
+    },
+    "otherinfo":{
+        "info":""
+    },
+    "targetbank":{
+        "bank":"xxx",
+        "area":"xxxx",
+        "reason":"xxxx",
+        "expect_salary":"xxxx",
+        "exam_place":"xxx",
+        "info_source":"xxxx"
+    },
+    "promise":{
+        "is_punished":true,
+        "is_disease":true,
+        "is_thisbank_worker":true,
+        "is_relative_worker":true
+    }
+    
+}
+```
+
+## 八、简历模板规则json协议
+```javascript
+{
+    "baseinfo":{
+        "show":true,
+        "max":121,
+        "keys":[
+            {
+                "key":"name",
+                "enable":true,
+                "judge":{xxx}
+            },
+            {
+                "key":"old_name",
+                 "enable":true,
+                "judge":{}
+            },
+            ......
+        ]
+    },
+    "education":{
+        "show":true,
+        "max":121,
+        "keys":[]
+    },
+    "rewards":{
+        "show":true,
+        "max":121,
+        "keys":[] 
+    },
+    "language":{
+        "show":true,
+        "max":121,
+        "keys":[]
+    },
+    "computer":{
+        "show":true,
+        "max":121,
+        "keys":[]
+    },
+    "student_ganbu":{
+        "show":true,
+        "max":121,
+        "keys":[]
+    },
+    "trainning":{
+        "show":true,
+        "max":121,
+        "keys":[]
+    },
+     "shijian":{
+        "show":true,
+        "max":121,
+        "keys":[]
+    },
+    "shixi":{
+        "show":true,
+        "max":121,
+        "keys":[]
+    },
+    "zigezhengshu":{
+        "show":true,
+        "max":121,
+        "keys":[]
+    },
+    "family":{
+        "show":true,
+        "max":121,
+        "keys":[]
+    },
+    "dissertation":{
+        "show":true,
+        "max":121,
+        "keys":[]
+    },
+    "workplan":{
+        "show":true,
+        "max":121,
+        "keys":[]
+    },
+    "selfjudge":{
+        "show":true,
+        "max":121,
+        "keys":[]
+    },
+    "speciality":{
+        "show":true,
+        "max":121,
+        "keys":[]
+    },
+    "selfrecomadation":{
+        "show":true,
+        "max":121,
+        "keys":[]
+    },
+    "otherinfo":{
+        "show":true,
+        "max":121,
+        "keys":[]
+    },
+    "targetbank":{
+        "show":true,
+        "max":121,
+        "keys":[]
+    },
+    "promise":{
+        "show":true,
+        "max":121,
+        "keys":[]
+    }
+}
 ```
