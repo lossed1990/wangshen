@@ -850,16 +850,490 @@ if (typeof Object.create !== 'function') {
         }
     };
 
+    var Modal6 = {
+        init: function() {
+            var self = this;
+            self.create();
+            self.bingEvent();
+        },
+
+        create: function() {
+            var self = this;
+            var modal6 = '<div class="modal fade bs-example-modal-lg" id="modal_rule_6" tabindex="-1" role="dialog" aria-hidden="true">\
+                            <div class="modal-dialog modal-lg">\
+                                <div class="modal-content">\
+                                    <div class="modal-header">\
+                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>\
+                                        <h4 class="modal-title">评分规则设置</h4>\
+                                    </div>\
+                                    <div class="modal-body">\
+                                        <table class="table table-striped table-bordered" id="table_6">\
+                                            <thead>\
+                                                <tr>\
+                                                    <th>上限</th>\
+                                                    <th>下限</th>\
+                                                    <th>分值</th>\
+                                                    <th>合格</th>\
+                                                    <th>操作</th>\
+                                                </tr>\
+                                            </thead>\
+                                            <tbody>\
+                                            </tbody>\
+                                        </table>\
+                                        <h5 class="fa fa-edit">新增</h5>\
+                                        <div class="form-horizontal form-label-left">\
+                                            <div class="form-group">\
+                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">上限</label>\
+                                                <div class="col-md-2 col-sm-2 col-xs-12">\
+                                                    <input type="text" class="form-control" id="input6_begin" placeholder="" />\
+                                                </div>\
+                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">下限</label>\
+                                                <div class="col-md-2 col-sm-2 col-xs-12">\
+                                                    <input type="text" class="form-control" id="input6_end" placeholder="" />\
+                                                </div>\
+                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">得分值</label>\
+                                                <div class="col-md-2 col-sm-2 col-xs-12">\
+                                                    <input type="text" class="form-control" id="input6_score" placeholder="" />\
+                                                </div>\
+                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">区间合格</label>\
+                                                <div class="col-md-2 col-sm-2 col-xs-12">\
+                                                    <select class="form-control" id="select6_flag">\
+                                                        <option>是</option>\
+                                                        <option>否</option>\
+                                                    </select>\
+                                                </div>\
+                                            </div>\
+                                            <div class="form-group">\
+                                                <div class="col-md-2 col-sm-2 col-xs-12 col-md-offset-1 col-sm-offset-1">\
+                                                    <button type="button" class="btn btn-default" id="btn6_add">新增</button>\
+                                                </div>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                    <div class="modal-footer">\
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>\
+                                        <button type="button" class="btn btn-primary" id="btn6_save">保存设置</button>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        </div>';
+            $('body').append(modal6);
+            self.$modal = $('#modal_rule_6');
+            self.$score_input = $('#input6_score');
+            self.$begin_input = $('#input6_begin');
+            self.$end_input = $('#input6_end');
+            self.$flag_select = $('#select6_flag');
+            self.$table = $("#table_6").DataTable({
+                'columns': [ { 
+                    "data": "begin"
+                },        {    
+                    "data": "end"
+                },        {    
+                    "data": "score"
+                },        {    
+                    "data": "flag"
+                },        {  
+                    "data":  null,
+                    "className":   "center",
+                    "defaultContent":   '<a id="delrow" href="#"><i class="fa fa-trash-o"></i>删除</a>'      
+                }]
+            });
+        },
+
+        bingEvent: function() {
+            var self = this;
+            //新增Item事件
+            $('#btn6_add').click(function() {
+                self.addItemData();
+            });
+
+            //删除Item事件
+            self.$table.on( 'click', 'a#delrow', function (even)  {
+                self.$table.row( $(this).parents('tr') ).remove().draw(false); 
+            });
+
+            $('#btn6_save').click(function() {
+                self.saveData();
+            });
+        },
+
+        //清空modal上的数据
+        clearData: function() {
+            var self = this;
+            var info = self.$table.page.info();
+            var dataRows = info.recordsTotal;
+            for (var i = 0; i < dataRows; ++i) {
+                self.$table.row(i).remove().draw(false); 
+            }
+
+            self.$score_input.val("");
+            self.$begin_input.val("");
+            self.$end_input.val("");
+        },
+
+        /**
+         * @brief 显示模态框
+         * 
+         * @param onSaveCallBack   保存事件回调函数 
+         * @param config           初始数据，为空不处理 
+         */
+        showModal: function(onSaveCallBack, config) {
+            var self = this;
+            self.onSave = onSaveCallBack;
+            self.clearData();
+            self.fillData(config);
+            self.$modal.modal();
+        },
+
+        hideModal: function() {
+            var self = this;
+            self.onSave = null;
+            self.clearData();
+            self.$modal.modal('hide');
+        },
+
+        addItemData:function() {
+            var self = this;
+
+            var begin = self.$begin_input.val().trim();
+            var end = self.$end_input.val().trim();
+            var score = self.$score_input.val().trim();
+            var flag = self.$flag_select.val().trim();
+
+            if (gIsNull(begin)) {
+                alert('体重起始值不能为空！');
+                return;
+            }
+
+            if (!gIsInt(begin)) {
+                alert('体重起始值仅能输入数字！');
+                return;
+            }
+
+            if (gIsNull(end)) {
+                alert('体重结束值不能为空！');
+                return;
+            }
+
+            if (!gIsInt(end)) {
+                alert('体重结束值仅能输入数字！');
+                return;
+            }
+
+            if (gIsNull(score)) {
+                alert('得分值不能为空！');
+                return;
+            }
+
+            if (!gIsInt(score)) {
+                alert('得分值仅能输入数字！');
+                return;
+            }
+
+            self.$table.row.add({ 'begin': begin, 'end': end, 'score': score, 'flag': flag }).draw(false);
+            self.$begin_input.val("");
+            self.$end_input.val("");
+            self.$score_input.val("");
+        },
+
+        saveData: function() {
+            var self = this;
+            if (self.onSave) {
+                var config = self.formatConfig();
+                var tip = self.formatTipString(config);
+                self.onSave(config, tip);
+                self.hideModal();
+            }
+        },
+
+        fillData: function(config) {
+            var self = this;
+            if (config && config.type == 6) {
+                for (var i = 0; i < config.rule.length; ++i) {
+                    var flag = config.rule[i].flag ? '是' : '否';
+                    self.$table.row.add({ 'begin': config.rule[i].begin, 'end': config.rule[i].end, 'score': config.rule[i].score, 'flag': flag }).draw(false);
+                }
+            }
+        },
+
+        formatConfig: function() {
+            var self = this;
+
+            var dataRows = self.$table.page.info().recordsTotal;
+            var config = {
+                "name": "体重",
+                "type": 6,
+                "rule": []
+            };
+            for (var i = 0; i < dataRows; ++i) {
+                var data = self.$table.row(i).data();
+                data.flag = (data.flag == '是') ? true : false;
+                config.rule.push(data);
+            }
+            return config;
+        },
+
+        formatTipString: function(config) {
+            var str = "";
+            for (var i = 0; i < config.rule.length; ++i) {
+                var sub = '';
+                if (config.rule[i].flag) {
+                    sub = '[' + config.rule[i].begin + "-" + config.rule[i].end + "]，得分：" + config.rule[i].score + " *；";
+                } else {
+                    sub = '[' + config.rule[i].begin + "-" + config.rule[i].end + "]，得分：" + config.rule[i].score + "；";
+                }
+                str += sub;
+            }
+            return str;
+        }
+    };
+
+    var Modal7 = {
+        init: function() {
+            var self = this;
+            self.create();
+            self.bingEvent();
+        },
+
+        create: function() {
+            var self = this;
+            var modal7 = '<div class="modal fade bs-example-modal-lg" id="modal_rule_7" tabindex="-1" role="dialog" aria-hidden="true">\
+                            <div class="modal-dialog modal-lg">\
+                                <div class="modal-content">\
+                                    <div class="modal-header">\
+                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>\
+                                        <h4 class="modal-title">评分规则设置</h4>\
+                                    </div>\
+                                    <div class="modal-body">\
+                                        <table class="table table-striped table-bordered" id="table_7">\
+                                            <thead>\
+                                                <tr>\
+                                                    <th>上限</th>\
+                                                    <th>下限</th>\
+                                                    <th>分值</th>\
+                                                    <th>操作</th>\
+                                                </tr>\
+                                            </thead>\
+                                            <tbody>\
+                                            </tbody>\
+                                        </table>\
+                                        <h5 class="fa fa-edit">新增</h5>\
+                                        <div class="form-horizontal form-label-left">\
+                                            <div class="form-group">\
+                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">上限</label>\
+                                                <div class="col-md-2 col-sm-2 col-xs-12">\
+                                                    <input type="text" class="form-control" id="input7_begin" placeholder="" />\
+                                                </div>\
+                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">下限</label>\
+                                                <div class="col-md-2 col-sm-2 col-xs-12">\
+                                                    <input type="text" class="form-control" id="input7_end" placeholder="" />\
+                                                </div>\
+                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">得分值</label>\
+                                                <div class="col-md-2 col-sm-2 col-xs-12">\
+                                                    <input type="text" class="form-control" id="input7_score" placeholder="" />\
+                                                </div>\
+                                                <button type="button" class="btn btn-default" id="btn7_add">新增</button>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                    <div class="modal-footer">\
+                                        <div class="form-horizontal form-label-left">\
+                                            <div class="form-group">\
+                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">得分上限</label>\
+                                                <div class="col-md-2 col-sm-2 col-xs-12">\
+                                                    <input type="text" class="form-control" id="input7_max" placeholder="" />\
+                                                </div>\
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>\
+                                                <button type="button" class="btn btn-primary" id="btn7_save">保存设置</button>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        </div>';
+            $('body').append(modal7);
+            self.$modal = $('#modal_rule_7');
+            self.$score_input = $('#input7_score');
+            self.$begin_input = $('#input7_begin');
+            self.$end_input = $('#input7_end');
+            self.$max_input = $('#input7_max');
+            self.$table = $("#table_7").DataTable({
+                'columns': [ { 
+                    "data": "begin"
+                },        {    
+                    "data": "end"
+                },        {    
+                    "data": "score"
+                },        {  
+                    "data":  null,
+                    "className":   "center",
+                    "defaultContent":   '<a id="delrow" href="#"><i class="fa fa-trash-o"></i>删除</a>'      
+                }]
+            });
+        },
+
+        bingEvent: function() {
+            var self = this;
+            //新增Item事件
+            $('#btn7_add').click(function() {
+                self.addItemData();
+            });
+
+            //删除Item事件
+            self.$table.on( 'click', 'a#delrow', function (even)  {
+                self.$table.row( $(this).parents('tr') ).remove().draw(false); 
+            });
+
+            $('#btn7_save').click(function() {
+                self.saveData();
+            });
+        },
+
+        //清空modal上的数据
+        clearData: function() {
+            var self = this;
+            var info = self.$table.page.info();
+            var dataRows = info.recordsTotal;
+            for (var i = 0; i < dataRows; ++i) {
+                self.$table.row(i).remove().draw(false); 
+            }
+
+            self.$score_input.val("");
+            self.$begin_input.val("");
+            self.$end_input.val("");
+            self.$max_input.val("");
+        },
+
+        /**
+         * @brief 显示模态框
+         * 
+         * @param onSaveCallBack   保存事件回调函数 
+         * @param config           初始数据，为空不处理 
+         */
+        showModal: function(onSaveCallBack, config) {
+            var self = this;
+            self.onSave = onSaveCallBack;
+            self.clearData();
+            self.fillData(config);
+            self.$modal.modal();
+        },
+
+        hideModal: function() {
+            var self = this;
+            self.onSave = null;
+            self.clearData();
+            self.$modal.modal('hide');
+        },
+
+        addItemData:function() {
+            var self = this;
+
+            var begin = self.$begin_input.val().trim();
+            var end = self.$end_input.val().trim();
+            var score = self.$score_input.val().trim();
+
+            if (gIsNull(begin)) {
+                alert('字数起始值不能为空！');
+                return;
+            }
+
+            if (!gIsInt(begin)) {
+                alert('字数起始值仅能输入数字！');
+                return;
+            }
+
+            if (gIsNull(end)) {
+                alert('字数结束值不能为空！');
+                return;
+            }
+
+            if (!gIsInt(end)) {
+                alert('字数结束值仅能输入数字！');
+                return;
+            }
+
+            if (gIsNull(score)) {
+                alert('得分值不能为空！');
+                return;
+            }
+
+            if (!gIsInt(score)) {
+                alert('得分值仅能输入数字！');
+                return;
+            }
+
+            self.$table.row.add({ 'begin': begin, 'end': end, 'score': score }).draw(false);
+            self.$begin_input.val("");
+            self.$end_input.val("");
+            self.$score_input.val("");
+        },
+
+        saveData: function() {
+            var self = this;
+            if (self.onSave) {
+                var max = self.$max_input.val().trim();
+                if (self.isNull(max)) {
+                    alert('最大得分值不能为空！');
+                    return;
+                }
+
+                if (!self.isInt(max)) {
+                    alert('最大得分值仅能输入数字！');
+                    return;
+                }
+
+                var config = self.formatConfig(max);
+                var tip = self.formatTipString(config);
+                self.onSave(config, tip);
+                self.hideModal();
+            }
+        },
+
+        fillData: function(config) {
+            var self = this;
+            if (config && config.type == 7) {
+                if(config.max){
+                    self.$max_input.val(config.max);
+                }
+                for (var i = 0; i < config.rule.length; ++i) {
+                    self.$table.row.add({ 'begin': config.rule[i].begin, 'end': config.rule[i].end, 'score': config.rule[i].score }).draw(false);
+                }
+            }
+        },
+
+        formatConfig: function(max) {
+            var self = this;
+
+            var dataRows = self.$table.page.info().recordsTotal;
+            var config = {
+                "name": "字数",
+                "type": 7,
+                "rule": [],
+                "max": max
+            };
+            for (var i = 0; i < dataRows; ++i) {
+                var data = self.$table.row(i).data();
+                config.rule.push(data);
+            }
+            return config;
+        },
+
+        formatTipString: function(config) {
+            var str = "最大分值：" + config.max + "；";
+            for (var i = 0; i < config.rule.length; ++i) {
+                var sub = '[' + config.rule[i].begin + "-" + config.rule[i].end + "]，得分：" + config.rule[i].score + "；";
+                str += sub;
+            }
+            return str;
+        }
+    };
+
     var ScoreRule = {
         init: function(options, elem) {
             var self = this;
             self.elem = elem;
             self.$elem = $(elem);
             self.options = options;
-            self.$table4 = null;
-            self.$table5 = null;
-            self.$table6 = null;
-            self.$table7 = null;
             self.data = {};
             self.initializeScoreRule();
         },
@@ -951,125 +1425,12 @@ if (typeof Object.create !== 'function') {
             
             self.modal_5 = Object.create(Modal5);
             self.modal_5.init();
+
+            self.modal_6 = Object.create(Modal6);
+            self.modal_6.init();
             
-
-            var modal6 = '<div class="modal fade bs-example-modal-lg" id="modal_rule_6" tabindex="-1" role="dialog" aria-hidden="true">\
-                            <div class="modal-dialog modal-lg">\
-                                <div class="modal-content">\
-                                    <div class="modal-header">\
-                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>\
-                                        <h4 class="modal-title">评分规则设置</h4>\
-                                    </div>\
-                                    <div class="modal-body">\
-                                        <table class="table table-striped table-bordered" id="table_6">\
-                                            <thead>\
-                                                <tr>\
-                                                    <th>上限</th>\
-                                                    <th>下限</th>\
-                                                    <th>分值</th>\
-                                                    <th>合格</th>\
-                                                    <th>操作</th>\
-                                                </tr>\
-                                            </thead>\
-                                            <tbody>\
-                                            </tbody>\
-                                        </table>\
-                                        <h5 class="fa fa-edit">新增</h5>\
-                                        <div class="form-horizontal form-label-left">\
-                                            <div class="form-group">\
-                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">上限</label>\
-                                                <div class="col-md-2 col-sm-2 col-xs-12">\
-                                                    <input type="text" class="form-control" id="input6_begin" placeholder="" />\
-                                                </div>\
-                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">下限</label>\
-                                                <div class="col-md-2 col-sm-2 col-xs-12">\
-                                                    <input type="text" class="form-control" id="input6_end" placeholder="" />\
-                                                </div>\
-                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">得分值</label>\
-                                                <div class="col-md-2 col-sm-2 col-xs-12">\
-                                                    <input type="text" class="form-control" id="input6_score" placeholder="" />\
-                                                </div>\
-                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">区间合格</label>\
-                                                <div class="col-md-2 col-sm-2 col-xs-12">\
-                                                    <select class="form-control" id="select6_flag">\
-                                                        <option>是</option>\
-                                                        <option>否</option>\
-                                                    </select>\
-                                                </div>\
-                                            </div>\
-                                            <div class="form-group">\
-                                                <div class="col-md-2 col-sm-2 col-xs-12 col-md-offset-1 col-sm-offset-1">\
-                                                    <button type="button" class="btn btn-default" id="btn6_add">新增</button>\
-                                                </div>\
-                                            </div>\
-                                        </div>\
-                                    </div>\
-                                    <div class="modal-footer">\
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>\
-                                        <button type="button" class="btn btn-primary" id="btn6_save">保存设置</button>\
-                                    </div>\
-                                </div>\
-                            </div>\
-                        </div>';
-
-            $('body').append(modal6);
-
-            var modal7 = '<div class="modal fade bs-example-modal-lg" id="modal_rule_7" tabindex="-1" role="dialog" aria-hidden="true">\
-                            <div class="modal-dialog modal-lg">\
-                                <div class="modal-content">\
-                                    <div class="modal-header">\
-                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>\
-                                        <h4 class="modal-title">评分规则设置</h4>\
-                                    </div>\
-                                    <div class="modal-body">\
-                                        <table class="table table-striped table-bordered" id="table_7">\
-                                            <thead>\
-                                                <tr>\
-                                                    <th>上限</th>\
-                                                    <th>下限</th>\
-                                                    <th>分值</th>\
-                                                    <th>操作</th>\
-                                                </tr>\
-                                            </thead>\
-                                            <tbody>\
-                                            </tbody>\
-                                        </table>\
-                                        <h5 class="fa fa-edit">新增</h5>\
-                                        <div class="form-horizontal form-label-left">\
-                                            <div class="form-group">\
-                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">上限</label>\
-                                                <div class="col-md-2 col-sm-2 col-xs-12">\
-                                                    <input type="text" class="form-control" id="input7_begin" placeholder="" />\
-                                                </div>\
-                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">下限</label>\
-                                                <div class="col-md-2 col-sm-2 col-xs-12">\
-                                                    <input type="text" class="form-control" id="input7_end" placeholder="" />\
-                                                </div>\
-                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">得分值</label>\
-                                                <div class="col-md-2 col-sm-2 col-xs-12">\
-                                                    <input type="text" class="form-control" id="input7_score" placeholder="" />\
-                                                </div>\
-                                                <button type="button" class="btn btn-default" id="btn7_add">新增</button>\
-                                            </div>\
-                                        </div>\
-                                    </div>\
-                                    <div class="modal-footer">\
-                                        <div class="form-horizontal form-label-left">\
-                                            <div class="form-group">\
-                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">得分上限</label>\
-                                                <div class="col-md-2 col-sm-2 col-xs-12">\
-                                                    <input type="text" class="form-control" id="input7_max" placeholder="" />\
-                                                </div>\
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>\
-                                                <button type="button" class="btn btn-primary" id="btn7_save">保存设置</button>\
-                                            </div>\
-                                        </div>\
-                                    </div>\
-                                </div>\
-                            </div>\
-                        </div>';
-
-            $('body').append(modal7);
+            self.modal_7 = Object.create(Modal7);
+            self.modal_7.init();
         },
 
         setTrigger: function() {
@@ -1114,344 +1475,20 @@ if (typeof Object.create !== 'function') {
                         }, keyconfig);
                         break;
                     case '体重规则':
-                        type = 6;
-                        $('#modal_rule_6').modal();
+                        self.modal_6.showModal(function(config, tip) {
+                            self.cur_ui.find('input').val(tip);
+                            self.data[self.cur_ui.find('label').html()] = config;
+                        }, keyconfig);
                         break;
                     case '字数规则':
-                        type = 7;
-                        $('#modal_rule_7').modal();
+                        self.modal_7.showModal(function(config, tip) {
+                            self.cur_ui.find('input').val(tip);
+                            self.data[self.cur_ui.find('label').html()] = config;
+                        }, keyconfig);
                         break;
                 }
             });
-
-
-
-
-
-            
-
-            
-            //6
-            self.$table6 = $("#table_6").DataTable({
-                'columns': [ { 
-                    "data": "begin"
-                },        {    
-                    "data": "end"
-                },        {    
-                    "data": "score"
-                },        {    
-                    "data": "flag"
-                },        {  
-                    "data":  null,
-                    "className":   "center",
-                    "defaultContent":   '<a id="delrow" href="#"><i class="fa fa-trash-o"></i>删除</a>'      
-                }]
-            });
-
-            $('#btn6_add').click(function() {
-                var begin = $('#input6_begin').val().trim();
-                var end = $('#input6_end').val().trim();
-                var score = $('#input6_score').val().trim();
-                var flag = $('#select6_flag').val().trim();
-
-                if (self.isNull(begin)) {
-                    alert('体重起始值不能为空！');
-                    return;
-                }
-
-                if (!self.isInt(begin)) {
-                    alert('体重起始值仅能输入数字！');
-                    return;
-                }
-
-                if (self.isNull(end)) {
-                    alert('体重结束值不能为空！');
-                    return;
-                }
-
-                if (!self.isInt(end)) {
-                    alert('体重结束值仅能输入数字！');
-                    return;
-                }
-
-                if (self.isNull(score)) {
-                    alert('得分值不能为空！');
-                    return;
-                }
-
-                if (!self.isInt(score)) {
-                    alert('得分值仅能输入数字！');
-                    return;
-                }
-
-                self.$table6.row.add({ 'begin': begin, 'end': end, 'score': score, 'flag': flag }).draw(false);
-                $('#input6_begin').val("");
-                $('#input6_end').val("");
-                $('#input6_score').val("");
-            });
-
-            self.$table6.on( 'click', 'a#delrow', function (even)  {
-                self.$table6.row( $(this).parents('tr') ).remove().draw(false); 
-            });
-
-            $('#btn6_save').click(function() {
-                var info = self.$table6.page.info();
-                var dataRows = info.recordsTotal;
-                var config = {
-                    "name": "体重",
-                    "type": 6,
-                    "rule": []
-                };
-                for (var i = 0; i < dataRows; ++i) {
-                    var data = self.$table6.row(i).data();
-                    data.flag = (data.flag == '是') ? true : false;
-                    config.rule.push(data);
-                }
-                self.cur_ui.find('input.form-control').val(self.fillRuleResultToInput(config));
-                self.data[self.cur_ui.find('label').html()] = config;
-
-                //清空数据
-                for (var i = 0; i < dataRows; ++i) {
-                    self.$table6.row(i).remove().draw(false); 
-                }
-                $('#modal_rule_6').modal('hide');
-            });
-
-            //7
-            self.$table7 = $("#table_7").DataTable({
-                'columns': [ { 
-                    "data": "begin"
-                },        {    
-                    "data": "end"
-                },        {    
-                    "data": "score"
-                },        {  
-                    "data":  null,
-                    "className":   "center",
-                    "defaultContent":   '<a id="delrow" href="#"><i class="fa fa-trash-o"></i>删除</a>'      
-                }]
-            });
-
-            $('#btn7_add').click(function() {
-                var begin = $('#input7_begin').val().trim();
-                var end = $('#input7_end').val().trim();
-                var score = $('#input7_score').val().trim();
-
-                if (self.isNull(begin)) {
-                    alert('字数起始值不能为空！');
-                    return;
-                }
-
-                if (!self.isInt(begin)) {
-                    alert('字数起始值仅能输入数字！');
-                    return;
-                }
-
-                if (self.isNull(end)) {
-                    alert('字数结束值不能为空！');
-                    return;
-                }
-
-                if (!self.isInt(end)) {
-                    alert('字数结束值仅能输入数字！');
-                    return;
-                }
-
-                if (self.isNull(score)) {
-                    alert('得分值不能为空！');
-                    return;
-                }
-
-                if (!self.isInt(score)) {
-                    alert('得分值仅能输入数字！');
-                    return;
-                }
-
-                self.$table7.row.add({ 'begin': begin, 'end': end, 'score': score }).draw(false);
-                $('#input7_begin').val("");
-                $('#input7_end').val("");
-                $('#input7_score').val("");
-            });
-
-            self.$table7.on( 'click', 'a#delrow', function (even)  {
-                self.$table7.row( $(this).parents('tr') ).remove().draw(false); 
-            });
-
-            $('#btn7_save').click(function() {
-                var max = $('#input7_max').val().trim();
-                if (self.isNull(max)) {
-                    alert('最大得分值不能为空！');
-                    return;
-                }
-
-                if (!self.isInt(max)) {
-                    alert('最大得分值仅能输入数字！');
-                    return;
-                }
-
-                var info = self.$table7.page.info();
-                var dataRows = info.recordsTotal;
-                var config = {
-                    "name": "字数",
-                    "type": 7,
-                    "rule": [],
-                    "max": max
-                };
-                for (var i = 0; i < dataRows; ++i) {
-                    var data = self.$table7.row(i).data();
-                    config.rule.push(data);
-                }
-                self.cur_ui.find('input.form-control').val(self.fillRuleResultToInput(config));
-                self.data[self.cur_ui.find('label').html()] = config;
-
-                //清空数据
-                for (var i = 0; i < dataRows; ++i) {
-                    self.$table7.row(i).remove().draw(false); 
-                }
-                $('#input7_max').val("");
-                $('#modal_rule_7').modal('hide');
-            });
-        },
-
-        fillRuleResultToInput: function(config) {
-            var str = '';
-            switch (config.type) {
-                case 1:
-                    str = "填写得分：" + config.score + "；";
-                    break;
-                case 2:
-                    str = "正确手机号得分：" + config.score + "；";
-                    break;
-                case 3:
-                    str = "正确身份证号得分：" + config.score + "；";
-                    break;
-                case 4:
-                    str = "最大分值：" + config.max + "；";
-                    for (var i = 0; i < config.rule.length; ++i) {
-                        var sub = "关键字：" + config.rule[i].key + "，得分：" + config.rule[i].score + "；";
-                        str += sub;
-                    }
-                    break;
-                case 5:
-                    str += '男：';
-                    for (var i = 0; i < config.male.length; ++i) {
-                        var sub = '';
-                        if (config.male[i].flag) {
-                            sub = '[' + config.male[i].begin + "-" + config.male[i].end + "]，得分：" + config.male[i].score + " *；";
-                        } else {
-                            sub = '[' + config.male[i].begin + "-" + config.male[i].end + "]，得分：" + config.male[i].score + "；";
-                        }
-                        str += sub;
-                    }
-                    str += '女：';
-                    for (var i = 0; i < config.female.length; ++i) {
-                        var sub = '';
-                        if (config.female[i].flag) {
-                            sub = '[' + config.female[i].begin + "-" + config.female[i].end + "]，得分：" + config.female[i].score + " *；";
-                        } else {
-                            sub = '[' + config.female[i].begin + "-" + config.female[i].end + "]，得分：" + config.female[i].score + "；";
-                        }
-                        str += sub;
-                    }
-                    break;
-                case 6:
-                    for (var i = 0; i < config.rule.length; ++i) {
-                        var sub = '';
-                        if (config.rule[i].flag) {
-                            sub = '[' + config.rule[i].begin + "-" + config.rule[i].end + "]，得分：" + config.rule[i].score + " *；";
-                        } else {
-                            sub = '[' + config.rule[i].begin + "-" + config.rule[i].end + "]，得分：" + config.rule[i].score + "；";
-                        }
-                        str += sub;
-                    }
-                    break;
-                case 7:
-                    str = "最大分值：" + config.max + "；";
-                    for (var i = 0; i < config.rule.length; ++i) {
-                        var sub = '[' + config.rule[i].begin + "-" + config.rule[i].end + "]，得分：" + config.rule[i].score + "；";
-                        str += sub;
-                    }
-                    break;
-            }
-            return str;
-        },
-
-        fillRuleToModal: function(key) {
-            var self = this;
-            var config = self.data[key];
-            if (!config) {
-                return;
-            }
-
-            switch (config.type) {
-                case 1:
-                    $('#input1_score').val(config.score);
-                    break;
-                case 2:
-                    $('#input2_score').val(config.score);
-                    break;
-                case 3:
-                    $('#input3_score').val(config.score);
-                    break;
-                case 4:
-                    $('#input4_max').val(config.max);
-                    for (var i = 0; i < config.rule.length; ++i) {
-                        self.$table4.row.add({ 'key': config.rule[i].key, 'score': config.rule[i].score }).draw(false);
-                    }
-                    break;
-                case 5:
-                    for (var i = 0; i < config.male.length; ++i) {
-                        var flag = config.male[i].flag ? '是' : '否';
-                        self.$table5.row.add({ 'sex': '男', 'begin': config.male[i].begin, 'end': config.male[i].end, 'score': config.male[i].score, 'flag': flag }).draw(false);
-                    }
-                    for (var i = 0; i < config.female.length; ++i) {
-                        var flag = config.male[i].flag ? '是' : '否';
-                        self.$table5.row.add({ 'sex': '女', 'begin': config.male[i].begin, 'end': config.male[i].end, 'score': config.male[i].score, 'flag': flag }).draw(false);
-                    }
-                    break;
-                case 6:
-                    for (var i = 0; i < config.rule.length; ++i) {
-                        var flag = config.male[i].flag ? '是' : '否';
-                        self.$table6.row.add({ 'begin': config.rule[i].begin, 'end': config.rule[i].end, 'score': config.rule[i].score, 'flag': flag }).draw(false);
-                    }
-                    break;
-                case 7:
-                    $('#input7_max').val(config.max);
-                    for (var i = 0; i < config.rule.length; ++i) {
-                        self.$table7.row.add({ 'begin': config.rule[i].begin, 'end': config.rule[i].end, 'score': config.rule[i].score }).draw(false);
-                    }
-                    break;
-            }
-        },
-
-        isInt: function(value)  {             
-            if (value.length != 0) {    
-                reg = /^[0-9]*$/;        
-                if (!reg.test(value)) {       
-                    return false;       
-                }  
-                return true;  
-            }   
-            return false; 
-        },
-
-        isPrice: function(value)  {             
-            if (value.length != 0) {    
-                reg = /(^[1-9]\d*(\.\d{1,2})?$)|(^0(\.\d{1,2})?$)/;   
-                if (!reg.test(value)) {       
-                    return false;       
-                }  
-                return true;  
-            }   
-            return false; 
-        },
-
-        isNull: function(value) {            
-            if (value.length == 0) {           
-                return true;    
-            }    
-            return false;
-        } 
+        }
     };
 
     $.fn.scorerule = function(options) {
