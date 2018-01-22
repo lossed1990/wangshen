@@ -267,26 +267,26 @@
 
 //调用示例
 $('#personal_scorerule').scorerule(['姓名','曾用名#1',...]);
-
 ```
 
 ## 五、简历模板相关接口
-### 1、新建简历模板
-URI: /resumetmpl/resumetemplates_new.page
-METHOD: FORM POST, 同步
-FORM参数:
-templatename=模板名称
-templatecover_id=模板图片id
+#### 1、新建简历模板
+#### URI: /resumetmpl/resumetemplates_new.page
+#### METHOD: FORM POST, 同步
+#### FORM参数:
+> templatename=模板名称
+
+> templatecover_id=模板图片id
 
 【结果】跳转“模板编辑界面” 
-URI: /resumetmpl/resumetemplates-edit.page
+#### URI: /resumetmpl/resumetemplates-edit.page
 
 【备注】“模板编辑界面”通过request(temp_id)，获取模板ID
 
 ### 2、启用|不启用模板（不删除简历）
-URI: /resumetmpl/resumetemplates-enable.json
-METHOD: JSON POST，异步
-JSON参数:
+#### URI: /resumetmpl/resumetemplates-enable.json
+#### METHOD: JSON POST，异步
+#### JSON参数:
 ```javascript
 {
     "temp_id"	: "xxx",
@@ -296,9 +296,9 @@ JSON参数:
 //反馈参数：公共结构
 
 ### 3、修改模板模块
-URI: /resumetmpl/resumetemplates-part-save.json
-METHOD: JSON POST，异步
-JSON参数:
+#### URI: /resumetmpl/resumetemplates-part-save.json
+#### METHOD: JSON POST，异步
+#### JSON参数:
 ```javascript
 {
     "temp_id"	:"xxxxx",
@@ -309,40 +309,40 @@ JSON参数:
 //反馈参数：公共结构
 
 ### 4、删除模板（同时删除相关简历）
-URI: /resumetmpl/resumetemplates-purgeremove.json
-METHOD: GET，异步
-GET参数:
-temp_id=模板id
+#### URI: /resumetmpl/resumetemplates-purgeremove.json
+#### METHOD: GET，异步
+#### GET参数:
+> temp_id=模板id
 
 //反馈参数：公共结构
 
 ### 5、获取所有模板（概览）
-URI: /resumetmpl/resumetemplates-list.page
-METHOD: GET，同步
-GET参数:无
+#### URI: /resumetmpl/resumetemplates-list.page
+#### METHOD: GET，同步
+#### GET参数:无
 【结果】跳转“模板列表界面” 
 
 ### 6、获取模板详情
-URI: /resumetmpl/resumetemplates-detail.json
-METHOD: GET，异步
-GET参数:
-temp_id=模板id
+#### URI: /resumetmpl/resumetemplates-detail.json
+#### METHOD: GET，异步
+#### GET参数:
+> temp_id=模板id
 
 //反馈参数：公共结构，result字段为模板json
 
 ## 六、简历相关接口
 ### 1、删除简历
-URI: /resume/resume-remove.json
-METHOD: GET，异步
-GET参数:
-resume_id=简历guid
+#### URI: /resume/resume-remove.json
+#### METHOD: GET，异步
+#### GET参数:
+> resume_id=简历guid
 
 //反馈参数：公共结构
 
 ### 2、保存简历某一模块
-URI: /resume/resume-part-save.json
-METHOD: JSON POST，异步
-JSON 参数:
+#### URI: /resume/resume-part-save.json
+#### METHOD: JSON POST，异步
+#### JSON 参数:
 ```javascript
 {
     "resume_id"		:"xxxxx-x-xxx",
@@ -353,19 +353,20 @@ JSON 参数:
 //反馈参数：公共结构
 
 ### 3、获取简历某一模块详情
-URI: /resume/resume-part-detail.json
-METHOD: GET，异步
-GET参数:
-resume_id=简历guid
-section_name=模块名称
+#### URI: /resume/resume-part-detail.json
+#### METHOD: GET，异步
+#### GET参数:
+> resume_id=简历guid
+
+> section_name=模块名称
 
 //反馈参数：公共结构, result字段为简历对应模块json
 
 ### 4、获取简历详情
-URI: /resume/resume-view.page
-METHOD: GET，同步
-GET参数:
-resume_id=简历guid
+#### URI: /resume/resume-view.page
+#### METHOD: GET，同步
+#### GET参数:
+> resume_id=简历guid
 
 【结果】跳转“简历预览界面” 
 
