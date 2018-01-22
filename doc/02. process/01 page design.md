@@ -546,112 +546,78 @@ $('#personal_scorerule').scorerule(['姓名','曾用名#1',...]);
 ## 八、简历模板规则json协议
 ```javascript
 {
-    "baseinfo":{
-        "show":true,
-        "max":121,
-        "keys":[
+  "baseinfo": {
+    "show": true,
+    "max": 121,
+    "keys": [
+      {
+        "keypath": "baseinfo.name",
+        "enable": true,
+        "judge": {
+          "name": "是否填写",
+          "type": 1,
+          "score": 1
+        }
+      },
+      {
+        "keypath": "baseinfo.mobile",
+        "enable": true,
+        "judge": {
+          "name": "是否填写",
+          "type": 1,
+          "score": 1
+        }
+      }
+    ]
+  },
+  "education": {
+    "show": true,
+    "max": 12,
+    "keys": [
+      {
+        "keypath": "education.gaokao_point",
+        "enable": true,
+        "judge": {
+          "name": "分数",
+          "type": 8,
+          "rule": [
             {
-                "key":"name",
-                "enable":true,
-                "judge":{xxx}
+              "begin": 0,
+              "end": 150,
+              "score": 0
             },
             {
-                "key":"old_name",
-                 "enable":true,
-                "judge":{}
+              "begin": 150,
+              "end": 300,
+              "score": 1
+            }
+          ],
+          "max": 5
+        }
+      },
+      {
+        "keypath": "education.edu_history.scores.score",
+        "enable": true,
+        "judge": {
+          "name": "分数",
+          "type": 8,
+          "rule": [
+            {
+              "begin": 0,
+              "end": 150,
+              "score": 0
             },
-            ......
-        ]
-    },
-    "education":{
-        "show":true,
-        "max":121,
-        "keys":[]
-    },
-    "rewards":{
-        "show":true,
-        "max":121,
-        "keys":[] 
-    },
-    "language":{
-        "show":true,
-        "max":121,
-        "keys":[]
-    },
-    "computer":{
-        "show":true,
-        "max":121,
-        "keys":[]
-    },
-    "student_ganbu":{
-        "show":true,
-        "max":121,
-        "keys":[]
-    },
-    "trainning":{
-        "show":true,
-        "max":121,
-        "keys":[]
-    },
-     "shijian":{
-        "show":true,
-        "max":121,
-        "keys":[]
-    },
-    "shixi":{
-        "show":true,
-        "max":121,
-        "keys":[]
-    },
-    "zigezhengshu":{
-        "show":true,
-        "max":121,
-        "keys":[]
-    },
-    "family":{
-        "show":true,
-        "max":121,
-        "keys":[]
-    },
-    "dissertation":{
-        "show":true,
-        "max":121,
-        "keys":[]
-    },
-    "workplan":{
-        "show":true,
-        "max":121,
-        "keys":[]
-    },
-    "selfjudge":{
-        "show":true,
-        "max":121,
-        "keys":[]
-    },
-    "speciality":{
-        "show":true,
-        "max":121,
-        "keys":[]
-    },
-    "selfrecomadation":{
-        "show":true,
-        "max":121,
-        "keys":[]
-    },
-    "otherinfo":{
-        "show":true,
-        "max":121,
-        "keys":[]
-    },
-    "targetbank":{
-        "show":true,
-        "max":121,
-        "keys":[]
-    },
-    "promise":{
-        "show":true,
-        "max":121,
-        "keys":[]
-    }
+            {
+              "begin": 150,
+              "end": 300,
+              "score": 1
+            }
+          ],
+          "max": 5
+        }
+      }
+    ]
+  }
+....
 }
 ```
