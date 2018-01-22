@@ -32,6 +32,77 @@ if (typeof Object.create !== 'function') {
         return false;
     } 
 
+    function formatTipString(config) {            
+        if (!config || !config.type) {
+            return '';
+        }
+
+        switch (config.type) {
+            case 1:
+                var str = "填写得分：" + config.score + "；";
+                return str;
+            case 2:
+                var str = "正确手机号得分：" + config.score + "；";
+                return str;
+            case 3:
+                var str = "正确身份证号得分：" + config.score + "；";
+                return str;
+            case 4:
+                var str = "最大分值：" + config.max + "；";
+                for (var i = 0; i < config.rule.length; ++i) {
+                    var sub = "关键字：" + config.rule[i].key + "，得分：" + config.rule[i].score + "；";
+                    str += sub;
+                }
+
+                return str;
+            case 5:
+                var str = "";
+                str += '男：';
+                for (var i = 0; i < config.male.length; ++i) {
+                    var sub = '';
+                    if (config.male[i].flag) {
+                        sub = '[' + config.male[i].begin + "-" + config.male[i].end + "]，得分：" + config.male[i].score + " *；";
+                    } else {
+                        sub = '[' + config.male[i].begin + "-" + config.male[i].end + "]，得分：" + config.male[i].score + "；";
+                    }
+                    str += sub;
+                }
+                str += '女：';
+                for (var i = 0; i < config.female.length; ++i) {
+                    var sub = '';
+                    if (config.female[i].flag) {
+                        sub = '[' + config.female[i].begin + "-" + config.female[i].end + "]，得分：" + config.female[i].score + " *；";
+                    } else {
+                        sub = '[' + config.female[i].begin + "-" + config.female[i].end + "]，得分：" + config.female[i].score + "；";
+                    }
+                    str += sub;
+                }
+
+                return str;
+            case 6:
+                var str = "";
+                for (var i = 0; i < config.rule.length; ++i) {
+                    var sub = '';
+                    if (config.rule[i].flag) {
+                        sub = '[' + config.rule[i].begin + "-" + config.rule[i].end + "]，得分：" + config.rule[i].score + " *；";
+                    } else {
+                        sub = '[' + config.rule[i].begin + "-" + config.rule[i].end + "]，得分：" + config.rule[i].score + "；";
+                    }
+                    str += sub;
+                }
+                return str;
+            case 7:
+                var str = "最大分值：" + config.max + "；";
+                for (var i = 0; i < config.rule.length; ++i) {
+                    var sub = '[' + config.rule[i].begin + "-" + config.rule[i].end + "]，得分：" + config.rule[i].score + "；";
+                    str += sub;
+                }
+                return str;
+            default:
+                return '';
+        }
+    }
+
     var Modal1 = {
         init: function() {
             var self = this;
@@ -113,7 +184,7 @@ if (typeof Object.create !== 'function') {
                 }
 
                 var config = self.formatConfig(score);
-                var tip = self.formatTipString(config);
+                var tip = formatTipString(config);
                 self.onSave(config, tip);
                 self.hideModal();
             }
@@ -133,11 +204,6 @@ if (typeof Object.create !== 'function') {
                 "score": score
             };
             return config;
-        },
-
-        formatTipString: function(config) {
-            var str = "填写得分：" + config.score + "；";
-            return str;
         }
     };
 
@@ -222,7 +288,7 @@ if (typeof Object.create !== 'function') {
                 }
 
                 var config = self.formatConfig(score);
-                var tip = self.formatTipString(config);
+                var tip = formatTipString(config);
                 self.onSave(config, tip);
                 self.hideModal();
             }
@@ -242,11 +308,6 @@ if (typeof Object.create !== 'function') {
                 "score": score
             };
             return config;
-        },
-
-        formatTipString: function(config) {
-            var str = "正确手机号得分：" + config.score + "；";
-            return str;
         }
     };
 
@@ -331,7 +392,7 @@ if (typeof Object.create !== 'function') {
                 }
 
                 var config = self.formatConfig(score);
-                var tip = self.formatTipString(config);
+                var tip = formatTipString(config);
                 self.onSave(config, tip);
                 self.hideModal();
             }
@@ -351,11 +412,6 @@ if (typeof Object.create !== 'function') {
                 "score": score
             };
             return config;
-        },
-
-        formatTipString: function(config) {
-            var str = "正确身份证号得分：" + config.score + "；";
-            return str;
         }
     };
 
@@ -492,7 +548,7 @@ if (typeof Object.create !== 'function') {
             self.$modal.modal('hide');
         },
 
-        addItemData:function() {
+        addItemData: function() {
             var self = this;
             var key = self.$key_input.val().trim();
             var score = self.$score_input.val().trim();
@@ -532,7 +588,7 @@ if (typeof Object.create !== 'function') {
                 }
 
                 var config = self.formatConfig(max);
-                var tip = self.formatTipString(config);
+                var tip = formatTipString(config);
                 self.onSave(config, tip);
                 self.hideModal();
             }
@@ -562,16 +618,6 @@ if (typeof Object.create !== 'function') {
                 config.rule.push(self.$table.row(i).data());
             }
             return config;
-        },
-
-        formatTipString: function(config) {
-            var str = "最大分值：" + config.max + "；";
-            for (var i = 0; i < config.rule.length; ++i) {
-                var sub = "关键字：" + config.rule[i].key + "，得分：" + config.rule[i].score + "；";
-                str += sub;
-            }
-
-            return str;
         }
     };
 
@@ -728,7 +774,7 @@ if (typeof Object.create !== 'function') {
             self.$modal.modal('hide');
         },
 
-        addItemData:function() {
+        addItemData: function() {
             var self = this;
 
             var sex = self.$sex_select.val().trim();
@@ -777,7 +823,7 @@ if (typeof Object.create !== 'function') {
             var self = this;
             if (self.onSave) {
                 var config = self.formatConfig();
-                var tip = self.formatTipString(config);
+                var tip = formatTipString(config);
                 self.onSave(config, tip);
                 self.hideModal();
             }
@@ -821,32 +867,6 @@ if (typeof Object.create !== 'function') {
                 }
             }
             return config;
-        },
-
-        formatTipString: function(config) {
-            var str = "";
-            str += '男：';
-            for (var i = 0; i < config.male.length; ++i) {
-                var sub = '';
-                if (config.male[i].flag) {
-                    sub = '[' + config.male[i].begin + "-" + config.male[i].end + "]，得分：" + config.male[i].score + " *；";
-                } else {
-                    sub = '[' + config.male[i].begin + "-" + config.male[i].end + "]，得分：" + config.male[i].score + "；";
-                }
-                str += sub;
-            }
-            str += '女：';
-            for (var i = 0; i < config.female.length; ++i) {
-                var sub = '';
-                if (config.female[i].flag) {
-                    sub = '[' + config.female[i].begin + "-" + config.female[i].end + "]，得分：" + config.female[i].score + " *；";
-                } else {
-                    sub = '[' + config.female[i].begin + "-" + config.female[i].end + "]，得分：" + config.female[i].score + "；";
-                }
-                str += sub;
-            }
-
-            return str;
         }
     };
 
@@ -992,7 +1012,7 @@ if (typeof Object.create !== 'function') {
             self.$modal.modal('hide');
         },
 
-        addItemData:function() {
+        addItemData: function() {
             var self = this;
 
             var begin = self.$begin_input.val().trim();
@@ -1040,7 +1060,7 @@ if (typeof Object.create !== 'function') {
             var self = this;
             if (self.onSave) {
                 var config = self.formatConfig();
-                var tip = self.formatTipString(config);
+                var tip = formatTipString(config);
                 self.onSave(config, tip);
                 self.hideModal();
             }
@@ -1071,20 +1091,6 @@ if (typeof Object.create !== 'function') {
                 config.rule.push(data);
             }
             return config;
-        },
-
-        formatTipString: function(config) {
-            var str = "";
-            for (var i = 0; i < config.rule.length; ++i) {
-                var sub = '';
-                if (config.rule[i].flag) {
-                    sub = '[' + config.rule[i].begin + "-" + config.rule[i].end + "]，得分：" + config.rule[i].score + " *；";
-                } else {
-                    sub = '[' + config.rule[i].begin + "-" + config.rule[i].end + "]，得分：" + config.rule[i].score + "；";
-                }
-                str += sub;
-            }
-            return str;
         }
     };
 
@@ -1225,7 +1231,7 @@ if (typeof Object.create !== 'function') {
             self.$modal.modal('hide');
         },
 
-        addItemData:function() {
+        addItemData: function() {
             var self = this;
 
             var begin = self.$begin_input.val().trim();
@@ -1283,7 +1289,7 @@ if (typeof Object.create !== 'function') {
                 }
 
                 var config = self.formatConfig(max);
-                var tip = self.formatTipString(config);
+                var tip = formatTipString(config);
                 self.onSave(config, tip);
                 self.hideModal();
             }
@@ -1292,7 +1298,7 @@ if (typeof Object.create !== 'function') {
         fillData: function(config) {
             var self = this;
             if (config && config.type == 7) {
-                if(config.max){
+                if (config.max) {
                     self.$max_input.val(config.max);
                 }
                 for (var i = 0; i < config.rule.length; ++i) {
@@ -1316,46 +1322,82 @@ if (typeof Object.create !== 'function') {
                 config.rule.push(data);
             }
             return config;
-        },
-
-        formatTipString: function(config) {
-            var str = "最大分值：" + config.max + "；";
-            for (var i = 0; i < config.rule.length; ++i) {
-                var sub = '[' + config.rule[i].begin + "-" + config.rule[i].end + "]，得分：" + config.rule[i].score + "；";
-                str += sub;
-            }
-            return str;
         }
     };
 
-    var ScoreRule = {
+    var SubModule = {
         init: function(options, elem) {
             var self = this;
             self.elem = elem;
             self.$elem = $(elem);
             self.options = options;
-            self.data = {};
-            self.initializeScoreRule();
+            self.data = {
+                "show": true,
+                "max": 0,
+                "keys": []
+            };
+            self.initializeSubModule();
         },
 
-        initializeScoreRule: function() {
+        initializeSubModule: function() {
             var self = this;
-            self.createModle();
-            self.createElem();
-            self.setTrigger();
+            self.createHead();
+            self.createBody();
         },
 
-        createElem: function() {
+        createHead: function() {
+            var self = this;
+            var strHtml = '<div class="col-md-12 col-sm-12 col-xs-12">\
+                                <div class="x_panel">\
+                                    <div class="x_title">\
+                                        <h2>' + self.options.title + ' <small>  </small></h2>\
+                                        <div class="clearfix"></div>\
+                                    </div>\
+                                    <div class="x_content">\
+                                        <h5><span class="fa fa-edit">&nbsp;&nbsp;模块基础设置</span></h5>\
+                                        <div class="form-horizontal form-label-left">\
+                                            <div class="form-group">\
+                                                <div class="col-md-2 col-sm-2 col-xs-12">\
+                                                    <input class="check_grey" type="checkbox" checked="" required />\
+                                                    <label class="control-label">启用模块</label>\
+                                                </div>\
+                                                <div class="col-md-1 col-sm-1 col-xs-12">\
+                                                    <label class="control-label">最大分值</label>\
+                                                </div>\
+                                                <div class="col-md-3 col-sm-3 col-xs-12">\
+                                                    <input type="text" class="form-control" placeholder="">\
+                                                </div>\
+                                            </div>\
+                                        </div>\
+                                        </br>\
+                                        <h5><span class="fa fa-edit">&nbsp;&nbsp;字段规则设置</span></h5>\
+                                        <div class="form-horizontal form-label-left" id="' + self.options.name + '">\
+                                        </div>\
+                                        <div class="form-horizontal form-label-left">\
+                                            <div class="form-group" >\
+                                                <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-2" >\
+                                                    <button type="submit" class="btn btn-primary" >保存</button>\
+                                                </div >\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                </div>\
+                            </div>';
+
+            self.$elem.append(strHtml);
+            self.$elembody = $('#' + self.options.name);
+        },
+
+        createBody: function() {
             var self = this;
             //清空
-            self.$elem.html("");
+            //self.$elem.html("");
             //构建
             var strHtml = '';
-            for (var i = 0; i < self.options.length; i++) {
+            for (var i = 0; i < self.options.keys.length; i++) {
                 var option = '';
-                var tempArray = self.options[i].split('#');
-                if (tempArray.length > 1) {
-                    var keyArray = tempArray[1].split(',');
+                if (self.options.keys[i].ruletype != '') {
+                    var keyArray = self.options.keys[i].ruletype.split(',');
                     for (var j = 0; j < keyArray.length; j++) {
                         switch (keyArray[j]) {
                             case '1':
@@ -1386,10 +1428,10 @@ if (typeof Object.create !== 'function') {
                     option += '<li><a class="rule-select">关键字规则</a></li>';
                 }
 
-                var strSubHtml = '<div class="form-group">\
+                var strSubHtml = '<div class="form-group" id="' + self.options.keys[i].keypath + '">\
                                     <div class="col-md-2 col-sm-2 col-xs-12">\
                                         <input class="check_grey" type="checkbox" checked="" required />\
-                                        <label class="control-label">' + tempArray[0] + '</label>\
+                                        <label class="control-label">' + self.options.keys[i].label + '</label>\
                                     </div>\
                                     <div class="col-md-1 col-sm-1 col-xs-12">\
                                         <div class="dropdown">\
@@ -1404,9 +1446,164 @@ if (typeof Object.create !== 'function') {
                                     </div>\
                                 </div>';
                 strHtml = strHtml + strSubHtml;
-                self.data[tempArray[0]] = {};
+                //self.data[tempArray[0]] = {};
             }
-            self.$elem.html(strHtml);
+            self.$elembody.html(strHtml);
+        },
+
+
+
+        getSubName: function() {
+            var self = this;
+            return self.options.name;
+        },
+
+        setTempData: function(data) {
+            var self = this;
+            self.data = data;
+
+            //todo: 上数据，1、设置模块是否启用及最大值；2、更新keys；（根据keypath寻找）
+
+            for (var i = 0; i < self.data.keys.length; ++i) {
+                var tip = formatTipString(self.data.keys[i].judge);
+                console.log('setTempData:' + self.data.keys[i]['keypath']);
+                console.log($('#' + self.data.keys[i]['keypath']));
+                console.log($('#' + self.data.keys[i]['keypath']).find('input'));
+                $('#' + self.data.keys[i]['keypath']).find('input').val(tip);
+            }
+        },
+
+        //通过keypath,查找当前点击项的配置信息
+        findJudgeInfo: function(keypath) {
+            var self = this;
+            for (var i = 0; i < self.data.keys.length; ++i) {
+                if (keypath == self.data.keys[i]['keypath']) {
+                    console.log('findJudgeInfo:' + self.data.keys[i].judge);
+                    return self.data.keys[i].judge;
+                }
+            }
+
+            console.log('findJudgeInfo: not find');
+            return null;
+        },
+
+        //通过keypath,保存当前点击项的配置信息
+        saveJudgeInfo: function(keypath, enable, config) {
+            var self = this;
+
+            var isHaving = false;
+            for (var i = 0; i < self.data.keys.length; ++i) {
+                if (keypath == self.data.keys[i].keypath) {
+                    self.data.keys[i].judge = config;
+                    isHaving = true;
+                    break;
+                }
+            }
+
+            if (!isHaving) {
+                var sub = {
+                    "keypath": keypath,
+                    "enable": enable,
+                    "judge": config
+                };
+                self.data.keys.push(sub);
+            }
+
+            console.log('saveJudgeInfo:' + JSON.stringify(self.data));
+        },
+
+        submitData: function() {
+            var self = this;
+
+            //todo： 提交self.data
+            console.log(self.data);
+        }
+    };
+
+    var Manager = {
+        init: function(elem) {
+            var self = this;
+            self.elem = elem;
+            self.$elem = $(elem);
+            self.subs = [];
+            self.requestTempId();
+            self.initUI();
+        },
+
+        //获取模板ID
+        requestTempId: function() {
+            var self = this;
+            self.tempid = null; //模板id
+        },
+
+        //初始化设置界面
+        initUI: function() {
+            var self = this;
+
+            var subModule = Object.create(SubModule);
+            subModule.init($.fn.scorerule.baseinfo, self.elem);
+            self.subs.push(subModule);
+
+            subModule = Object.create(SubModule);
+            subModule.init($.fn.scorerule.education, self.elem);
+            self.subs.push(subModule);
+
+            self.createModle();
+            self.setTrigger();
+            self.requestTempData();
+        },
+
+        //获取模板详情
+        requestTempData: function() {
+            var self = this;
+
+            //todo:test
+            var data = {
+                "baseinfo": {
+                    "show": true,
+                    "max": 121,
+                    "keys": [{
+                            "keypath": "baseinfo-name",
+                            "enable": true,
+                            "judge": {
+                                "name": "是否填写",
+                                "type": 1,
+                                "score": 1
+                            }
+                        },
+                        {
+                            "keypath": "baseinfo-old_name",
+                            "enable": true,
+                            "judge": {
+                                "name": "是否填写",
+                                "type": 1,
+                                "score": 1
+                            }
+                        }
+                    ]
+                }
+            };
+            self.setTempData(data);
+
+            // $.getJSON("XXX.ftl?temp_id=XXX", function(data){
+            //     // $.each(data.items, function(i,item){
+            //     //     $("<img/>").attr("src", item.media.m).appendTo("#images");
+            //     //     if ( i == 3 ) return false;
+            //     // });
+            //     self.setTempData(data);
+            // });
+        },
+
+        //刷新模板界面
+        setTempData: function(data) {
+            var self = this;
+            //按模块名称，设置各模块数据
+            for (var i = 0; i < self.subs.length; ++i) {
+                var subName = self.subs[i].getSubName();
+                if (data[subName]) {
+                    self.subs[i].setTempData(data[subName]);
+                }
+            }
         },
 
         createModle: function() {
@@ -1419,16 +1616,16 @@ if (typeof Object.create !== 'function') {
 
             self.modal_3 = Object.create(Modal3);
             self.modal_3.init();
-            
+
             self.modal_4 = Object.create(Modal4);
             self.modal_4.init();
-            
+
             self.modal_5 = Object.create(Modal5);
             self.modal_5.init();
 
             self.modal_6 = Object.create(Modal6);
             self.modal_6.init();
-            
+
             self.modal_7 = Object.create(Modal7);
             self.modal_7.init();
         },
@@ -1441,63 +1638,266 @@ if (typeof Object.create !== 'function') {
                 var type = 0;
                 self.cur_ui = $(this).parent().parent().parent().parent().parent();
 
-                var keyconfig = self.data[self.cur_ui.find('label').html()];
+                //todo: 上数据
+                //var keyconfig = null;// self.data[self.cur_ui.find('label').html()];
+                var keyconfig = self.findJudgeInfo(self.cur_ui.attr("id"));
+                console.log(self.cur_ui.attr("id"));
+                console.log(keyconfig);
 
                 switch (str) {
                     case '是否填写规则':
                         self.modal_1.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
-                            self.data[self.cur_ui.find('label').html()] = config;
+                            self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
+                            //self.data[self.cur_ui.find('label').html()] = config;
                         }, keyconfig);
                         break;
                     case '手机号规则':
                         self.modal_2.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
-                            self.data[self.cur_ui.find('label').html()] = config;
+                            self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
+                            //self.data[self.cur_ui.find('label').html()] = config;
                         }, keyconfig);
                         break;
                     case '身份证规则':
                         self.modal_3.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
-                            self.data[self.cur_ui.find('label').html()] = config;
+                            self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
+                            //self.data[self.cur_ui.find('label').html()] = config;
                         }, keyconfig);
                         break;
                     case '关键字规则':
                         self.modal_4.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
-                            self.data[self.cur_ui.find('label').html()] = config;
+                            self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
+                            //self.data[self.cur_ui.find('label').html()] = config;
                         }, keyconfig);
                         break;
                     case '身高规则':
                         self.modal_5.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
-                            self.data[self.cur_ui.find('label').html()] = config;
+                            self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
+                            //self.data[self.cur_ui.find('label').html()] = config;
                         }, keyconfig);
                         break;
                     case '体重规则':
                         self.modal_6.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
-                            self.data[self.cur_ui.find('label').html()] = config;
+                            self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
+                            //self.data[self.cur_ui.find('label').html()] = config;
                         }, keyconfig);
                         break;
                     case '字数规则':
                         self.modal_7.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
-                            self.data[self.cur_ui.find('label').html()] = config;
+                            self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
+                            //self.data[self.cur_ui.find('label').html()] = config;
                         }, keyconfig);
                         break;
                 }
             });
+        },
+
+        //通过keypath,查找当前点击项的配置信息
+        findJudgeInfo: function(keypath) {
+            var self = this;
+
+            for (var i = 0; i < self.subs.length; ++i) {
+                var subName = self.subs[i].getSubName();
+                var KeyArray = keypath.split(".");
+                if (subName == KeyArray[0]) {
+                    return self.subs[i].findJudgeInfo(keypath);
+                }
+            }
+
+            return null;
+        },
+
+        //通过keypath,保存当前点击项的配置信息
+        saveJudgeInfo: function(keypath, enable, config) {
+            var self = this;
+
+            for (var i = 0; i < self.subs.length; ++i) {
+                var subName = self.subs[i].getSubName();
+                var KeyArray = keypath.split(".");
+                if (subName == KeyArray[0]) {
+                    self.subs[i].saveJudgeInfo(keypath, enable, config);
+                    break;
+                }
+            }
         }
     };
 
-    $.fn.scorerule = function(options) {
-        if ($.isArray(options)) {
-            return this.each(function() {
-                var scoreruleObj = Object.create(ScoreRule);
-                scoreruleObj.init(options, this);
-            });
-        }
+
+    // $.fn.scorerule = function(options) {
+    //     if ($.isArray(options)) {
+    //         return this.each(function() {
+    //             var scoreruleObj = Object.create(Manager);
+    //             scoreruleObj.init(options, this);
+    //         });
+    //     }
+    // };
+
+    $.fn.scorerule = function() {
+        return this.each(function() {
+            var scoreruleObj = Object.create(Manager);
+            scoreruleObj.init(this);
+        });
     };
 
+    $.fn.scorerule.baseinfo = {
+        "name": "baseinfo",
+        "title": "个人基础信息",
+        "keys": [{
+            "label": "姓名",
+            "ruletype": "1,7",
+            "keypath": "baseinfo-name"
+        }, {
+            "label": "曾用名",
+            "ruletype": "",
+            "keypath": "baseinfo-old_name"
+        }, {
+            "label": "性别",
+            "ruletype": "",
+            "keypath": "baseinfo.sex"
+        }, {
+            "label": "出生年月",
+            "ruletype": "",
+            "keypath": "baseinfo.birth_date"
+        }, {
+            "label": "民族",
+            "ruletype": "",
+            "keypath": "baseinfo.nation"
+        }, {
+            "label": "籍贯",
+            "ruletype": "",
+            "keypath": "baseinfo.birthplace"
+        }, {
+            "label": "政治面貌",
+            "ruletype": "",
+            "keypath": "baseinfo.party"
+        }, {
+            "label": "入党团时间",
+            "ruletype": "",
+            "keypath": "baseinfo.party_entry_date"
+        }, {
+            "label": "身高",
+            "ruletype": "1,5",
+            "keypath": "baseinfo.height_cm"
+        }, {
+            "label": "体重",
+            "ruletype": "1,6",
+            "keypath": "baseinfo.weight_kg"
+        }, {
+            "label": "血型",
+            "ruletype": "",
+            "keypath": "baseinfo.bloodtype"
+        }, {
+            "label": "婚姻状况",
+            "ruletype": "",
+            "keypath": "baseinfo.marrage"
+        }, {
+            "label": "生育状况",
+            "ruletype": "",
+            "keypath": "baseinfo.have_kid"
+        }, {
+            "label": "健康状况",
+            "ruletype": "",
+            "keypath": "baseinfo.heath"
+        }, {
+            "label": "生源地",
+            "ruletype": "",
+            "keypath": "baseinfo.gaokao_place"
+        }, {
+            "label": "现居住地",
+            "ruletype": "",
+            "keypath": "baseinfo.living_place"
+        }, {
+            "label": "通讯地址",
+            "ruletype": "",
+            "keypath": "baseinfo.address"
+        }, {
+            "label": "家庭地址",
+            "ruletype": "",
+            "keypath": "baseinfo.home_address"
+        }, {
+            "label": "户口所在地",
+            "ruletype": "",
+            "keypath": "baseinfo.hukou_place"
+        }, {
+            "label": "户口类别",
+            "ruletype": "",
+            "keypath": "baseinfo.hukou_type"
+        }, {
+            "label": "毕业时间",
+            "ruletype": "",
+            "keypath": "baseinfo.graduate_date"
+        }, {
+            "label": "参加工作时间",
+            "ruletype": "",
+            "keypath": "baseinfo.work_date"
+        }, {
+            "label": "证件类型",
+            "ruletype": "",
+            "keypath": "baseinfo.idcard_type"
+        }, {
+            "label": "证件号",
+            "ruletype": "1,3,4",
+            "keypath": "baseinfo.idcard_num"
+        }, {
+            "label": "移动电话",
+            "ruletype": "1,2,4",
+            "keypath": "baseinfo.mobile"
+        }, {
+            "label": "固定电话",
+            "ruletype": "",
+            "keypath": "baseinfo.fix_phone"
+        }, {
+            "label": "E-mail",
+            "ruletype": "",
+            "keypath": "baseinfo.email"
+        }, {
+            "label": "紧急联系人",
+            "ruletype": "",
+            "keypath": "baseinfo.emergency_contact"
+        }, {
+            "label": "紧急联系人电话",
+            "ruletype": "",
+            "keypath": "baseinfo.emergency_phone"
+        }, {
+            "label": "免冠一寸照",
+            "ruletype": "",
+            "keypath": "baseinfo.head_pic"
+        }, {
+            "label": "近期生活照",
+            "ruletype": "",
+            "keypath": "baseinfo.live_pic"
+        }, {
+            "label": "学生证照片",
+            "ruletype": "",
+            "keypath": "baseinfo.student_pic"
+        }]
+    };
+
+    $.fn.scorerule.education = {
+        "name": "education",
+        "title": "教育背景",
+        "keys": [{
+            "label": "起始日期",
+            "ruletype": "1,7",
+            "keypath": "baseinfo.name"
+        }, {
+            "label": "结束日期",
+            "ruletype": "",
+            "keypath": "baseinfo.old_name"
+        }, {
+            "label": "阶段",
+            "ruletype": "",
+            "keypath": "baseinfo.sex"
+        }, {
+            "label": "省份",
+            "ruletype": "",
+            "keypath": "baseinfo.birth_date"
+        }]
+    };
 })(jQuery, window, document);
