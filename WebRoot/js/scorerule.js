@@ -1358,14 +1358,14 @@ if (typeof Object.create !== 'function') {
                                         <div class="form-horizontal form-label-left">\
                                             <div class="form-group">\
                                                 <div class="col-md-2 col-sm-2 col-xs-12">\
-                                                    <input class="check_grey" type="checkbox" checked="" required />\
+                                                    <input class="check_grey ' + self.options.name + '" type="checkbox" checked="" required />\
                                                     <label class="control-label">启用模块</label>\
                                                 </div>\
                                                 <div class="col-md-1 col-sm-1 col-xs-12">\
                                                     <label class="control-label">最大分值</label>\
                                                 </div>\
                                                 <div class="col-md-3 col-sm-3 col-xs-12">\
-                                                    <input type="text" class="form-control" placeholder="">\
+                                                    <input type="text" class="form-control ' + self.options.name + '" placeholder="">\
                                                 </div>\
                                             </div>\
                                         </div>\
@@ -1376,7 +1376,7 @@ if (typeof Object.create !== 'function') {
                                         <div class="form-horizontal form-label-left">\
                                             <div class="form-group" >\
                                                 <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-2" >\
-                                                    <button type="submit" class="btn btn-primary" >保存</button>\
+                                                    <button class="btn btn-primary btn-save-rules" data="' + self.options.name + '">保存</button>\
                                                 </div >\
                                             </div>\
                                         </div>\
@@ -1462,13 +1462,17 @@ if (typeof Object.create !== 'function') {
             var self = this;
             self.data = data;
 
-            //todo: 上数据，1、设置模块是否启用及最大值；2、更新keys；（根据keypath寻找）
-
+            //设置模块是否启用及最大值；
+            if (self.data.show) {
+                $('input.check_grey.' + self.options.name).iCheck('check');
+            } else {
+                $('input.check_grey.' + self.options.name).iCheck('uncheck');
+            }
+            $('input.form-control.' + self.options.name).val(self.data.max);
+            //更新keys；（根据keypath寻找）
             for (var i = 0; i < self.data.keys.length; ++i) {
                 var tip = formatTipString(self.data.keys[i].judge);
                 console.log('setTempData:' + self.data.keys[i]['keypath']);
-                console.log($('#' + self.data.keys[i]['keypath']));
-                console.log($('#' + self.data.keys[i]['keypath']).find('input'));
                 $('#' + self.data.keys[i]['keypath']).find('input').val(tip);
             }
         },
@@ -1560,7 +1564,7 @@ if (typeof Object.create !== 'function') {
             //todo:test
             var data = {
                 "baseinfo": {
-                    "show": true,
+                    "show": false,
                     "max": 121,
                     "keys": [{
                             "keypath": "baseinfo-name",
@@ -1638,62 +1642,61 @@ if (typeof Object.create !== 'function') {
                 var type = 0;
                 self.cur_ui = $(this).parent().parent().parent().parent().parent();
 
-                //todo: 上数据
-                //var keyconfig = null;// self.data[self.cur_ui.find('label').html()];
                 var keyconfig = self.findJudgeInfo(self.cur_ui.attr("id"));
-                console.log(self.cur_ui.attr("id"));
-                console.log(keyconfig);
-
                 switch (str) {
                     case '是否填写规则':
                         self.modal_1.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
+                            //todo:是否启用值
                             self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
-                            //self.data[self.cur_ui.find('label').html()] = config;
                         }, keyconfig);
                         break;
                     case '手机号规则':
                         self.modal_2.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
                             self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
-                            //self.data[self.cur_ui.find('label').html()] = config;
                         }, keyconfig);
                         break;
                     case '身份证规则':
                         self.modal_3.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
                             self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
-                            //self.data[self.cur_ui.find('label').html()] = config;
                         }, keyconfig);
                         break;
                     case '关键字规则':
                         self.modal_4.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
                             self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
-                            //self.data[self.cur_ui.find('label').html()] = config;
                         }, keyconfig);
                         break;
                     case '身高规则':
                         self.modal_5.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
                             self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
-                            //self.data[self.cur_ui.find('label').html()] = config;
                         }, keyconfig);
                         break;
                     case '体重规则':
                         self.modal_6.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
                             self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
-                            //self.data[self.cur_ui.find('label').html()] = config;
                         }, keyconfig);
                         break;
                     case '字数规则':
                         self.modal_7.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
                             self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
-                            //self.data[self.cur_ui.find('label').html()] = config;
                         }, keyconfig);
                         break;
+                }
+            });
+
+            $(".btn-save-rules").click(function() {
+                for (var i = 0; i < self.subs.length; ++i) {
+                    var subName = self.subs[i].getSubName();
+                    if (subName == $(this).attr('data')) {
+                        self.subs[i].submitData();
+                        break;
+                    }
                 }
             });
         },
@@ -1900,4 +1903,11 @@ if (typeof Object.create !== 'function') {
             "keypath": "baseinfo.birth_date"
         }]
     };
+
+
+    //todo:1、点击保存的时候，根据模块是否启用及最大值，验证最大值数据是否合法；更新缓存；提交数据；
+    //     2、监听每个字段的checkbox，实时修改缓存数据；
+    //     3、完善整体模板数据获取接口；
+    //     4、完善模板提交接口；
+    //     5、完善其余模块；
 })(jQuery, window, document);
