@@ -30,9 +30,9 @@
                 <ul class="nav side-menu">
                     <li><a><i class="fa fa-home"></i> 系统管理 <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                            <li><a href="index.html">学员简历信息浏览</a></li>
-                            <li><a href="index2.html">银行简历模板配置</a></li>
-                            <li><a href="index2.html">广告展示内容配置</a></li>
+                            <li><a href="${path}/resume/resume-list.page">学员简历信息浏览</a></li>
+                            <li><a href="${path}/resumetmpl/resumetemplates-list.page">银行简历模板配置</a></li>
+                            <li><a href="${path}/config/ads-edit.page">广告展示内容配置</a></li>
                         </ul>
                     </li>
                 </ul>

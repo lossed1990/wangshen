@@ -32,12 +32,12 @@
                                                 <div class="mask">
                                                     <p>进入功能项</p>
                                                     <div class="tools tools-bottom">
-                                                        <a href="#"><i class="fa fa-pencil"></i></a>
+                                                        <a href="${path}/resume/resume-list.page"><i class="fa fa-pencil"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="caption">
-                                                <p>学员信息简历浏览</p>
+                                                <a href="${path}/resume/resume-list.page">学员信息简历浏览</a>
                                             </div>
                                         </div>
                                     </div>
@@ -48,12 +48,12 @@
                                                 <div class="mask">
                                                     <p>进入功能项</p>
                                                     <div class="tools tools-bottom">
-                                                        <a href="#"><i class="fa fa-pencil"></i></a>
+                                                        <a href="${path}/resumetmpl/resumetemplates-list.page"><i class="fa fa-pencil"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="caption">
-                                                <p>银行简历模拟配置</p>
+                                                <a href="${path}/resumetmpl/resumetemplates-list.page">银行简历模拟配置</a>
                                             </div>
                                         </div>
                                     </div>
@@ -64,12 +64,12 @@
                                                 <div class="mask">
                                                     <p>进入功能项</p>
                                                     <div class="tools tools-bottom">
-                                                        <a href="#"><i class="fa fa-pencil"></i></a>
+                                                        <a href="${path}/config/ads-edit.page"><i class="fa fa-pencil"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="caption">
-                                                <p>广告展示内容配置</p>
+                                                <a href="${path}/config/ads-edit.page">广告展示内容配置</a>
                                             </div>
                                         </div>
                                     </div>
