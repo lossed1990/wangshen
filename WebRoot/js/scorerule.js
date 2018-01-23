@@ -14,6 +14,13 @@ if (typeof Object.create !== 'function') {
 
 (function($, window, document, undefined) {
 
+    function gIsNull(value) {            
+        if (value.length == 0) {           
+            return true;    
+        }    
+        return false;
+    } 
+
     function gIsInt(value)  {             
         if (value.length != 0) {    
             reg = /^[0-9]*$/;        
@@ -25,12 +32,16 @@ if (typeof Object.create !== 'function') {
         return false; 
     }
 
-    function gIsNull(value) {            
-        if (value.length == 0) {           
-            return true;    
-        }    
-        return false;
-    } 
+    function gIsFloat(value)  {             
+        if (value.length != 0) {    
+            reg = /(^[1-9]\d*(\.\d{1,2})?$)|(^0(\.\d{1,2})?$)/;   
+            if (!reg.test(value)) {       
+                return false;       
+            }  
+            return true;  
+        }   
+        return false; 
+    }
 
     function formatTipString(config) {            
         if (!config || !config.type) {
@@ -53,7 +64,6 @@ if (typeof Object.create !== 'function') {
                     var sub = "关键字：" + config.rule[i].key + "，得分：" + config.rule[i].score + "；";
                     str += sub;
                 }
-
                 return str;
             case 5:
                 var str = "";
@@ -77,7 +87,6 @@ if (typeof Object.create !== 'function') {
                     }
                     str += sub;
                 }
-
                 return str;
             case 6:
                 var str = "";
@@ -92,6 +101,13 @@ if (typeof Object.create !== 'function') {
                 }
                 return str;
             case 7:
+                var str = "最大分值：" + config.max + "；";
+                for (var i = 0; i < config.rule.length; ++i) {
+                    var sub = '[' + config.rule[i].begin + "-" + config.rule[i].end + "]，得分：" + config.rule[i].score + "；";
+                    str += sub;
+                }
+                return str;
+            case 8:
                 var str = "最大分值：" + config.max + "；";
                 for (var i = 0; i < config.rule.length; ++i) {
                     var sub = '[' + config.rule[i].begin + "-" + config.rule[i].end + "]，得分：" + config.rule[i].score + "；";
@@ -178,7 +194,7 @@ if (typeof Object.create !== 'function') {
                     return;
                 }
 
-                if (!gIsInt(score)) {
+                if (!gIsFloat(score)) {
                     alert('得分值仅能输入数字！');
                     return;
                 }
@@ -201,7 +217,7 @@ if (typeof Object.create !== 'function') {
             var config = {
                 "name": "是否填写",
                 "type": 1,
-                "score": score
+                "score": parseFloat(score)
             };
             return config;
         }
@@ -282,7 +298,7 @@ if (typeof Object.create !== 'function') {
                     return;
                 }
 
-                if (!gIsInt(score)) {
+                if (!gIsFloat(score)) {
                     alert('得分值仅能输入数字！');
                     return;
                 }
@@ -305,7 +321,7 @@ if (typeof Object.create !== 'function') {
             var config = {
                 "name": "手机号",
                 "type": 2,
-                "score": score
+                "score": parseFloat(score)
             };
             return config;
         }
@@ -386,7 +402,7 @@ if (typeof Object.create !== 'function') {
                     return;
                 }
 
-                if (!gIsInt(score)) {
+                if (!gIsFloat(score)) {
                     alert('得分值仅能输入数字！');
                     return;
                 }
@@ -409,7 +425,7 @@ if (typeof Object.create !== 'function') {
             var config = {
                 "name": "身份证",
                 "type": 2,
-                "score": score
+                "score": parseFloat(score)
             };
             return config;
         }
@@ -563,12 +579,12 @@ if (typeof Object.create !== 'function') {
                 return;
             }
 
-            if (!gIsInt(score)) {
+            if (!gIsFloat(score)) {
                 alert('得分值仅能输入数字！');
                 return;
             }
 
-            self.$table.row.add({ 'key': key, 'score': score }).draw(false);
+            self.$table.row.add({ 'key': key, 'score': parseFloat(score) }).draw(false);
             self.$key_input.val("");
             self.$score_input.val("");
         },
@@ -582,7 +598,7 @@ if (typeof Object.create !== 'function') {
                     return;
                 }
 
-                if (!gIsInt(max)) {
+                if (!gIsFloat(max)) {
                     alert('最大得分值仅能输入数字！');
                     return;
                 }
@@ -610,7 +626,7 @@ if (typeof Object.create !== 'function') {
                 "name": "关键词",
                 "type": 4,
                 "rule": [],
-                "max": max
+                "max": parseFloat(max)
             };
 
             var dataRows = self.$table.page.info().recordsTotal;
@@ -808,12 +824,12 @@ if (typeof Object.create !== 'function') {
                 return;
             }
 
-            if (!gIsInt(score)) {
+            if (!gIsFloat(score)) {
                 alert('得分值仅能输入数字！');
                 return;
             }
 
-            self.$table.row.add({ 'sex': sex, 'begin': begin, 'end': end, 'score': score, 'flag': flag }).draw(false);
+            self.$table.row.add({ 'sex': sex, 'begin': parseInt(begin), 'end': parseInt(end), 'score': parseFloat(score), 'flag': flag }).draw(false);
             self.$begin_input.val("");
             self.$end_input.val("");
             self.$score_input.val("");
@@ -1045,12 +1061,12 @@ if (typeof Object.create !== 'function') {
                 return;
             }
 
-            if (!gIsInt(score)) {
+            if (!gIsFloat(score)) {
                 alert('得分值仅能输入数字！');
                 return;
             }
 
-            self.$table.row.add({ 'begin': begin, 'end': end, 'score': score, 'flag': flag }).draw(false);
+            self.$table.row.add({ 'begin': parseInt(begin), 'end': parseInt(end), 'score': parseFloat(score), 'flag': flag }).draw(false);
             self.$begin_input.val("");
             self.$end_input.val("");
             self.$score_input.val("");
@@ -1263,12 +1279,12 @@ if (typeof Object.create !== 'function') {
                 return;
             }
 
-            if (!gIsInt(score)) {
+            if (!gIsFloat(score)) {
                 alert('得分值仅能输入数字！');
                 return;
             }
 
-            self.$table.row.add({ 'begin': begin, 'end': end, 'score': score }).draw(false);
+            self.$table.row.add({ 'begin': parseInt(begin), 'end': parseInt(end), 'score': parseFloat(score) }).draw(false);
             self.$begin_input.val("");
             self.$end_input.val("");
             self.$score_input.val("");
@@ -1278,12 +1294,12 @@ if (typeof Object.create !== 'function') {
             var self = this;
             if (self.onSave) {
                 var max = self.$max_input.val().trim();
-                if (self.isNull(max)) {
+                if (gIsNull(max)) {
                     alert('最大得分值不能为空！');
                     return;
                 }
 
-                if (!self.isInt(max)) {
+                if (!gIsFloat(max)) {
                     alert('最大得分值仅能输入数字！');
                     return;
                 }
@@ -1315,7 +1331,238 @@ if (typeof Object.create !== 'function') {
                 "name": "字数",
                 "type": 7,
                 "rule": [],
-                "max": max
+                "max": parseFloat(max)
+            };
+            for (var i = 0; i < dataRows; ++i) {
+                var data = self.$table.row(i).data();
+                config.rule.push(data);
+            }
+            return config;
+        }
+    };
+
+    var Modal8 = {
+        init: function() {
+            var self = this;
+            self.create();
+            self.bingEvent();
+        },
+
+        create: function() {
+            var self = this;
+            var modal8 = '<div class="modal fade bs-example-modal-lg" id="modal_rule_8" tabindex="-1" role="dialog" aria-hidden="true">\
+                            <div class="modal-dialog modal-lg">\
+                                <div class="modal-content">\
+                                    <div class="modal-header">\
+                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>\
+                                        <h4 class="modal-title">评分规则设置</h4>\
+                                    </div>\
+                                    <div class="modal-body">\
+                                        <table class="table table-striped table-bordered" id="table_8">\
+                                            <thead>\
+                                                <tr>\
+                                                    <th>上限</th>\
+                                                    <th>下限</th>\
+                                                    <th>分值</th>\
+                                                    <th>操作</th>\
+                                                </tr>\
+                                            </thead>\
+                                            <tbody>\
+                                            </tbody>\
+                                        </table>\
+                                        <h5 class="fa fa-edit">新增</h5>\
+                                        <div class="form-horizontal form-label-left">\
+                                            <div class="form-group">\
+                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">上限</label>\
+                                                <div class="col-md-2 col-sm-2 col-xs-12">\
+                                                    <input type="text" class="form-control" id="input8_begin" placeholder="" />\
+                                                </div>\
+                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">下限</label>\
+                                                <div class="col-md-2 col-sm-2 col-xs-12">\
+                                                    <input type="text" class="form-control" id="input8_end" placeholder="" />\
+                                                </div>\
+                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">得分值</label>\
+                                                <div class="col-md-2 col-sm-2 col-xs-12">\
+                                                    <input type="text" class="form-control" id="input8_score" placeholder="" />\
+                                                </div>\
+                                                <button type="button" class="btn btn-default" id="btn8_add">新增</button>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                    <div class="modal-footer">\
+                                        <div class="form-horizontal form-label-left">\
+                                            <div class="form-group">\
+                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">得分上限</label>\
+                                                <div class="col-md-2 col-sm-2 col-xs-12">\
+                                                    <input type="text" class="form-control" id="input8_max" placeholder="" />\
+                                                </div>\
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>\
+                                                <button type="button" class="btn btn-primary" id="btn8_save">保存设置</button>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        </div>';
+            $('body').append(modal8);
+            self.$modal = $('#modal_rule_8');
+            self.$score_input = $('#input8_score');
+            self.$begin_input = $('#input8_begin');
+            self.$end_input = $('#input8_end');
+            self.$max_input = $('#input8_max');
+            self.$table = $("#table_8").DataTable({
+                'columns': [ { 
+                    "data": "begin"
+                },        {    
+                    "data": "end"
+                },        {    
+                    "data": "score"
+                },        {  
+                    "data":  null,
+                    "className":   "center",
+                    "defaultContent":   '<a id="delrow" href="#"><i class="fa fa-trash-o"></i>删除</a>'      
+                }]
+            });
+        },
+
+        bingEvent: function() {
+            var self = this;
+            //新增Item事件
+            $('#btn8_add').click(function() {
+                self.addItemData();
+            });
+
+            //删除Item事件
+            self.$table.on( 'click', 'a#delrow', function (even)  {
+                self.$table.row( $(this).parents('tr') ).remove().draw(false); 
+            });
+
+            $('#btn8_save').click(function() {
+                self.saveData();
+            });
+        },
+
+        //清空modal上的数据
+        clearData: function() {
+            var self = this;
+            var info = self.$table.page.info();
+            var dataRows = info.recordsTotal;
+            for (var i = 0; i < dataRows; ++i) {
+                self.$table.row(i).remove().draw(false); 
+            }
+
+            self.$score_input.val("");
+            self.$begin_input.val("");
+            self.$end_input.val("");
+            self.$max_input.val("");
+        },
+
+        /**
+         * @brief 显示模态框
+         * 
+         * @param onSaveCallBack   保存事件回调函数 
+         * @param config           初始数据，为空不处理 
+         */
+        showModal: function(onSaveCallBack, config) {
+            var self = this;
+            self.onSave = onSaveCallBack;
+            self.clearData();
+            self.fillData(config);
+            self.$modal.modal();
+        },
+
+        hideModal: function() {
+            var self = this;
+            self.onSave = null;
+            self.clearData();
+            self.$modal.modal('hide');
+        },
+
+        addItemData: function() {
+            var self = this;
+
+            var begin = self.$begin_input.val().trim();
+            var end = self.$end_input.val().trim();
+            var score = self.$score_input.val().trim();
+
+            if (gIsNull(begin)) {
+                alert('字数起始值不能为空！');
+                return;
+            }
+
+            if (!gIsFloat(begin)) {
+                alert('字数起始值仅能输入数字！');
+                return;
+            }
+
+            if (gIsNull(end)) {
+                alert('字数结束值不能为空！');
+                return;
+            }
+
+            if (!gIsFloat(end)) {
+                alert('字数结束值仅能输入数字！');
+                return;
+            }
+
+            if (gIsNull(score)) {
+                alert('得分值不能为空！');
+                return;
+            }
+
+            if (!gIsFloat(score)) {
+                alert('得分值仅能输入数字！');
+                return;
+            }
+
+            self.$table.row.add({ 'begin': parseFloat(begin), 'end': parseFloat(end), 'score': parseFloat(score) }).draw(false);
+            self.$begin_input.val("");
+            self.$end_input.val("");
+            self.$score_input.val("");
+        },
+
+        saveData: function() {
+            var self = this;
+            if (self.onSave) {
+                var max = self.$max_input.val().trim();
+                if (gIsNull(max)) {
+                    alert('最大得分值不能为空！');
+                    return;
+                }
+
+                if (!gIsFloat(max)) {
+                    alert('最大得分值仅能输入数字！');
+                    return;
+                }
+
+                var config = self.formatConfig(max);
+                var tip = formatTipString(config);
+                self.onSave(config, tip);
+                self.hideModal();
+            }
+        },
+
+        fillData: function(config) {
+            var self = this;
+            if (config && config.type == 8) {
+                if (config.max) {
+                    self.$max_input.val(config.max);
+                }
+                for (var i = 0; i < config.rule.length; ++i) {
+                    self.$table.row.add({ 'begin': config.rule[i].begin, 'end': config.rule[i].end, 'score': config.rule[i].score }).draw(false);
+                }
+            }
+        },
+
+        formatConfig: function(max) {
+            var self = this;
+
+            var dataRows = self.$table.page.info().recordsTotal;
+            var config = {
+                "name": "数字范围",
+                "type": 8,
+                "rule": [],
+                "max": parseFloat(max)
             };
             for (var i = 0; i < dataRows; ++i) {
                 var data = self.$table.row(i).data();
@@ -1326,10 +1573,11 @@ if (typeof Object.create !== 'function') {
     };
 
     var SubModule = {
-        init: function(options, elem) {
+        init: function(options, elem, temp_id) {
             var self = this;
             self.elem = elem;
             self.$elem = $(elem);
+            self.temp_id = temp_id;
             self.options = options;
             self.data = {
                 "show": true,
@@ -1421,6 +1669,9 @@ if (typeof Object.create !== 'function') {
                             case '7':
                                 option += '<li><a class="rule-select">字数规则</a></li>';
                                 break;
+                            case '8':
+                                option += '<li><a class="rule-select">数字范围规则</a></li>';
+                                break;
                         }
                     }
                 } else {
@@ -1430,7 +1681,7 @@ if (typeof Object.create !== 'function') {
 
                 var strSubHtml = '<div class="form-group" id="' + self.options.keys[i].keypath + '">\
                                     <div class="col-md-2 col-sm-2 col-xs-12">\
-                                        <input class="check_grey" type="checkbox" checked="" required />\
+                                        <input class="check_grey check_key_enable" type="checkbox" checked/>\
                                         <label class="control-label">' + self.options.keys[i].label + '</label>\
                                     </div>\
                                     <div class="col-md-1 col-sm-1 col-xs-12">\
@@ -1446,12 +1697,9 @@ if (typeof Object.create !== 'function') {
                                     </div>\
                                 </div>';
                 strHtml = strHtml + strSubHtml;
-                //self.data[tempArray[0]] = {};
             }
             self.$elembody.html(strHtml);
         },
-
-
 
         getSubName: function() {
             var self = this;
@@ -1471,9 +1719,14 @@ if (typeof Object.create !== 'function') {
             $('input.form-control.' + self.options.name).val(self.data.max);
             //更新keys；（根据keypath寻找）
             for (var i = 0; i < self.data.keys.length; ++i) {
+                var parentElem = $('#' + self.data.keys[i]['keypath']);
                 var tip = formatTipString(self.data.keys[i].judge);
                 console.log('setTempData:' + self.data.keys[i]['keypath']);
-                $('#' + self.data.keys[i]['keypath']).find('input').val(tip);
+
+                parentElem.find('input.form-control').val(tip);
+                if (!self.data.keys[i]['enable']) {
+                    parentElem.find('input.check_grey').iCheck('uncheck');
+                }
             }
         },
 
@@ -1492,7 +1745,7 @@ if (typeof Object.create !== 'function') {
         },
 
         //通过keypath,保存当前点击项的配置信息
-        saveJudgeInfo: function(keypath, enable, config) {
+        saveJudgeInfo: function(keypath, config) {
             var self = this;
 
             var isHaving = false;
@@ -1507,7 +1760,7 @@ if (typeof Object.create !== 'function') {
             if (!isHaving) {
                 var sub = {
                     "keypath": keypath,
-                    "enable": enable,
+                    "enable": true,
                     "judge": config
                 };
                 self.data.keys.push(sub);
@@ -1516,28 +1769,91 @@ if (typeof Object.create !== 'function') {
             console.log('saveJudgeInfo:' + JSON.stringify(self.data));
         },
 
-        submitData: function() {
+        //设置某个子字段是否启用参数
+        changeKeyEnableParam: function(keypath, enable) {
             var self = this;
 
-            //todo： 提交self.data
-            console.log(self.data);
+            var isHaving = false;
+            for (var i = 0; i < self.data.keys.length; ++i) {
+                if (keypath == self.data.keys[i].keypath) {
+                    self.data.keys[i].enable = enable;
+                    isHaving = true;
+                    break;
+                }
+            }
+
+            if (!isHaving) {
+                var sub = {
+                    "keypath": keypath,
+                    "enable": enable,
+                    "judge": {}
+                };
+                self.data.keys.push(sub);
+            }
+
+            console.log('changeKeyEnableParam:' + JSON.stringify(self.data));
+        },
+
+        submitData: function() {
+            var self = this;
+            //检测输入值，并更新缓存
+            if ($('input.check_grey.' + self.options.name).is(':checked')) {
+                self.data.show = true;
+
+                var max = $('input.form-control.' + self.options.name).val().trim();
+                if (gIsNull(max)) {
+                    alert('模块最大分数值不能为空！');
+                    return;
+                }
+
+                if (!gIsFloat(max)) {
+                    alert('模块最大分数值仅能输入数字！');
+                    return;
+                }
+
+                self.data.max = parseInt(max);
+            } else {
+                self.data.show = false;
+                self.data.max = 0;
+            }
+
+            //todo:提交self.data
+            var param = {
+                "temp_id": self.temp_id,
+                "key": self.options.name,
+                "value": self.data
+            };
+
+            console.log('submit saveinfo：' + JSON.stringify(param));
+
+            $.ajax({    
+                type: "POST",
+                url: "/resumetmpl/resumetemplates-part-save.json",
+                cache:  false,
+                data: JSON.stringify(param),
+                dataType: "json",
+                success: function (result)  {
+                    if (result.ok) {
+                        toastr.success('配置信息保存成功！');
+                    } else {
+                        toastr.error(result.errorinfo);
+                    }  
+                },
+                error: function() {
+                    toastr.error('配置信息保存失败，请稍后重试！');
+                }  
+            }); 
         }
     };
 
     var Manager = {
-        init: function(elem) {
+        init: function(elem, temp_id) {
             var self = this;
             self.elem = elem;
             self.$elem = $(elem);
+            self.temp_id = temp_id;
             self.subs = [];
-            self.requestTempId();
             self.initUI();
-        },
-
-        //获取模板ID
-        requestTempId: function() {
-            var self = this;
-            self.tempid = null; //模板id
         },
 
         //初始化设置界面
@@ -1545,11 +1861,79 @@ if (typeof Object.create !== 'function') {
             var self = this;
 
             var subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.baseinfo, self.elem);
+            subModule.init($.fn.scorerule.baseinfo, self.elem, self.temp_id);
             self.subs.push(subModule);
 
             subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.education, self.elem);
+            subModule.init($.fn.scorerule.education, self.elem, self.temp_id);
+            self.subs.push(subModule);
+
+            subModule = Object.create(SubModule);
+            subModule.init($.fn.scorerule.rewards, self.elem, self.temp_id);
+            self.subs.push(subModule);
+
+            subModule = Object.create(SubModule);
+            subModule.init($.fn.scorerule.language, self.elem, self.temp_id);
+            self.subs.push(subModule);
+
+            subModule = Object.create(SubModule);
+            subModule.init($.fn.scorerule.computer, self.elem, self.temp_id);
+            self.subs.push(subModule);
+
+            subModule = Object.create(SubModule);
+            subModule.init($.fn.scorerule.student_ganbu, self.elem, self.temp_id);
+            self.subs.push(subModule);
+
+            subModule = Object.create(SubModule);
+            subModule.init($.fn.scorerule.trainning, self.elem, self.temp_id);
+            self.subs.push(subModule);
+
+            subModule = Object.create(SubModule);
+            subModule.init($.fn.scorerule.shijian, self.elem, self.temp_id);
+            self.subs.push(subModule);
+
+            subModule = Object.create(SubModule);
+            subModule.init($.fn.scorerule.shixi, self.elem, self.temp_id);
+            self.subs.push(subModule);
+
+            subModule = Object.create(SubModule);
+            subModule.init($.fn.scorerule.zigezhengshu, self.elem, self.temp_id);
+            self.subs.push(subModule);
+
+            subModule = Object.create(SubModule);
+            subModule.init($.fn.scorerule.family, self.elem, self.temp_id);
+            self.subs.push(subModule);
+
+            subModule = Object.create(SubModule);
+            subModule.init($.fn.scorerule.dissertation, self.elem, self.temp_id);
+            self.subs.push(subModule);
+
+            subModule = Object.create(SubModule);
+            subModule.init($.fn.scorerule.workplan, self.elem, self.temp_id);
+            self.subs.push(subModule);
+
+            subModule = Object.create(SubModule);
+            subModule.init($.fn.scorerule.selfjudge, self.elem, self.temp_id);
+            self.subs.push(subModule);
+
+            subModule = Object.create(SubModule);
+            subModule.init($.fn.scorerule.speciality, self.elem, self.temp_id);
+            self.subs.push(subModule);
+
+            subModule = Object.create(SubModule);
+            subModule.init($.fn.scorerule.selfrecomadation, self.elem, self.temp_id);
+            self.subs.push(subModule);
+
+            subModule = Object.create(SubModule);
+            subModule.init($.fn.scorerule.otherinfo, self.elem, self.temp_id);
+            self.subs.push(subModule);
+
+            subModule = Object.create(SubModule);
+            subModule.init($.fn.scorerule.targetbank, self.elem, self.temp_id);
+            self.subs.push(subModule);
+
+            subModule = Object.create(SubModule);
+            subModule.init($.fn.scorerule.promise, self.elem, self.temp_id);
             self.subs.push(subModule);
 
             self.createModle();
@@ -1568,7 +1952,7 @@ if (typeof Object.create !== 'function') {
                     "max": 121,
                     "keys": [{
                             "keypath": "baseinfo-name",
-                            "enable": true,
+                            "enable": false,
                             "judge": {
                                 "name": "是否填写",
                                 "type": 1,
@@ -1588,14 +1972,22 @@ if (typeof Object.create !== 'function') {
                 }
             };
             self.setTempData(data);
+            self.startListenCheckChangeEvent();
 
-            // $.getJSON("XXX.ftl?temp_id=XXX", function(data){
-            //     // $.each(data.items, function(i,item){
-            //     //     $("<img/>").attr("src", item.media.m).appendTo("#images");
-            //     //     if ( i == 3 ) return false;
-            //     // });
-            //     self.setTempData(data);
-            // });
+            //release
+            // $.ajax({    
+            //     type: "GET",
+            //     url: "/resumetmpl/resumetemplates-detail.json",
+            //     cache:  false,
+            //     data: { 'temp_id': self.temp_id },
+            //     dataType: "json",
+            //     success: function (result)  {
+            //         if (result.ok) {
+            //             self.setTempData(result.result);
+            //         }
+            //         self.startListenCheckChangeEvent(); 
+            //     }
+            // }); 
         },
 
         //刷新模板界面
@@ -1632,11 +2024,15 @@ if (typeof Object.create !== 'function') {
 
             self.modal_7 = Object.create(Modal7);
             self.modal_7.init();
+
+            self.modal_8 = Object.create(Modal8);
+            self.modal_8.init();
         },
 
         setTrigger: function() {
             var self = this;
 
+            //规则模板选择事件
             $(".rule-select").click(function() {
                 var str = $(this).html();
                 var type = 0;
@@ -1647,49 +2043,54 @@ if (typeof Object.create !== 'function') {
                     case '是否填写规则':
                         self.modal_1.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
-                            //todo:是否启用值
-                            self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
+                            self.saveJudgeInfo(self.cur_ui.attr("id"), config);
                         }, keyconfig);
                         break;
                     case '手机号规则':
                         self.modal_2.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
-                            self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
+                            self.saveJudgeInfo(self.cur_ui.attr("id"), config);
                         }, keyconfig);
                         break;
                     case '身份证规则':
                         self.modal_3.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
-                            self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
+                            self.saveJudgeInfo(self.cur_ui.attr("id"), config);
                         }, keyconfig);
                         break;
                     case '关键字规则':
                         self.modal_4.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
-                            self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
+                            self.saveJudgeInfo(self.cur_ui.attr("id"), config);
                         }, keyconfig);
                         break;
                     case '身高规则':
                         self.modal_5.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
-                            self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
+                            self.saveJudgeInfo(self.cur_ui.attr("id"), config);
                         }, keyconfig);
                         break;
                     case '体重规则':
                         self.modal_6.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
-                            self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
+                            self.saveJudgeInfo(self.cur_ui.attr("id"), config);
                         }, keyconfig);
                         break;
                     case '字数规则':
                         self.modal_7.showModal(function(config, tip) {
                             self.cur_ui.find('input').val(tip);
-                            self.saveJudgeInfo(self.cur_ui.attr("id"), true, config);
+                            self.saveJudgeInfo(self.cur_ui.attr("id"), config);
+                        }, keyconfig);
+                    case '数字范围规则':
+                        self.modal_8.showModal(function(config, tip) {
+                            self.cur_ui.find('input').val(tip);
+                            self.saveJudgeInfo(self.cur_ui.attr("id"), config);
                         }, keyconfig);
                         break;
                 }
             });
 
+            //模板保存事件
             $(".btn-save-rules").click(function() {
                 for (var i = 0; i < self.subs.length; ++i) {
                     var subName = self.subs[i].getSubName();
@@ -1707,7 +2108,7 @@ if (typeof Object.create !== 'function') {
 
             for (var i = 0; i < self.subs.length; ++i) {
                 var subName = self.subs[i].getSubName();
-                var KeyArray = keypath.split(".");
+                var KeyArray = keypath.split("-");
                 if (subName == KeyArray[0]) {
                     return self.subs[i].findJudgeInfo(keypath);
                 }
@@ -1717,17 +2118,43 @@ if (typeof Object.create !== 'function') {
         },
 
         //通过keypath,保存当前点击项的配置信息
-        saveJudgeInfo: function(keypath, enable, config) {
+        saveJudgeInfo: function(keypath, config) {
             var self = this;
 
             for (var i = 0; i < self.subs.length; ++i) {
                 var subName = self.subs[i].getSubName();
-                var KeyArray = keypath.split(".");
+                var KeyArray = keypath.split("-");
                 if (subName == KeyArray[0]) {
-                    self.subs[i].saveJudgeInfo(keypath, enable, config);
+                    self.subs[i].saveJudgeInfo(keypath, config);
                     break;
                 }
             }
+        },
+
+        //设置某个子字段是否启用参数
+        changeKeyEnableParam: function(keypath, enable) {
+            var self = this;
+
+            for (var i = 0; i < self.subs.length; ++i) {
+                var subName = self.subs[i].getSubName();
+                var KeyArray = keypath.split("-");
+                if (subName == KeyArray[0]) {
+                    self.subs[i].changeKeyEnableParam(keypath, enable);
+                    break;
+                }
+            }
+        },
+
+        //开始监听子字段是否启用事件
+        startListenCheckChangeEvent: function() {
+            var self = this;
+            $(".check_key_enable").on('ifChecked', function() {
+                console.log($(this).parent().parent().parent().attr('id') + ' checked');
+                self.changeKeyEnableParam($(this).parent().parent().parent().attr('id'), true);
+            }).on('ifUnchecked', function() {
+                console.log($(this).parent().parent().parent().attr('id') + ' unchecked');
+                self.changeKeyEnableParam($(this).parent().parent().parent().attr('id'), false);
+            });
         }
     };
 
@@ -1741,10 +2168,10 @@ if (typeof Object.create !== 'function') {
     //     }
     // };
 
-    $.fn.scorerule = function() {
+    $.fn.scorerule = function(temp_id) {
         return this.each(function() {
             var scoreruleObj = Object.create(Manager);
-            scoreruleObj.init(this);
+            scoreruleObj.init(this, temp_id);
         });
     };
 
@@ -1753,7 +2180,7 @@ if (typeof Object.create !== 'function') {
         "title": "个人基础信息",
         "keys": [{
             "label": "姓名",
-            "ruletype": "1,7",
+            "ruletype": "",
             "keypath": "baseinfo-name"
         }, {
             "label": "曾用名",
@@ -1762,123 +2189,123 @@ if (typeof Object.create !== 'function') {
         }, {
             "label": "性别",
             "ruletype": "",
-            "keypath": "baseinfo.sex"
+            "keypath": "baseinfo-sex"
         }, {
             "label": "出生年月",
             "ruletype": "",
-            "keypath": "baseinfo.birth_date"
+            "keypath": "baseinfo-birth_date"
         }, {
             "label": "民族",
             "ruletype": "",
-            "keypath": "baseinfo.nation"
+            "keypath": "baseinfo-nation"
         }, {
             "label": "籍贯",
             "ruletype": "",
-            "keypath": "baseinfo.birthplace"
+            "keypath": "baseinfo-birthplace"
         }, {
             "label": "政治面貌",
             "ruletype": "",
-            "keypath": "baseinfo.party"
+            "keypath": "baseinfo-party"
         }, {
             "label": "入党团时间",
             "ruletype": "",
-            "keypath": "baseinfo.party_entry_date"
+            "keypath": "baseinfo-party_entry_date"
         }, {
             "label": "身高",
             "ruletype": "1,5",
-            "keypath": "baseinfo.height_cm"
+            "keypath": "baseinfo-height_cm"
         }, {
             "label": "体重",
             "ruletype": "1,6",
-            "keypath": "baseinfo.weight_kg"
+            "keypath": "baseinfo-weight_kg"
         }, {
             "label": "血型",
             "ruletype": "",
-            "keypath": "baseinfo.bloodtype"
+            "keypath": "baseinfo-bloodtype"
         }, {
             "label": "婚姻状况",
             "ruletype": "",
-            "keypath": "baseinfo.marrage"
+            "keypath": "baseinfo-marrage"
         }, {
             "label": "生育状况",
             "ruletype": "",
-            "keypath": "baseinfo.have_kid"
+            "keypath": "baseinfo-have_kid"
         }, {
             "label": "健康状况",
             "ruletype": "",
-            "keypath": "baseinfo.heath"
+            "keypath": "baseinfo-heath"
         }, {
             "label": "生源地",
             "ruletype": "",
-            "keypath": "baseinfo.gaokao_place"
+            "keypath": "baseinfo-gaokao_place"
         }, {
             "label": "现居住地",
             "ruletype": "",
-            "keypath": "baseinfo.living_place"
+            "keypath": "baseinfo-living_place"
         }, {
             "label": "通讯地址",
             "ruletype": "",
-            "keypath": "baseinfo.address"
+            "keypath": "baseinfo-address"
         }, {
             "label": "家庭地址",
             "ruletype": "",
-            "keypath": "baseinfo.home_address"
+            "keypath": "baseinfo-home_address"
         }, {
             "label": "户口所在地",
             "ruletype": "",
-            "keypath": "baseinfo.hukou_place"
+            "keypath": "baseinfo-hukou_place"
         }, {
             "label": "户口类别",
             "ruletype": "",
-            "keypath": "baseinfo.hukou_type"
+            "keypath": "baseinfo-hukou_type"
         }, {
             "label": "毕业时间",
             "ruletype": "",
-            "keypath": "baseinfo.graduate_date"
+            "keypath": "baseinfo-graduate_date"
         }, {
             "label": "参加工作时间",
             "ruletype": "",
-            "keypath": "baseinfo.work_date"
+            "keypath": "baseinfo-work_date"
         }, {
             "label": "证件类型",
             "ruletype": "",
-            "keypath": "baseinfo.idcard_type"
+            "keypath": "baseinfo-idcard_type"
         }, {
             "label": "证件号",
             "ruletype": "1,3,4",
-            "keypath": "baseinfo.idcard_num"
+            "keypath": "baseinfo-idcard_num"
         }, {
             "label": "移动电话",
             "ruletype": "1,2,4",
-            "keypath": "baseinfo.mobile"
+            "keypath": "baseinfo-mobile"
         }, {
             "label": "固定电话",
             "ruletype": "",
-            "keypath": "baseinfo.fix_phone"
+            "keypath": "baseinfo-fix_phone"
         }, {
             "label": "E-mail",
             "ruletype": "",
-            "keypath": "baseinfo.email"
+            "keypath": "baseinfo-email"
         }, {
             "label": "紧急联系人",
             "ruletype": "",
-            "keypath": "baseinfo.emergency_contact"
+            "keypath": "baseinfo-emergency_contact"
         }, {
             "label": "紧急联系人电话",
-            "ruletype": "",
-            "keypath": "baseinfo.emergency_phone"
+            "ruletype": "1,2,4",
+            "keypath": "baseinfo-emergency_phone"
         }, {
             "label": "免冠一寸照",
             "ruletype": "",
-            "keypath": "baseinfo.head_pic"
+            "keypath": "baseinfo-head_pic"
         }, {
             "label": "近期生活照",
             "ruletype": "",
-            "keypath": "baseinfo.live_pic"
+            "keypath": "baseinfo-live_pic"
         }, {
             "label": "学生证照片",
             "ruletype": "",
-            "keypath": "baseinfo.student_pic"
+            "keypath": "baseinfo-student_pic"
         }]
     };
 
@@ -1886,28 +2313,483 @@ if (typeof Object.create !== 'function') {
         "name": "education",
         "title": "教育背景",
         "keys": [{
+            "label": "最高学历",
+            "ruletype": "",
+            "keypath": "education-top_grade"
+        }, {
+            "label": "高考录取批次",
+            "ruletype": "",
+            "keypath": "education-gaokao_level"
+        }, {
+            "label": "高考分数",
+            "ruletype": "",
+            "keypath": "education-gaokao_point"
+        }, {
             "label": "起始日期",
-            "ruletype": "1,7",
-            "keypath": "baseinfo.name"
+            "ruletype": "",
+            "keypath": "education-edu_history-start_date"
         }, {
             "label": "结束日期",
             "ruletype": "",
-            "keypath": "baseinfo.old_name"
+            "keypath": "education-edu_history-end_date"
         }, {
             "label": "阶段",
             "ruletype": "",
-            "keypath": "baseinfo.sex"
+            "keypath": "education-edu_history-stage"
         }, {
             "label": "省份",
             "ruletype": "",
-            "keypath": "baseinfo.birth_date"
+            "keypath": "education-edu_history-province"
+        }, {
+            "label": "学校",
+            "ruletype": "",
+            "keypath": "education-edu_history-school"
+        }, {
+            "label": "学院",
+            "ruletype": "",
+            "keypath": "education-edu_history-institude"
+        }, {
+            "label": "专业",
+            "ruletype": "",
+            "keypath": "education-edu_history-study"
+        }, {
+            "label": "研究/专业方向",
+            "ruletype": "",
+            "keypath": "education-edu_history-study_apect"
+        }, {
+            "label": "平均绩点",
+            "ruletype": "",
+            "keypath": "education-edu_history-gpa"
+        }, {
+            "label": "所获学位",
+            "ruletype": "",
+            "keypath": "education-edu_history-xuewei"
+        }, {
+            "label": "学习形式",
+            "ruletype": "",
+            "keypath": "education-edu_history-study_type"
+        }, {
+            "label": "教育类型",
+            "ruletype": "",
+            "keypath": "education-edu_history-edu_type"
+        }, {
+            "label": "毕业方式",
+            "ruletype": "",
+            "keypath": "education-edu_history-graduate_type"
+        }, {
+            "label": "毕业排名",
+            "ruletype": "",
+            "keypath": "education-edu_history-graduate_pos"
+        }, {
+            "label": "所学课程及成绩",
+            "ruletype": "1,8",
+            "keypath": "education-edu_history-scores-score"
         }]
     };
 
+    $.fn.scorerule.rewards = {
+        "name": "rewards",
+        "title": "获奖阶段",
+        "keys": [{
+            "label": "获奖名称",
+            "ruletype": "",
+            "keypath": "rewards-name"
+        }, {
+            "label": "获奖级别",
+            "ruletype": "",
+            "keypath": "rewards-level"
+        }, {
+            "label": "颁发单位",
+            "ruletype": "",
+            "keypath": "rewards-source"
+        }, {
+            "label": "获奖次数",
+            "ruletype": "",
+            "keypath": "rewards-times"
+        }, {
+            "label": "获奖时间",
+            "ruletype": "",
+            "keypath": "rewards-date"
+        }]
+    };
 
-    //todo:1、点击保存的时候，根据模块是否启用及最大值，验证最大值数据是否合法；更新缓存；提交数据；
-    //     2、监听每个字段的checkbox，实时修改缓存数据；
-    //     3、完善整体模板数据获取接口；
-    //     4、完善模板提交接口；
-    //     5、完善其余模块；
+    $.fn.scorerule.language = {
+        "name": "language",
+        "title": "英语能力描述",
+        "keys": [{
+            "label": "证书级别",
+            "ruletype": "",
+            "keypath": "language-level"
+        }, {
+            "label": "具体成绩",
+            "ruletype": "",
+            "keypath": "language-score"
+        }, {
+            "label": "获证日期",
+            "ruletype": "",
+            "keypath": "language-date"
+        }, {
+            "label": "其他外语掌握情况",
+            "ruletype": "",
+            "keypath": "language-other"
+        }, {
+            "label": "方言掌握情况",
+            "ruletype": "",
+            "keypath": "language-local_lan"
+        }, {
+            "label": "其它说明",
+            "ruletype": "",
+            "keypath": "language-memo"
+        }]
+    };
+
+    $.fn.scorerule.computer = {
+        "name": "computer",
+        "title": "计算机能力描述",
+        "keys": [{
+            "label": "证书级别",
+            "ruletype": "",
+            "keypath": "computer-name"
+        }, {
+            "label": "获取时间",
+            "ruletype": "",
+            "keypath": "computer-date"
+        }, {
+            "label": "掌握程度",
+            "ruletype": "",
+            "keypath": "computer-level"
+        }]
+    };
+
+    $.fn.scorerule.student_ganbu = {
+        "name": "student_ganbu",
+        "title": "学生干部任职情况/学生工作",
+        "keys": [{
+            "label": "起始时间",
+            "ruletype": "",
+            "keypath": "student_ganbu-start_date"
+        }, {
+            "label": "结束时间",
+            "ruletype": "",
+            "keypath": "student_ganbu-end_date"
+        }, {
+            "label": "职务名称",
+            "ruletype": "",
+            "keypath": "student_ganbu-zhiwu_name"
+        }, {
+            "label": "职务类别",
+            "ruletype": "",
+            "keypath": "student_ganbu-zhiwu_type"
+        }, {
+            "label": "工作业绩",
+            "ruletype": "",
+            "keypath": "student_ganbu-memo"
+        }]
+    };
+
+    $.fn.scorerule.trainning = {
+        "name": "trainning",
+        "title": "培训经历",
+        "keys": [{
+            "label": "起始时间",
+            "ruletype": "",
+            "keypath": "trainning-start_date"
+        }, {
+            "label": "结束时间",
+            "ruletype": "",
+            "keypath": "trainning-end_date"
+        }, {
+            "label": "培训项目名称",
+            "ruletype": "",
+            "keypath": "trainning-name"
+        }, {
+            "label": "内容描述",
+            "ruletype": "",
+            "keypath": "trainning-memo"
+        }]
+    };
+
+    $.fn.scorerule.shijian = {
+        "name": "shijian",
+        "title": "实践经历",
+        "keys": [{
+            "label": "起始时间",
+            "ruletype": "",
+            "keypath": "shijian-start_date"
+        }, {
+            "label": "结束时间",
+            "ruletype": "",
+            "keypath": "shijian-end_date"
+        }, {
+            "label": "培训项目名称",
+            "ruletype": "",
+            "keypath": "shijian-name"
+        }, {
+            "label": "内容描述",
+            "ruletype": "",
+            "keypath": "shijian-memo"
+        }]
+    };
+
+    $.fn.scorerule.shixi = {
+        "name": "shixi",
+        "title": "实习经历",
+        "keys": [{
+            "label": "起始时间",
+            "ruletype": "",
+            "keypath": "shixi-start_date"
+        }, {
+            "label": "结束时间",
+            "ruletype": "",
+            "keypath": "shixi-end_date"
+        }, {
+            "label": "所在行业",
+            "ruletype": "",
+            "keypath": "shixi-hangye"
+        }, {
+            "label": "所在单位及部门",
+            "ruletype": "",
+            "keypath": "shixi-apartment"
+        }, {
+            "label": "所在岗位",
+            "ruletype": "",
+            "keypath": "shixi-work"
+        }, {
+            "label": "单位性质",
+            "ruletype": "",
+            "keypath": "shixi-company_type"
+        }, {
+            "label": "工作类型",
+            "ruletype": "",
+            "keypath": "shixi-work_type"
+        }, {
+            "label": "绩效考核等级",
+            "ruletype": "",
+            "keypath": "shixi-kpi_level"
+        }, {
+            "label": "工作经历描述",
+            "ruletype": "",
+            "keypath": "shixi-work_memo"
+        }, {
+            "label": "薪资（税前含福利）",
+            "ruletype": "",
+            "keypath": "shixi-salary"
+        }, {
+            "label": "证明人",
+            "ruletype": "",
+            "keypath": "shixi-zhengming_people"
+        }, {
+            "label": "证明人职务",
+            "ruletype": "",
+            "keypath": "shixi-zhengming_work"
+        }, {
+            "label": "证明人电话",
+            "ruletype": "",
+            "keypath": "shixi-zhengming_phone"
+        }, {
+            "label": "离职原因",
+            "ruletype": "",
+            "keypath": "shixi-lizhi_info"
+        }]
+    };
+
+    $.fn.scorerule.zigezhengshu = {
+        "name": "zigezhengshu",
+        "title": "专业职业资格证书",
+        "keys": [{
+            "label": "证书类别",
+            "ruletype": "",
+            "keypath": "zigezhengshu-type"
+        }, {
+            "label": "证书名称",
+            "ruletype": "",
+            "keypath": "zigezhengshu-name"
+        }, {
+            "label": "获得年份",
+            "ruletype": "",
+            "keypath": "zigezhengshu-got_date"
+        }, {
+            "label": "认证机构",
+            "ruletype": "",
+            "keypath": "zigezhengshu-source"
+        }, {
+            "label": "认证时间",
+            "ruletype": "",
+            "keypath": "zigezhengshu-cert_date"
+        }, {
+            "label": "证书编号",
+            "ruletype": "",
+            "keypath": "zigezhengshu-zhengshu_code"
+        }]
+    };
+
+    $.fn.scorerule.family = {
+        "name": "family",
+        "title": "家庭背景与社会资源",
+        "keys": [{
+            "label": "姓名",
+            "ruletype": "",
+            "keypath": "family-name"
+        }, {
+            "label": "性别",
+            "ruletype": "",
+            "keypath": "family-sex"
+        }, {
+            "label": "关系",
+            "ruletype": "",
+            "keypath": "family-relation"
+        }, {
+            "label": "出生年月",
+            "ruletype": "",
+            "keypath": "family-birthdate"
+        }, {
+            "label": "人员状态",
+            "ruletype": "",
+            "keypath": "family-status"
+        }, {
+            "label": "工作单位",
+            "ruletype": "",
+            "keypath": "family-work_place"
+        }, {
+            "label": "担任职务",
+            "ruletype": "",
+            "keypath": "family-work"
+        }, {
+            "label": "政治面貌",
+            "ruletype": "",
+            "keypath": "family-zhengzhimianmao"
+        }, {
+            "label": "教育情况",
+            "ruletype": "",
+            "keypath": "family-edu_status"
+        }]
+    };
+
+    $.fn.scorerule.dissertation = {
+        "name": "dissertation",
+        "title": "毕业论文及发表期刊",
+        "keys": [{
+            "label": "论文/期刊名称",
+            "ruletype": "",
+            "keypath": "dissertation-name"
+        }, {
+            "label": "刊物级别",
+            "ruletype": "",
+            "keypath": "dissertation-level"
+        }, {
+            "label": "刊载时间/出版时间",
+            "ruletype": "",
+            "keypath": "dissertation-date"
+        }, {
+            "label": "作者",
+            "ruletype": "",
+            "keypath": "dissertation-author"
+        }, {
+            "label": "文章/专著简介",
+            "ruletype": "",
+            "keypath": "dissertation-memo"
+        }]
+    };
+
+    $.fn.scorerule.workplan = {
+        "name": "workplan",
+        "title": "职业规划",
+        "keys": [{
+            "label": "未来五年的职业规划",
+            "ruletype": "",
+            "keypath": "workplan-plan"
+        }]
+    };
+
+    $.fn.scorerule.selfjudge = {
+        "name": "selfjudge",
+        "title": "自我评价",
+        "keys": [{
+            "label": "自我评价",
+            "ruletype": "",
+            "keypath": "selfjudge-info"
+        }]
+    };
+
+    $.fn.scorerule.speciality = {
+        "name": "speciality",
+        "title": "特长爱好",
+        "keys": [{
+            "label": "特长爱好",
+            "ruletype": "",
+            "keypath": "speciality-info"
+        }]
+    };
+
+    $.fn.scorerule.selfrecomadation = {
+        "name": "selfrecomadation",
+        "title": "自荐信",
+        "keys": [{
+            "label": "自荐信",
+            "ruletype": "",
+            "keypath": "selfrecomadation-info"
+        }]
+    };
+
+    $.fn.scorerule.otherinfo = {
+        "name": "otherinfo",
+        "title": "其他说明",
+        "keys": [{
+            "label": "其他说明",
+            "ruletype": "",
+            "keypath": "otherinfo-info"
+        }]
+    };
+
+    $.fn.scorerule.targetbank = {
+        "name": "targetbank",
+        "title": "报考银行、薪资收入、报考地区",
+        "keys": [{
+            "label": "报考银行",
+            "ruletype": "",
+            "keypath": "targetbank-bank"
+        }, {
+            "label": "报考地区",
+            "ruletype": "",
+            "keypath": "targetbank-area"
+        }, {
+            "label": "报考上述地区的理由",
+            "ruletype": "",
+            "keypath": "targetbank-reason"
+        }, {
+            "label": "期望年薪（税前含福利）",
+            "ruletype": "1,4,8",
+            "keypath": "targetbank-expect_salary"
+        }, {
+            "label": "期望参加笔试地点",
+            "ruletype": "",
+            "keypath": "targetbank-exam_place"
+        }, {
+            "label": "招聘信息来源",
+            "ruletype": "",
+            "keypath": "targetbank-info_source"
+        }]
+    };
+
+    $.fn.scorerule.promise = {
+        "name": "promise",
+        "title": "是否具有以下情况",
+        "keys": [{
+            "label": "是否曾受过处罚或处分",
+            "ruletype": "",
+            "keypath": "promise-is_punished"
+        }, {
+            "label": "是否曾患过重大疾病",
+            "ruletype": "",
+            "keypath": "promise-is_disease"
+        }, {
+            "label": "是否是本行员工",
+            "ruletype": "",
+            "keypath": "promise-is_thisbank_worker"
+        }, {
+            "label": "是否有亲属在本行工作",
+            "ruletype": "",
+            "keypath": "promise-is_relative_worker"
+        }]
+    };
 })(jQuery, window, document);

@@ -255,6 +255,28 @@
     "max":0
 }
 ```
+- 数字范围规则 【type：8】
+```javascript
+{
+    "name":"数字范围",
+    "type":8,
+    "rule":[
+        {
+            "begin":0,
+            "end":150,
+            "score":0
+        },
+        {
+            "begin":150,
+            "end":180,
+            "score":0
+        }
+        ...
+    ],
+    "max":0
+}
+```
+
 ## 四、控件scorerule.js使用说明
 ```javascript
 /*
@@ -381,7 +403,7 @@ $('#personal_scorerule').scorerule(['姓名','曾用名#1',...]);
 }
 ```
 
-## 七、简历内容json协议
+## 八、简历内容json协议
 ```javascript
 {
     "baseinfo":{
@@ -579,7 +601,7 @@ $('#personal_scorerule').scorerule(['姓名','曾用名#1',...]);
 }
 ```
 
-## 八、简历模板规则json协议
+## 九、简历模板规则json协议
 ```javascript
 {
   "baseinfo": {

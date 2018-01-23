@@ -35,6 +35,10 @@
     <!-- iCheck -->
     <link href="${path}/vendors/iCheck/skins/flat/grey.css" rel="stylesheet">
 
+     <!-- toastr -->
+    <link rel="stylesheet" type="text/css" href="${path}/css/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="${path}/css/sweetalert.css">
+
     <!-- Custom Theme Style -->
     <link href="${path}/css/custom.min.css" rel="stylesheet">
 </head>

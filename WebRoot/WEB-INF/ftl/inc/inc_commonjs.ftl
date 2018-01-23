@@ -24,5 +24,27 @@
 <!-- iCheck -->
 <script src="${path}/vendors/iCheck/icheck.min.js"></script>
 
+<!-- toastr -->
+<script src="${path}/js/toastr.min.js"></script>
+<script src="${path}/js/sweetalert.min.js"></script>
+
 <!-- Custom Theme Scripts -->
 <script src="${path}/js/custom.min.js"></script>
+
+<script>
+    //初始化提示框toastr的相关参数
+	toastr.options = {
+		"closeButton": true,
+		"debug": false,
+		"positionClass": "toast-bottom-right",
+		"onclick": null,
+		"showDuration": "300",
+		"hideDuration": "1000",
+		"timeOut": "5000",
+		"extendedTimeOut": "1000",
+		"showEasing": "swing",
+		"hideEasing": "linear",
+		"showMethod": "fadeIn",
+		"hideMethod": "fadeOut"
+	};
+</script>
