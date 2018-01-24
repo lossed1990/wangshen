@@ -16,7 +16,7 @@
         <div class="right_col" role="main">
             <div class="">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
                                 <h2>简历模板 <small>  </small></h2>
@@ -26,12 +26,12 @@
                                 <p class="text-muted font-13 m-b-30">
                                     此处展示了目前所有的简历模板，您可通过该页面进行修改与删除。
                                 </p>
-
                                 <!-- begin resume table -->
-                                <table id="table_resumetemplate" class="table table-striped table-bordered">
+                                <table id="table_resumetemplate" class="table table-striped table-bordered" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>模板名称</th>
+                                            <th>状态</th>
                                             <th>操作</th>
                                         </tr>
                                     </thead>
@@ -39,11 +39,10 @@
                                     </tbody>
                                 </table>
                                 <!-- end resume table -->
-
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
                         <div class="x_panel">
                             <div class="x_title">
                                 <h2>新增模板 <small>  </small></h2>
@@ -57,14 +56,14 @@
                                 <div class="form-horizontal form-label-left">
                                     <form id="form_edit_occupational_plan">
                                         <div class="form-group">
-                                            <label class="control-label col-md-1 col-sm-12 col-xs-12">简历名称</label>
-                                            <div class="col-md-4 col-sm-12 col-xs-12">
+                                            <label class="control-label col-md-1 col-sm-3 col-xs-12">简历名称</label>
+                                            <div class="col-md-4 col-sm-9 col-xs-12">
                                                 <input name="" type="text" class="form-control" value="">
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="control-label col-md-1 col-sm-12 col-xs-12">模板图片</label>
-                                            <div class="col-md-4 col-sm-12 col-xs-12">
+                                            <label class="control-label col-md-1 col-sm-3 col-xs-12">模板图片</label>
+                                            <div class="col-md-4 col-sm-9 col-xs-12">
                                                 <input id="input-picture" type="file" data-preview-file-type="text" >
                                             </div>
                                         </div>
@@ -99,15 +98,18 @@
     var $m_ui_table = $("#table_resumetemplate");  
     var m_tablecolumns = [ { 
             "data": "name"
-        },        {    
+        },        {     
+            "data": "enable"
+        },        {  
             "data":  null,
             "className":   "center",
-            "defaultContent":   '<a id="delrow" href="#"><i class="fa fa-trash-o"></i>修改</a>&nbsp;&nbsp;<a id="delrow" href="#"><i class="fa fa-trash-o"></i>删除</a>'      
+            "defaultContent":   '<a id="delrow" href="#"><i class="fa fa-trash-o"></i>修改</a>&nbsp;&nbsp;<a id="delrow" href="#"><i class="fa fa-trash-o"></i>禁用</a>&nbsp;&nbsp;<a id="delrow" href="#"><i class="fa fa-trash-o"></i>删除</a>'      
         }];
     var m_sourceSelect = new Array(); 
       
     var subItem = {
-        name: '中国银行模板'
+        name: '中国银行模板',
+        enable: '启用'
     };
     m_sourceSelect.push(subItem);
 

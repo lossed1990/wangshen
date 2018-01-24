@@ -5,17 +5,41 @@
 <script src="${path}/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
 <script src="${path}/vendors/google-code-prettify/src/prettify.js"></script>
 
+<script type="text/javascript" src="${path}/js/jquery.base64.js"></script>
+
 <!-- begin 富文本编辑框逻辑 -->
 <script>
     $(document).ready(function() {
+        $.base64.utf8encode = true;
+
         function initToolbarBootstrapBindings() {
-            var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
-                    'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
-                    'Times New Roman', 'Verdana'
-                ],
-                fontTarget = $('[title=Font]').siblings('.dropdown-menu');
+            var fonts = [
+                {
+                    "name":'SimSun',
+                    "tip":'宋体'
+                },{
+                    "name":'SimHei',
+                    "tip":'黑体'
+                },{
+                    "name":'Microsoft YaHei',
+                    "tip":'微软雅黑'
+                },{
+                    "name":'Microsoft JhengHei',
+                    "tip":'微软正黑体'
+                },{
+                    "name":'NSimSun',
+                    "tip":'新宋体'
+                },{
+                    "name":'FangSong',
+                    "tip":'仿宋'
+                },{
+                    "name":'KaiTi',
+                    "tip":'楷体'
+                }],    
+
+                fontTarget = $('[title=字体]').siblings('.dropdown-menu');
             $.each(fonts, function(idx, fontName) {
-                fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
+                fontTarget.append($('<li><a data-edit="fontName ' + fontName.name + '" style="font-family:\'' + fontName.name + '\'">' + fontName.tip + '</a></li>'));
             });
             $('a[title]').tooltip({
                 container: 'body'
@@ -64,6 +88,13 @@
 
         $('#editor').wysiwyg({
             fileUploadError: showErrorAlert
+        });
+
+        $("#editor").html("<div><ul><li>123</li></ul></div>");
+
+        $("#btn_save").click(function(){
+           // console.log($.base64.btoa($("#editor").html()));
+           // $('#editor').html($.base64.atob('PGRpdj48dWw+PGxpPmRlbW88L2xpPjwvdWw+PC9kaXY+', true));
         });
 
         window.prettyPrint;
