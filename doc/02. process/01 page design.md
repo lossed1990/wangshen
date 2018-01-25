@@ -712,7 +712,7 @@ $('#personal_scorerule').scorerule(['姓名','曾用名#1',...]);
 //反馈参数：公共结构
 
 ### 2. 广告获取
-#### URI: /file/download.page
+#### URI: /config/ads-get.json
 #### METHOD:AJAX GET，异步
 #### GET参数: 无
 
