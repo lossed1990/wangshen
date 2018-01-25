@@ -8,10 +8,10 @@ public class HelperUtilClass {
 		int i = fileName.lastIndexOf('.');
 		if((i > -1) && (i < (fileName.length())))
 		{
-			return fileName.substring(i);
+			return fileName.substring(i+1).toUpperCase();
 		}
 		
-		return ".jpg";
+		return "NA";
 	}
 	
 	//获取文件名

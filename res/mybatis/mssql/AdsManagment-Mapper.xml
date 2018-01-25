@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuexin.wangshen.dao.AdsManagmentDAO">
+
+	<!-- 保存广告信息 -->
+	<insert id="saveAdsInfo" parameterType="com.xuexin.wangshen.model.pojo.AdsDO" 
+			statementType="PREPARED">
+		INSERT INTO ads
+		(
+		  un_type
+		 ,vc_name
+		 ,ti_infotype
+		 ,tx_info
+		 ,dtime_lastmodified
+		)
+		VALUES
+		(
+		  #{nType} -- un_type - INT(11) NOT NULL
+		 ,#{strName} -- vc_name - VARCHAR(255)
+		 ,#{nInfoType} -- ti_infotype - TINYINT(4)
+		 ,#{strInfo} -- tx_info - TEXT
+		 ,NOW() -- dtime_lastmodified - DATETIME
+		);
+	</insert>
+	
+	<!-- 更新广告信息 -->
+	<update id="updateAdsInfo" parameterType="com.xuexin.wangshen.model.pojo.AdsDO" 
+			statementType="PREPARED">
+		UPDATE ads 
+		SET
+		 vc_name = #{strName} -- vc_name - VARCHAR(255)
+		 ,ti_infotype = #{nInfoType} -- ti_infotype - TINYINT(4)
+		 ,tx_info = #{strInfo} -- tx_info - LONGTEXT
+		 ,dtime_lastmodified = NOW() -- dtime_lastmodified - DATETIME
+		WHERE
+		  un_type = #{nType} -- un_type - INT(11) NOT NULL
+		;
+	</update>
+	
+	<!-- 删除广告信息 -->
+	<delete id="deleteAdsInfo" parameterType="java.lang.Integer" statementType="PREPARED">  
+        DELETE FROM ads
+        WHERE un_type = #{value};
+	</delete>
+	
+	<!-- 获取广告信息，通过文件id -->
+	<resultMap id="RM_AdsInfo" type="com.xuexin.wangshen.model.pojo.AdsDO">
+		<result column="un_type" property="nType" jdbcType="INTEGER" />
+		<result column="vc_name" property="strName" jdbcType="VARCHAR" />
+		<result column="ti_infotype" property="nInfoType" jdbcType="TINYINT" />
+		<result column="tx_info" property="strInfo" jdbcType="LONGVARCHAR" />
+		<result column="dtime_lastmodified" property="tsLastModifiedTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<select id="getAdsInfo" resultMap="RM_AdsInfo" parameterType="java.lang.Integer" statementType="PREPARED">
+		SELECT
+		  un_type,
+		  vc_name,
+		  ti_infotype,
+		  tx_info,
+		  dtime_lastmodified
+		FROM ads 
+		WHERE un_type = #{value};
+	</select>
+
+</mapper>

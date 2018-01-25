@@ -1,6 +1,5 @@
 USE wangshen;
 
-DROP TABLE g_errorinfo;
 CREATE TABLE g_errorinfo (
   c_errorcode char(10) NOT NULL COMMENT '错误码',
   vc_errorinfo varchar(255) NOT NULL COMMENT '错误描述',

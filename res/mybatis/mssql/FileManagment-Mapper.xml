@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuexin.wangshen.dao.FileManagmentDAO">
+
+	<!-- 保存文件信息 -->
+	<insert id="saveUploadFile" parameterType="com.xuexin.wangshen.model.pojo.FileInfoDO" 
+			statementType="PREPARED">
+		INSERT INTO files
+		(
+		  c_fileid
+		 ,un_filesize
+		 ,vc_relpath
+		 ,c_fileext
+		 ,un_upuser
+		 ,dtime_lastmodifile
+		 ,bi_deleteflag
+		)
+		VALUES
+		(
+		  #{strFileID} -- c_fileid - CHAR(32) NOT NULL
+		 ,#{nFileSize} -- un_filesize - INT(11)
+		 ,#{strFilePath} -- vc_relpath - VARCHAR(255)
+		 ,#{strFileExt} -- c_fileext - CHAR(8)
+		 ,#{nUpUserID} -- un_upuser - INT(11)
+		 ,NOW() -- dtime_lastmodifile - DATETIME
+		 ,0 -- bi_deleteflag - TINYINT(1) NOT NULL
+		);
+	</insert>
+	
+	<!-- 获取文件信息，通过文件id -->
+	<resultMap id="RM_FileInfo" type="com.xuexin.wangshen.model.pojo.FileInfoDO">
+		<result column="c_fileid" property="strFileID" jdbcType="CHAR" />
+		<result column="un_filesize" property="nFileSize" jdbcType="INTEGER" />
+		<result column="vc_relpath" property="strFilePath" jdbcType="VARCHAR" />
+		<result column="c_fileext" property="strFileExt" jdbcType="CHAR" />
+		<result column="un_upuser" property="nUpUserID" jdbcType="INTEGER" />
+		<result column="dtime_lastmodifile" property="tsUpTime" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<select id="getFileInfo" resultMap="RM_FileInfo" parameterType="java.lang.String" 
+			statementType="PREPARED">
+		SELECT
+		  c_fileid,
+		  un_filesize,
+		  vc_relpath,
+		  c_fileext,
+		  un_upuser,
+		  dtime_lastmodifile
+		FROM files
+		WHERE c_fileid = #{value} 
+		  AND bi_deleteflag = 0;
+	</select>
+
+</mapper>

@@ -1,4 +1,6 @@
-CREATE TABLE wangshen.users (
+USE wangshen;
+
+CREATE TABLE users (
   un_uid integer(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户自增ID',
   c_username char(20) DEFAULT NULL COMMENT '可选用户名',
   c_mobilenumder char(20) DEFAULT NULL COMMENT '用户手机号',

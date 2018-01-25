@@ -109,7 +109,8 @@ public class UserAction {
 	    //用户登陆页
 	    @RequestMapping(value = "/login.page", method=RequestMethod.GET)
 	    public String userLogin(Model model, HttpSession session) {
-	    	   	
+
+	    	
 
 	        return "page_user_login";
 	    }

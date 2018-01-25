@@ -679,3 +679,42 @@ $('#personal_scorerule').scorerule(['姓名','曾用名#1',...]);
 ....
 }
 ```
+
+
+## 十、文件上传下载接口
+### 1. 文件上传
+#### URI: /file/common-upload.json
+#### METHOD: FORM POST，异步 
+#### FORM参数:
+> file=上传文件
+
+//反馈参数：公共结构, result字段为文件ID
+
+### 2. 文件下载
+#### URI: /file/download.page
+#### METHOD: GET，数据流 
+#### GET参数:
+> fid=文件id
+
+//反馈为二进制数据流，可以直接用于下载或者img，video标签的src属性
+
+## 十一、广告设置接口
+### 1. 广告设置
+#### URI: /config/ads-save.json
+#### METHOD: AJAX POST，异步 
+#### JSON参数:
+```javascript
+{
+"data":"xxxxxxxxxxxxxxxxxxxx"
+}
+```
+
+//反馈参数：公共结构
+
+### 2. 广告获取
+#### URI: /file/download.page
+#### METHOD:AJAX GET，异步
+#### GET参数: 无
+
+//反馈参数：公共结构, result字段为广告的base64编码
+
