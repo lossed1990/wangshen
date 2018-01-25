@@ -90,15 +90,58 @@
             fileUploadError: showErrorAlert
         });
 
-        $("#editor").html("<div><ul><li>123</li></ul></div>");
-
         $("#btn_save").click(function(){
-           // console.log($.base64.btoa($("#editor").html()));
-           // $('#editor').html($.base64.atob('PGRpdj48dWw+PGxpPmRlbW88L2xpPjwvdWw+PC9kaXY+', true));
+            saveAdsConfig();
         });
 
-        window.prettyPrint;
-        prettyPrint();
+        getAdsConfig();
+
+        function getAdsConfig() {
+            $.ajax({    
+                type: "GET",
+                url: "${path}/config/ads-get.json",
+                dataType: "json",
+                success: function (data)  {
+                    console.log(data);
+                    if (data.ok) {
+                        $('#editor').html($.base64.atob(data.result, true));
+                    }
+                },
+                error: function() {
+                    toastr.error('获取广告配置信息失败，请刷新重试！');
+                }  
+            }); 
+        }
+
+        function saveAdsConfig() {
+            var data = JSON.stringify({
+                "data": $.base64.btoa($("#editor").html())
+                });
+            
+            if(data.length > 1024*1024){
+                toastr.error('广告配置图片及文字内容过多，请压缩图片或删除部分文字后重试！');
+                return;
+            }
+
+            $.ajax({    
+                type: "POST",
+                url: "${path}/config/ads-save.json",
+                cache:  false,
+                contentType: "application/json",
+                data: data,
+                dataType: "json",
+                success: function (data)  {
+                    if (data.ok) {
+                        toastr.success('广告配置信息保存成功！');
+                    } else {
+                        toastr.error(data.errorinfo);
+                    }  
+                },
+                error: function() {
+                    toastr.error('广告配置信息保存失败，请稍后重试！');
+                }  
+            }); 
+        }
     });
 </script>
 <!-- end 富文本编辑框逻辑 -->
