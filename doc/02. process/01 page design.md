@@ -330,7 +330,31 @@ $('#personal_scorerule').scorerule(['姓名','曾用名#1',...]);
 ```
 //反馈参数：公共结构
 
-### 4、删除模板（同时删除相关简历）
+### 4、修改模板名称
+#### URI: /resumetmpl/resumetemplates-mod-name.json
+#### METHOD: JSON POST，异步
+#### JSON参数:
+```javascript
+{
+    "temp_id"	:"xxxxx",
+    "new_name"	:"XXX"
+}
+```
+//反馈参数：公共结构
+
+### 5、修改模板图片
+#### URI: /resumetmpl/resumetemplates-mod-cover.json
+#### METHOD: JSON POST，异步
+#### JSON参数:
+```javascript
+{
+    "temp_id"	:"xxxxx",
+    "new_cover_id"	:"XXX"
+}
+```
+//反馈参数：公共结构
+
+### 6、删除模板（同时删除相关简历）
 #### URI: /resumetmpl/resumetemplates-purgeremove.json
 #### METHOD: GET，异步
 #### GET参数:
@@ -338,13 +362,13 @@ $('#personal_scorerule').scorerule(['姓名','曾用名#1',...]);
 
 //反馈参数：公共结构
 
-### 5、获取所有模板（概览）
+### 7、获取所有模板（概览）
 #### URI: /resumetmpl/resumetemplates-list.page
 #### METHOD: GET，同步
 #### GET参数:无
 【结果】跳转“模板列表界面” 
 
-### 6、获取模板详情
+### 8、获取模板详情
 #### URI: /resumetmpl/resumetemplates-detail.json
 #### METHOD: GET，异步
 #### GET参数:

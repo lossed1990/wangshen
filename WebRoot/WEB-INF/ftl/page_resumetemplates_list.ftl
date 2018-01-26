@@ -30,12 +30,21 @@
                                 <table id="table_resumetemplate" class="table table-striped table-bordered" style="width:100%">
                                     <thead>
                                         <tr>
+                                            <th>模板编号</th>
                                             <th>模板名称</th>
                                             <th>状态</th>
                                             <th>操作</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <#list lstTemps as index>
+                                            <tr>
+                                                <td>${index.nTempID}</td>
+                                                <td>${index.strTempName}</td>
+                                                <td>${index.bEnable?string("启用","禁用")} </td>
+                                                <td></td>
+                                            </tr>
+                                        </#list>
                                     </tbody>
                                 </table>
                                 <!-- end resume table -->
@@ -54,7 +63,7 @@
                                 </p>
                                 <!-- begin edit --> 
                                 <div class="form-horizontal form-label-left">
-                                    <form id="form_new_temp">
+                                    <form id="form_new_temp" action="${path}/resumetmpl/resumetemplates-new.page" method="POST" enctype="application/x-www-form-urlencoded">
                                         <div class="form-group">
                                             <label class="control-label col-md-1 col-sm-3 col-xs-12">简历名称</label>
                                             <div class="col-md-4 col-sm-9 col-xs-12">
@@ -84,6 +93,46 @@
         </div>
         <!-- /page content -->
 
+        <!-- modal-->
+        <div class="modal fade bs-example-modal-sm" id="modal_change_name" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">修改模板名称</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5>新模板名称：</h5>
+                        <input class="form-control" id="input_new_name" type="text" placeholder="">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" id="btn_change_name">保存设置</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade bs-example-modal-sm" id="modal_change_logo" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">修改模板图片</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h5>新模板名称：</h5>
+                        <input id="input_new_logo" type="file" name="file" data-preview-file-type="text" >
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" id="btn_change_logo">保存设置</button>
+                    </div>
+                </div>
+            </div>
+        </div>    
+        <!-- /modal-->
+
         <#include "inc/inc_footer.ftl" />
 
     </div>
@@ -98,26 +147,72 @@
     //table test
     var $m_ui_table = $("#table_resumetemplate");  
     var m_tablecolumns = [ { 
-            "data": "name"
+            "data": "id"
         },        {     
+            "data": "name"
+        },        { 
             "data": "enable"
         },        {  
             "data":  null,
             "className":   "center",
-            "defaultContent":   '<a id="delrow" href="#"><i class="fa fa-trash-o"></i>修改</a>&nbsp;&nbsp;<a id="delrow" href="#"><i class="fa fa-trash-o"></i>禁用</a>&nbsp;&nbsp;<a id="delrow" href="#"><i class="fa fa-trash-o"></i>删除</a>'      
+            "defaultContent":   '<a id="menu_change_name" href="#"><i class="fa fa-trash-o"></i>修改名称</a>&nbsp;&nbsp;<a id="menu_change_logo" href="#"><i class="fa fa-trash-o"></i>修改图片</a>&nbsp;&nbsp;<a id="delrow" href="#"><i class="fa fa-trash-o"></i>禁用</a>&nbsp;&nbsp;<a id="delrow" href="#"><i class="fa fa-trash-o"></i>删除</a>'      
         }];
-    var m_sourceSelect = new Array(); 
-      
-    var subItem = {
-        name: '中国银行模板',
-        enable: '启用'
-    };
-    m_sourceSelect.push(subItem);
-
+    
     $m_ui_table.DataTable({
         destroy: true, //可重新加载
-        data: m_sourceSelect,
         columns: m_tablecolumns
+    });
+
+    $m_ui_table.on( 'click', 'a#menu_change_name', function (even)  {        
+        var data = $m_ui_table.DataTable().row($(this).parents('tr')).data();  
+        
+        $("#input_new_name").attr("data",data.id);
+        $("#modal_change_name").modal();
+    }); 
+
+    $m_ui_table.on( 'click', 'a#menu_change_logo', function (even)  {        
+        var data = $m_ui_table.DataTable().row($(this).parents('tr')).data();  
+        
+        $("#input_new_logo").attr("data",data.id);
+        $("#modal_change_logo").modal();
+    });
+
+    $("#btn_change_name").click(function(){
+        if($("#input_new_name").val().trim() == ''){
+            toastr.error('新模板名称不能为空！'); 
+            return;
+        }
+
+        var param = {
+            "temp_id": $("#input_new_name").attr("data"),
+            "new_name": $("#input_new_name").val().trim(),
+        };
+
+        console.log(param);
+
+        $.ajax({               
+            url: "${path}/resumetmpl/resumetemplates-mod-name.json",
+            type: 'POST',
+            dataType: 'json',
+            data: JSON.stringify(param),
+            success: function(result) {              
+                if  (result.ok) {  
+                    toastr.success('模板名称修改成功');           
+                    //刷新页面
+                    window.location.reload();
+                } 
+                else {
+                    toastr.error('模板名称修改失败,' + result.errorinfo); 
+                }              
+            },
+            error: function() {              
+                toastr.error('模板名称修改失败,请检查服务器及网络后重试！');            
+            }           
+        });
+    });
+
+    $("#btn_change_logo").click(function(){
+        $("#input_new_logo").fileinput("upload");
     });
 
     $("#input-picture").fileinput({
@@ -134,8 +229,21 @@
         }
     });
 
+    $("#input_new_logo").fileinput({
+        language : 'zh',
+        uploadAsync: true,
+        uploadUrl: "${path}/file/common-upload.json", //上传的地址
+        allowedFileExtensions : ['jpg', 'png'],//接收的文件后缀,
+        maxFileCount: 1,
+        dropZoneEnabled: false,
+        showUpload: false,
+        enctype: 'multipart/form-data',
+        layoutTemplates: {
+            actionUpload:''
+        }
+    });
+    
     $("#input-picture").on("fileuploaded", function(event, data, previewId, index) {
-        console.log(data.response);
         if(data.response.ok){
             $("#templatecover_id").val(data.response.result);
             
@@ -147,6 +255,40 @@
             $("#form_new_temp").submit();
         }else{
             toastr.error(data.response.errorinfo);
+        }
+    });
+
+    $("#input_new_logo").on("fileuploaded", function(event, data, previewId, index) {
+        if(data.response.ok){
+            //图片上传成功后，修改数据库
+            var param = {
+                "temp_id": $("#input_new_logo").attr("data"),
+                "new_cover_id": data.response.result
+            };
+
+            console.log(param);
+
+            $.ajax({               
+                url: "${path}/resumetmpl/resumetemplates-mod-cover.json",
+                type: 'POST',
+                dataType: 'json',
+                data: JSON.stringify(param),
+                success: function(result) {              
+                    if  (result.ok) {  
+                        toastr.success('模板图片修改成功');           
+                        //刷新页面
+                        //window.location.reload();
+                    } 
+                    else {
+                        toastr.error('模板图片修改失败,' + result.errorinfo); 
+                    }              
+                },
+                error: function() {              
+                    toastr.error('模板图片修改失败,请检查服务器及网络后重试！');            
+                }           
+            });
+        }else{
+            toastr.error('图片上传失败，' + data.response.errorinfo);
         }
     });
 

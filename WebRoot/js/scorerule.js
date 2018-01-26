@@ -1573,12 +1573,13 @@ if (typeof Object.create !== 'function') {
     };
 
     var SubModule = {
-        init: function(options, elem, temp_id) {
+        init: function(options, elem, temp_id, save_callback) {
             var self = this;
             self.elem = elem;
             self.$elem = $(elem);
             self.temp_id = temp_id;
             self.options = options;
+            self.save_callback = save_callback;
             self.data = {
                 "show": true,
                 "max": 0,
@@ -1825,179 +1826,125 @@ if (typeof Object.create !== 'function') {
             };
 
             console.log('submit saveinfo：' + JSON.stringify(param));
-
-            $.ajax({    
-                type: "POST",
-                url: "/resumetmpl/resumetemplates-part-save.json",
-                cache:  false,
-                data: JSON.stringify(param),
-                dataType: "json",
-                success: function (result)  {
-                    if (result.ok) {
-                        toastr.success('配置信息保存成功！');
-                    } else {
-                        toastr.error(result.errorinfo);
-                    }  
-                },
-                error: function() {
-                    toastr.error('配置信息保存失败，请稍后重试！');
-                }  
-            }); 
+            self.save_callback(param);
         }
     };
 
     var Manager = {
-        init: function(elem, temp_id) {
+        init: function(elem, temp_id, save_callback, data) {
             var self = this;
             self.elem = elem;
             self.$elem = $(elem);
             self.temp_id = temp_id;
+            self.save_callback = save_callback;
             self.subs = [];
-            self.initUI();
+            self.initUI(data);
         },
 
         //初始化设置界面
-        initUI: function() {
+        initUI: function(data) {
             var self = this;
 
             var subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.baseinfo, self.elem, self.temp_id);
+            subModule.init($.fn.scorerule.baseinfo, self.elem, self.temp_id, self.save_callback);
             self.subs.push(subModule);
 
             subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.education, self.elem, self.temp_id);
+            subModule.init($.fn.scorerule.education, self.elem, self.temp_id, self.save_callback);
             self.subs.push(subModule);
 
             subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.rewards, self.elem, self.temp_id);
+            subModule.init($.fn.scorerule.rewards, self.elem, self.temp_id, self.save_callback);
             self.subs.push(subModule);
 
             subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.language, self.elem, self.temp_id);
+            subModule.init($.fn.scorerule.language, self.elem, self.temp_id, self.save_callback);
             self.subs.push(subModule);
 
             subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.computer, self.elem, self.temp_id);
+            subModule.init($.fn.scorerule.computer, self.elem, self.temp_id, self.save_callback);
             self.subs.push(subModule);
 
             subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.student_ganbu, self.elem, self.temp_id);
+            subModule.init($.fn.scorerule.student_ganbu, self.elem, self.temp_id, self.save_callback);
             self.subs.push(subModule);
 
             subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.trainning, self.elem, self.temp_id);
+            subModule.init($.fn.scorerule.trainning, self.elem, self.temp_id, self.save_callback);
             self.subs.push(subModule);
 
             subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.shijian, self.elem, self.temp_id);
+            subModule.init($.fn.scorerule.shijian, self.elem, self.temp_id, self.save_callback);
             self.subs.push(subModule);
 
             subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.shixi, self.elem, self.temp_id);
+            subModule.init($.fn.scorerule.shixi, self.elem, self.temp_id, self.save_callback);
             self.subs.push(subModule);
 
             subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.zigezhengshu, self.elem, self.temp_id);
+            subModule.init($.fn.scorerule.zigezhengshu, self.elem, self.temp_id, self.save_callback);
             self.subs.push(subModule);
 
             subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.family, self.elem, self.temp_id);
+            subModule.init($.fn.scorerule.family, self.elem, self.temp_id, self.save_callback);
             self.subs.push(subModule);
 
             subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.dissertation, self.elem, self.temp_id);
+            subModule.init($.fn.scorerule.dissertation, self.elem, self.temp_id, self.save_callback);
             self.subs.push(subModule);
 
             subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.workplan, self.elem, self.temp_id);
+            subModule.init($.fn.scorerule.workplan, self.elem, self.temp_id, self.save_callback);
             self.subs.push(subModule);
 
             subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.selfjudge, self.elem, self.temp_id);
+            subModule.init($.fn.scorerule.selfjudge, self.elem, self.temp_id, self.save_callback);
             self.subs.push(subModule);
 
             subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.speciality, self.elem, self.temp_id);
+            subModule.init($.fn.scorerule.speciality, self.elem, self.temp_id, self.save_callback);
             self.subs.push(subModule);
 
             subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.selfrecomadation, self.elem, self.temp_id);
+            subModule.init($.fn.scorerule.selfrecomadation, self.elem, self.temp_id, self.save_callback);
             self.subs.push(subModule);
 
             subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.otherinfo, self.elem, self.temp_id);
+            subModule.init($.fn.scorerule.otherinfo, self.elem, self.temp_id, self.save_callback);
             self.subs.push(subModule);
 
             subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.targetbank, self.elem, self.temp_id);
+            subModule.init($.fn.scorerule.targetbank, self.elem, self.temp_id, self.save_callback);
             self.subs.push(subModule);
 
             subModule = Object.create(SubModule);
-            subModule.init($.fn.scorerule.promise, self.elem, self.temp_id);
+            subModule.init($.fn.scorerule.promise, self.elem, self.temp_id, self.save_callback);
             self.subs.push(subModule);
 
             self.createModle();
             self.setTrigger();
-            self.requestTempData();
+            self.requestTempData(data);
         },
 
         //获取模板详情
-        requestTempData: function() {
+        requestTempData: function(data) {
             var self = this;
 
-            //todo:test
-            var data = {
-                "baseinfo": {
-                    "show": false,
-                    "max": 121,
-                    "keys": [{
-                            "keypath": "baseinfo-name",
-                            "enable": false,
-                            "judge": {
-                                "name": "是否填写",
-                                "type": 1,
-                                "score": 1
-                            }
-                        },
-                        {
-                            "keypath": "baseinfo-old_name",
-                            "enable": true,
-                            "judge": {
-                                "name": "是否填写",
-                                "type": 1,
-                                "score": 1
-                            }
-                        }
-                    ]
-                }
-            };
+            console.log('requestTempData:' + data);
             self.setTempData(data);
             self.startListenCheckChangeEvent();
-
-            //release
-            // $.ajax({    
-            //     type: "GET",
-            //     url: "/resumetmpl/resumetemplates-detail.json",
-            //     cache:  false,
-            //     data: { 'temp_id': self.temp_id },
-            //     dataType: "json",
-            //     success: function (result)  {
-            //         if (result.ok) {
-            //             self.setTempData(result.result);
-            //         }
-            //         self.startListenCheckChangeEvent(); 
-            //     }
-            // }); 
         },
 
         //刷新模板界面
         setTempData: function(data) {
             var self = this;
             //按模块名称，设置各模块数据
-            for (var i = 0; i < self.subs.length; ++i) {
-                var subName = self.subs[i].getSubName();
-                if (data[subName]) {
-                    self.subs[i].setTempData(data[subName]);
+            if (data) {
+                for (var i = 0; i < self.subs.length; ++i) {
+                    var subName = self.subs[i].getSubName();
+                    if (data[subName]) {
+                        self.subs[i].setTempData(data[subName]);
+                    }
                 }
             }
         },
@@ -2168,10 +2115,10 @@ if (typeof Object.create !== 'function') {
     //     }
     // };
 
-    $.fn.scorerule = function(temp_id) {
+    $.fn.scorerule = function(temp_id, save_callback, data) {
         return this.each(function() {
             var scoreruleObj = Object.create(Manager);
-            scoreruleObj.init(this, temp_id);
+            scoreruleObj.init(this, temp_id, save_callback, data);
         });
     };
 
