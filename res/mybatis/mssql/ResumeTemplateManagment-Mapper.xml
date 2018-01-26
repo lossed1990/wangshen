@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuexin.wangshen.dao.ResumeTemplateManagmentDAO">
+
+	<!-- 新建模板信息 -->
+	<insert id="saveTemplateInfo" parameterType="com.xuexin.wangshen.model.pojo.ResumeTemplateDO" 
+			statementType="PREPARED" useGeneratedKeys="true" keyProperty="nTempID">
+		INSERT INTO rstemplate
+		(
+		  un_tempid
+		 ,vc_tempname
+		 ,vc_tempinfo
+		 ,vc_temppic
+		 ,js_temp
+		 ,dtime_lastmodified
+		 ,bi_enableflag
+		 ,bi_deleteflag
+		)
+		VALUES
+		(
+		  #{nTempID} -- un_tempid - INT(11) NOT NULL
+		 ,#{strTempName} -- vc_tempname - VARCHAR(255) NOT NULL
+		 ,'' -- vc_tempinfo - VARCHAR(255)
+		 ,#{strTempPic} -- vc_temppic - VARCHAR(255)
+		 ,'{}' -- js_temp - JSON
+		 ,NOW() -- dtime_lastmodified - DATETIME
+		 ,1 -- bi_enableflag - TINYINT(1)
+		 ,0 -- bi_deleteflag - TINYINT(1)
+		);
+	</insert>
+	
+	<!-- 更新模板 -->
+	<update id="updateTemplateInfo" parameterType="com.xuexin.wangshen.model.pojo.ResumeTemplateDO" 
+			statementType="PREPARED">
+		UPDATE rstemplate 
+		
+		<trim prefix="SET" prefixOverrides=",">  
+			<if test="strTempName != null">
+			  ,vc_tempname = #{strTempName} -- vc_tempname - VARCHAR(255) NOT NULL
+			</if>
+			<if test="strTempPic != null">
+			  ,vc_temppic = #{strTempPic} -- vc_temppic - VARCHAR(255)
+			</if>
+			<if test="strTempJson != null">
+			  ,js_temp = #{strTempJson} -- js_temp - JSON
+			</if>
+			<if test="strTempName == null and strTempPic == null and strTempJson == null">
+			  ,bi_enableflag = #{bEnable} -- bi_enableflag - TINYINT(1)
+			</if>
+		</trim>
+		
+		 ,dtime_lastmodified = NOW() -- dtime_lastmodified - DATETIME
+		WHERE
+		  un_tempid = #{nTempID} -- un_tempid - INT(11) NOT NULL
+		;
+	</update>
+	
+	<!-- 获取模板信息，通过模板id -->
+	<resultMap id="RM_ResumTemplateInfo" type="com.xuexin.wangshen.model.pojo.ResumeTemplateDO">
+		<result column="un_tempid" property="nTempID" jdbcType="INTEGER" />
+		<result column="vc_tempname" property="strTempName" jdbcType="VARCHAR" />
+		<result column="vc_tempinfo" property="strTempInfo" jdbcType="VARCHAR" />
+		<result column="vc_temppic" property="strTempPic" jdbcType="VARCHAR" />
+		<result column="js_temp" property="strTempJson" jdbcType="LONGVARCHAR" />
+		<result column="dtime_lastmodified" property="tsLastModified" jdbcType="TIMESTAMP" />
+		<result column="bi_enableflag" property="bEnable" jdbcType="BOOLEAN" />
+	</resultMap>
+
+	<select id="getTemplateInfo" resultMap="RM_ResumTemplateInfo" parameterType="java.lang.Integer" statementType="PREPARED">
+		SELECT
+		  un_tempid,
+		  vc_tempname,
+		  vc_tempinfo,
+		  vc_temppic,
+		  js_temp,
+		  dtime_lastmodified,
+		  bi_enableflag
+		FROM rstemplate 
+		WHERE un_tempid = #{value} 
+		AND bi_deleteflag = 0;
+	</select>
+	
+	<!-- 获取模板列表，过滤是否启用 -->
+	<select id="listTemplateInfo" resultMap="RM_ResumTemplateInfo" parameterType="java.lang.Boolean" statementType="PREPARED">
+		SELECT
+		  un_tempid,
+		  vc_tempname,
+		  vc_tempinfo,
+		  vc_temppic,
+		  js_temp,
+		  dtime_lastmodified,
+		  bi_enableflag
+		FROM rstemplate 
+		WHERE bi_deleteflag = 0 
+		<if test="bOnlyShowEnable == true">
+			AND bi_enableflag = 1
+		</if>
+		;
+	</select>
+	
+	<!-- 删除模板，附带删除对应简历(打删除标记) -->
+	<update id="deleteTemplatePurge" parameterType="java.lang.Integer" statementType="PREPARED">  
+        UPDATE resumes 
+		SET bi_deleteflag = 1
+		WHERE un_tempid = #{value};
+		  
+		UPDATE rstemplate 
+		SET bi_deleteflag = 1
+		WHERE un_tempid = #{value};
+	</update>
+
+</mapper>

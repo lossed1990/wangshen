@@ -14,7 +14,7 @@ import com.xuexin.wangshen.model.pojo.UserInfoDO;
 
 
 /*
- * 用户DAO操作测试类
+ * 模板操走DAO操作测试类
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)

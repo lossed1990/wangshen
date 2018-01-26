@@ -293,7 +293,7 @@ $('#personal_scorerule').scorerule(['姓名','曾用名#1',...]);
 
 ## 五、简历模板相关接口
 #### 1、新建简历模板
-#### URI: /resumetmpl/resumetemplates_new.page
+#### URI: /resumetmpl/resumetemplates-new.page
 #### METHOD: FORM POST, 同步
 #### FORM参数:
 > templatename=模板名称

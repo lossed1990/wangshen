@@ -33,6 +33,13 @@ public class UserInfoServiceTest {
 	@Test
 	public void testSaveUserInfo() {
 		
+		
+		String strTestJSON = "{\"key\":1, \"a\":2}";
+		JSONObject jsonObjnew = JSON.parseObject(strTestJSON);
+		UserInfoInputFormDTO newthing = new UserInfoInputFormDTO();
+		jsonObjnew.put("key", newthing);
+		String jsonString = JSON.toJSONString(jsonObjnew);
+		
     	String strJSON = "{\"key1\":\"value1\",\"key2_array\":[{\"arra_key1\":1,\"arra_key2\":2,\"sub_array_key\":[{\"sss_key\":\"f1\",\"sss_key2\":22},{\"sss_key\":\"f2\",\"sss_key2\":33}]},{\"arra_key1\":2,\"arra_key2\":4,\"sub_array_key\":[{\"sss_key\":\"f3\",\"sss_key2\":44},{\"sss_key\":\"f4\",\"sss_key2\":55}]}],\"key3\":{\"key_obj1\":\"value3\",\"key_obj2\":2}}";   	
         JSONObject jsonObj = JSON.parseObject(strJSON);
         
