@@ -54,25 +54,26 @@
                                 </p>
                                 <!-- begin edit --> 
                                 <div class="form-horizontal form-label-left">
-                                    <form id="form_edit_occupational_plan">
+                                    <form id="form_new_temp">
                                         <div class="form-group">
                                             <label class="control-label col-md-1 col-sm-3 col-xs-12">简历名称</label>
                                             <div class="col-md-4 col-sm-9 col-xs-12">
-                                                <input name="" type="text" class="form-control" value="">
+                                                <input id="templatename" name="templatename" type="text" class="form-control" value="">
                                             </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-1 col-sm-3 col-xs-12">模板图片</label>
-                                            <div class="col-md-4 col-sm-9 col-xs-12">
-                                                <input id="input-picture" type="file" data-preview-file-type="text" >
-                                            </div>
-                                        </div>
-                                        <div class="form-group" >
-                                            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
-                                                <button type="submit" class="btn btn-primary" >新增</button>
-                                            </div >
+                                            <input id="templatecover_id" name="templatecover_id" type="hidden" value="">
                                         </div>
                                     </form>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-1 col-sm-3 col-xs-12">模板图片</label>
+                                        <div class="col-md-4 col-sm-9 col-xs-12">
+                                            <input id="input-picture" type="file" name="file" data-preview-file-type="text" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group" >
+                                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
+                                            <button id="btn_add" type="submit" class="btn btn-primary" >新增</button>
+                                        </div >
+                                    </div>
                                 </div >
                                 <!-- end edit --> 
                             </div>
@@ -119,7 +120,44 @@
         columns: m_tablecolumns
     });
 
-    $("#input-picture").fileinput({language : 'zh'});
+    $("#input-picture").fileinput({
+        language : 'zh',
+        uploadAsync: true,
+        uploadUrl: "${path}/file/common-upload.json", //上传的地址
+        allowedFileExtensions : ['jpg', 'png'],//接收的文件后缀,
+        maxFileCount: 1,
+        dropZoneEnabled: false,
+        showUpload: false,
+        enctype: 'multipart/form-data',
+        layoutTemplates: {
+            actionUpload:''
+        }
+    });
+
+    $("#input-picture").on("fileuploaded", function(event, data, previewId, index) {
+        console.log(data.response);
+        if(data.response.ok){
+            $("#templatecover_id").val(data.response.result);
+            
+            if($("#templatecover_id").val().trim() == ''){
+                toastr.error('模板图片不能为空');     
+                return;
+            }
+
+            $("#form_new_temp").submit();
+        }else{
+            toastr.error(data.response.errorinfo);
+        }
+    });
+
+    $("#btn_add").click(function(){
+        if($("#templatename").val().trim() == ''){
+            toastr.error('模板名称不能为空');     
+            return;
+        }
+
+        $("#input-picture").fileinput("upload");
+    });
 </script>
 
 </body>
