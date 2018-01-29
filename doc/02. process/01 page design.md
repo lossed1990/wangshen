@@ -377,7 +377,27 @@ $('#personal_scorerule').scorerule(['姓名','曾用名#1',...]);
 //反馈参数：公共结构，result字段为模板json
 
 ## 六、简历相关接口
-### 1、删除简历
+### 1、新建/编辑简历
+#### URI: /resume/resume-edit.page
+#### METHOD: GET，异步
+#### GET参数:
+
+#### 新建简历
+> temp_id=模板id
+
+【结果】跳转“简历编辑界面”
+ 通过request(temp_id),获取模板id
+ 通过request(resume_guid),获取新建简历guid
+ 
+#### 修改简历
+> resume_guid=简历guid
+
+【结果】跳转“简历编辑界面”
+ 通过request(temp_id),获取模板id
+ 通过request(resume_guid),获取新建简历guid
+
+
+### 2、删除简历
 #### URI: /resume/resume-remove.json
 #### METHOD: GET，异步
 #### GET参数:
@@ -385,7 +405,7 @@ $('#personal_scorerule').scorerule(['姓名','曾用名#1',...]);
 
 //反馈参数：公共结构
 
-### 2、保存简历某一模块
+### 3、保存简历某一模块
 #### URI: /resume/resume-part-save.json
 #### METHOD: JSON POST，异步
 #### JSON 参数:
@@ -398,7 +418,7 @@ $('#personal_scorerule').scorerule(['姓名','曾用名#1',...]);
 ```
 //反馈参数：公共结构
 
-### 3、获取简历某一模块详情
+### 4、获取简历某一模块详情
 #### URI: /resume/resume-part-detail.json
 #### METHOD: GET，异步
 #### GET参数:
@@ -408,7 +428,7 @@ $('#personal_scorerule').scorerule(['姓名','曾用名#1',...]);
 
 //反馈参数：公共结构, result字段为简历对应模块json
 
-### 4、获取简历详情
+### 5、获取简历详情
 #### URI: /resume/resume-view.page
 #### METHOD: GET，同步
 #### GET参数:
