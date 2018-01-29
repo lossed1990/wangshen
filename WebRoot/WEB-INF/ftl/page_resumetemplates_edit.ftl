@@ -9,7 +9,6 @@
 <div class="container body">
     <div class="main_container">
         <#include "inc/inc_leftmenu_admin.ftl" />
-
         <#include "inc/inc_toprightnav.ftl" />
 
         <!-- page content -->
@@ -22,13 +21,10 @@
         <!-- /page content -->
 
         <#include "inc/inc_footer.ftl" />
-
     </div>
 </div>
 
-
 <#include "inc/inc_commonjs.ftl" />
-
 <#include "inc/inc_datatablejs.ftl" />
 
 <script src="${path}/js/scorerule.js"></script>
@@ -60,7 +56,8 @@
             checkboxClass: 'icheckbox_flat-grey'
         });
     }
-
+ 
+    //通过模板id，获取配置详情，并初始化界面
     $.ajax({    
         type: "GET",
         url: "${path}/resumetmpl/resumetemplates-detail.json",

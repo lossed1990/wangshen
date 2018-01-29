@@ -42,7 +42,13 @@
                                                 <td>${index.nTempID}</td>
                                                 <td>${index.strTempName}</td>
                                                 <td>${index.bEnable?string("启用","禁用")} </td>
-                                                <td></td>
+                                                <td>
+                                                    <a id="menu_change_name" href="#"><i class="fa fa-pencil-square-o"></i>修改名称</a>&nbsp;&nbsp;
+                                                    <a id="menu_change_logo" href="#"><i class="fa fa-file-image-o"></i>修改图片</a>&nbsp;&nbsp;
+                                                    <a id="menu_change_rule" href="#"><i class="fa fa-object-ungroup"></i>修改模板</a>&nbsp;&nbsp;
+                                                    <a id="menu_change_enable" href="#"><i class="fa fa-sliders"></i>${index.bEnable?string("禁用模板","启用模板")}</a>&nbsp;&nbsp;
+                                                    <a id="menu_delete" href="#"><i class="fa fa-trash-o"></i>删除模板</a>
+                                                </td>
                                             </tr>
                                         </#list>
                                     </tbody>
@@ -146,35 +152,95 @@
 <script>
     //table test
     var $m_ui_table = $("#table_resumetemplate");  
-    var m_tablecolumns = [ { 
-            "data": "id"
-        },        {     
-            "data": "name"
-        },        { 
-            "data": "enable"
-        },        {  
-            "data":  null,
-            "className":   "center",
-            "defaultContent":   '<a id="menu_change_name" href="#"><i class="fa fa-trash-o"></i>修改名称</a>&nbsp;&nbsp;<a id="menu_change_logo" href="#"><i class="fa fa-trash-o"></i>修改图片</a>&nbsp;&nbsp;<a id="delrow" href="#"><i class="fa fa-trash-o"></i>禁用</a>&nbsp;&nbsp;<a id="delrow" href="#"><i class="fa fa-trash-o"></i>删除</a>'      
-        }];
-    
-    $m_ui_table.DataTable({
-        destroy: true, //可重新加载
-        columns: m_tablecolumns
-    });
+    $m_ui_table.DataTable();
 
     $m_ui_table.on( 'click', 'a#menu_change_name', function (even)  {        
         var data = $m_ui_table.DataTable().row($(this).parents('tr')).data();  
         
-        $("#input_new_name").attr("data",data.id);
+        $("#input_new_name").attr("data",data[0]);
         $("#modal_change_name").modal();
     }); 
 
     $m_ui_table.on( 'click', 'a#menu_change_logo', function (even)  {        
         var data = $m_ui_table.DataTable().row($(this).parents('tr')).data();  
         
-        $("#input_new_logo").attr("data",data.id);
+        $("#input_new_logo").attr("data",data[0]);
         $("#modal_change_logo").modal();
+    });
+
+    $m_ui_table.on( 'click', 'a#menu_change_rule', function (even)  {        
+        var data = $m_ui_table.DataTable().row($(this).parents('tr')).data();  
+        window.location.href = '${path}/resumetmpl/resumetemplates-edit.page?temp_id=' + data[0];
+    });
+
+    $m_ui_table.on( 'click', 'a#menu_change_enable', function (even)  {        
+        var data = $m_ui_table.DataTable().row($(this).parents('tr')).data(); 
+        var enable = (data[2] == '启用') ? false : true;
+         
+        $.ajax({               
+            url: "${path}/resumetmpl/resumetemplates-enable.json",
+            type: 'POST',
+            contentType: "application/json",
+            dataType: 'json',
+            data: JSON.stringify({
+                "temp_id" : data[0],
+                "enable" : enable
+            }),
+            success: function(result) {              
+                if  (result.ok) {  
+                    //$m_ui_table.DataTable().row($(this).parents('tr')).data(data).draw();   
+                    //刷新页面
+                    window.location.reload();
+                } 
+                else {
+                    toastr.error('操作失败,' + result.result);       
+                }              
+            },
+            error: function() {              
+                toastr.error('操作失败,请检查服务器及网络后重试！');            
+            }           
+        });
+    });
+
+    $m_ui_table.on( 'click', 'a#menu_delete', function (even)  {        
+        even.preventDefault; //方法阻止元素发生默认的行为（例如，当点击提交按钮时阻止对表单的提交）。  
+        // 得到当前对象的值                 
+        var data = $m_ui_table.DataTable().row( $(this).parents('tr') ).data();  
+
+        var textInfoStr = "确定要删除模板[" + data[1] + "]吗？（注意：该操作将一并删除与之关联的简历信息）";
+        swal({  
+                title: "提示",
+                text: textInfoStr,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定删除",
+                cancelButtonText: "取消"
+            },
+            function(isConfirm) {  
+                if (isConfirm) {           
+                    $.ajax({               
+                        url: "${path}/resumetmpl/resumetemplates-purgeremove.json",
+                        type: 'GET',
+                        dataType: 'json',
+                        data:  {
+                            "temp_id": data[0]
+                        },
+                        success:  function(result) {              
+                            if (result.ok) {  
+                                //刷新页面
+                                window.location.reload();  
+                            } 
+                            else {
+                                toastr.error('删除失败,' + result.result); 
+                            }              
+                        },
+                        error: function() {              
+                            toastr.error('删除失败,请检查服务器及网络后重试！');            
+                        }           
+                    })  
+                }
+            });
     });
 
     $("#btn_change_name").click(function(){

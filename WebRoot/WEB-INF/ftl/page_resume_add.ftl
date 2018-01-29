@@ -24,7 +24,26 @@
                             </div>
                             <div class="x_content">
                                 <div class="row">
-                                    <!-- begin 一个入口示例 --> 
+                                    <#list lstTemps as index>
+                                        <div class="col-md-55">
+                                            <div class="thumbnail">
+                                                <div class="image view view-first">
+                                                    <img style="width: 100%; display: block;" src="${path}/file/download.page?fid=${index.strTempPic}" alt="image" />
+                                                    <div class="mask">
+                                                        <p>新建简历</p>
+                                                        <div class="tools tools-bottom">
+                                                            <a href="${path}/resume/resume-edit.page?temp_id=${index.nTempID}"><i class="fa fa-pencil"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="caption">
+                                                    <p>${index.strTempName}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </#list>
+
+                                    <!-- begin 一个入口示例  
                                     <div class="col-md-55">
                                         <div class="thumbnail">
                                             <div class="image view view-first">
@@ -41,71 +60,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- end 一个入口示例 --> 
-                                    <div class="col-md-55">
-                                        <div class="thumbnail">
-                                            <div class="image view view-first">
-                                                <img style="width: 100%; display: block;" src="${path}/image/media.jpg" alt="image" />
-                                                <div class="mask">
-                                                    <p>新建简历</p>
-                                                    <div class="tools tools-bottom">
-                                                        <a href="#"><i class="fa fa-pencil"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="caption">
-                                                <p>中国农业银行</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-55">
-                                        <div class="thumbnail">
-                                            <div class="image view view-first">
-                                                <img style="width: 100%; display: block;" src="${path}/image/media.jpg" alt="image" />
-                                                <div class="mask">
-                                                    <p>新建简历</p>
-                                                    <div class="tools tools-bottom">
-                                                        <a href="#"><i class="fa fa-pencil"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="caption">
-                                                <p>中国建设银行</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-55">
-                                        <div class="thumbnail">
-                                            <div class="image view view-first">
-                                                <img style="width: 100%; display: block;" src="${path}/image/media.jpg" alt="image" />
-                                                <div class="mask">
-                                                    <p>新建简历</p>
-                                                    <div class="tools tools-bottom">
-                                                        <a href="#"><i class="fa fa-pencil"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="caption">
-                                                <p>中国交通银行</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-55">
-                                        <div class="thumbnail">
-                                            <div class="image view view-first">
-                                                <img style="width: 100%; display: block;" src="${path}/image/media.jpg" alt="image" />
-                                                <div class="mask">
-                                                    <p>新建简历</p>
-                                                    <div class="tools tools-bottom">
-                                                        <a href="#"><i class="fa fa-pencil"></i></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="caption">
-                                                <p>招商银行</p>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    end 一个入口示例 --> 
                                 </div>
                             </div>
                         </div>
