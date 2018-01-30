@@ -2,6 +2,8 @@ package com.xuexin.wangshen.dao.test;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.xuexin.wangshen.dao.ResumeManagmentDAO;
 import com.xuexin.wangshen.model.pojo.ResumeDO;
+import com.xuexin.wangshen.model.pojo.ResumeListVO;
 import com.xuexin.wangshen.util.UniqueGenerator;
 
 
@@ -49,5 +52,20 @@ public class ResumeManagmentDAOTest {
 		ResumeDO resume = resumeDAO.getResumeByGUID("542A183D-7D7E-4FFA-92D0-6A4D6FBF32EF");
 		
 		assertNotNull(resume);
+	}
+	
+	@Test
+	public void testCountResumes() {
+		
+		int nCount = resumeDAO.countResumesByUser(1);
+		
+		assertEquals(nCount, 1);
+	}
+	
+	@Test
+	public void testListResumeInPage() {
+		List<ResumeListVO> lstResume = resumeDAO.listResumesInPageByUser(1, 0, 100);
+		
+		assertNotNull(lstResume);
 	}
 }

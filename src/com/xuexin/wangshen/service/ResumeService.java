@@ -2,7 +2,9 @@ package com.xuexin.wangshen.service;
 
 import java.util.List;
 
+import com.xuexin.wangshen.model.pojo.PagingInfo;
 import com.xuexin.wangshen.model.pojo.ResumeDO;
+import com.xuexin.wangshen.model.pojo.ResumeListVO;
 import com.xuexin.wangshen.model.pojo.ResumePartDTO;
 
 /*
@@ -29,4 +31,9 @@ public interface ResumeService {
 	 * 删除简历
 	 */
 	int deleteResume(String strGUID);
+	
+	/*
+	 * 列出简历，分页时按时间
+	 */
+	List<ResumeListVO> listResumesInPages(int nUserID, PagingInfo pageinfo);
 }

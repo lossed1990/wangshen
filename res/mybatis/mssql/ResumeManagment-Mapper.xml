@@ -75,5 +75,46 @@
 		SET bi_deleteflag = 1
 		WHERE c_resumeid = #{value};
 	</update>
+	
+	<!-- 简历计数，按用户 -->
+	<select id="countResumesByUser" resultType="java.lang.Integer" 
+			parameterType="java.lang.Integer" statementType="PREPARED">
+		SELECT COUNT(*) FROM resumes 
+		WHERE bi_deleteflag = 0 
+		<if test="value != 0">
+		AND un_userid = #{value}
+		</if>
+		;
+	</select>
+	
+	<!-- 分页查询简历 -->
+	<resultMap id="RM_ResumeInfoListVO" type="com.xuexin.wangshen.model.pojo.ResumeListVO">
+		<id column="c_resumeid" property="resume_id" jdbcType="VARCHAR" />
+		<result column="vc_tempname" property="tmplname" jdbcType="VARCHAR" />
+		<result column="vc_temppic" property="tmplpic" jdbcType="VARCHAR" />
+		<association property="resume" resultMap="RM_ResumeInfo"/>
+	</resultMap>
+	
+	<select id="listResumesInPageByUser" resultMap="RM_ResumeInfoListVO" statementType="PREPARED">
+		SELECT
+		  rs.c_resumeid,
+		  rs.c_resumename,
+		  rs.un_tempid,
+		  tmp.vc_tempname,
+		  tmp.vc_temppic,
+		  rs.un_userid,
+		  rs.js_resume,
+		  rs.un_lastmodifieduser,
+		  rs.dtime_lastmodified
+		FROM resumes AS rs
+		LEFT JOIN rstemplate AS tmp 
+		ON rs.un_tempid = tmp.un_tempid
+		WHERE rs.bi_deleteflag = 0 
+		<if test="nUserID != 0">
+		AND rs.un_userid = #{nUserID} 
+		</if>
+		ORDER BY rs.dtime_lastmodified DESC 
+		LIMIT #{nStart}, #{nEnd};
+	</select>
 
 </mapper>

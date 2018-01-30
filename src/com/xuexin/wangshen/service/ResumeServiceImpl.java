@@ -1,5 +1,7 @@
 package com.xuexin.wangshen.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -7,9 +9,10 @@ import org.springframework.stereotype.Service;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xuexin.wangshen.dao.ResumeManagmentDAO;
+import com.xuexin.wangshen.model.pojo.PagingInfo;
 import com.xuexin.wangshen.model.pojo.ResumeDO;
+import com.xuexin.wangshen.model.pojo.ResumeListVO;
 import com.xuexin.wangshen.model.pojo.ResumePartDTO;
-import com.xuexin.wangshen.model.pojo.ResumeTemplateDO;
 import com.xuexin.wangshen.util.UniqueGenerator;
 
 @Service("resumeService")
@@ -65,6 +68,25 @@ public class ResumeServiceImpl implements ResumeService {
 		resNew.setStrResumeJOSN(strNewJSON);
 
 		return dao_resume.updateResumeSection(resNew);
+	}
+
+	@Override
+	public List<ResumeListVO> listResumesInPages(int nUserID, PagingInfo pageinfo) {
+
+		//获取总数
+		int nTotalCount = dao_resume.countResumesByUser(nUserID);
+		
+		//计算分页
+		int nTotalPage = (int) Math.ceil(((double)nTotalCount / pageinfo.getnPageSize()));
+		
+		pageinfo.setnTotalCount(nTotalCount);
+		pageinfo.setnTotalPage(nTotalPage);
+		
+		//计算开始结束位置
+		int nStart = pageinfo.getnPageIndex() * pageinfo.getnPageSize();
+		int nEnd = nStart + pageinfo.getnPageSize();
+		
+		return dao_resume.listResumesInPageByUser(nUserID, nStart, nEnd);
 	}
 
 }
