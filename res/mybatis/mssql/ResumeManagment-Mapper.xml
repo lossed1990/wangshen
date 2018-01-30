@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuexin.wangshen.dao.ResumeManagmentDAO">
+
+	<!-- 新建简历 -->
+	<insert id="saveResume" parameterType="com.xuexin.wangshen.model.pojo.ResumeDO" 
+			statementType="PREPARED">
+		INSERT INTO resumes
+		(
+		  c_resumeid
+		 ,c_resumename
+		 ,un_tempid
+		 ,un_userid
+		 ,js_resume
+		 ,un_lastmodifieduser
+		 ,dtime_lastmodified
+		 ,bi_deleteflag
+		)
+		VALUES
+		(
+		  #{strResumeGUID} -- c_resumeid - VARCHAR(255) NOT NULL
+		 ,#{strResumeName} -- c_resumename - VARCHAR(255)
+		 ,#{nTemplateID} -- un_tempid - INT(11)
+		 ,#{nUserID} -- un_userid - INT(11)
+		 , '{}' -- js_resume - JSON
+		 ,#{nUserID} -- un_lastmodifieduser - INT(11)
+		 ,NOW() -- dtime_lastmodified - DATETIME
+		 ,0 -- bi_deleteflag - TINYINT(1)
+		);
+	</insert>
+	
+	<!-- 更新简历模块 -->
+	<update id="updateResumeSection" parameterType="com.xuexin.wangshen.model.pojo.ResumeDO" 
+			statementType="PREPARED">
+		UPDATE resumes 
+		SET
+		 js_resume = #{strResumeJOSN} -- js_resume - JSON
+		 ,un_lastmodifieduser = #{nLastModUserID} -- un_lastmodifieduser - INT(11)
+		 ,dtime_lastmodified = NOW() -- dtime_lastmodified - DATETIME
+		WHERE
+		  c_resumeid = #{strResumeGUID} -- c_resumeid - VARCHAR(255) NOT NULL
+		;
+	</update>
+	
+	<!-- 获取简历信息，通过简历guid -->
+	<resultMap id="RM_ResumeInfo" type="com.xuexin.wangshen.model.pojo.ResumeDO">
+		<result column="c_resumeid" property="strResumeGUID" jdbcType="VARCHAR" />
+		<result column="c_resumename" property="strResumeName" jdbcType="VARCHAR" />
+		<result column="un_tempid" property="nTemplateID" jdbcType="INTEGER" />
+		<result column="un_userid" property="nUserID" jdbcType="INTEGER" />
+		<result column="js_resume" property="strResumeJOSN" jdbcType="LONGVARCHAR" />
+		<result column="un_lastmodifieduser" property="nLastModUserID" jdbcType="INTEGER" />
+		<result column="dtime_lastmodified" property="tsLastModified" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<select id="getResumeByGUID" resultMap="RM_ResumeInfo" parameterType="java.lang.String" statementType="PREPARED">
+		SELECT
+		  c_resumeid,
+		  c_resumename,
+		  un_tempid,
+		  un_userid,
+		  js_resume,
+		  un_lastmodifieduser,
+		  dtime_lastmodified
+		FROM resumes 
+		WHERE bi_deleteflag = 0 
+		AND c_resumeid = #{value};
+	</select>
+	
+	<!-- 删除简历(打删除标记) -->
+	<update id="deleteResumeByGUID" parameterType="java.lang.String" statementType="PREPARED">  
+        UPDATE resumes 
+		SET bi_deleteflag = 1
+		WHERE c_resumeid = #{value};
+	</update>
+
+</mapper>
