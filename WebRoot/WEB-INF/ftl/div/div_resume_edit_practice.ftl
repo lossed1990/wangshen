@@ -1,6 +1,6 @@
 <#--  实践经历 预览  -->
 
-<div class="col-md-12 col-sm-12 col-xs-12">
+<div class="col-md-12 col-sm-12 col-xs-12" id="shijian">
                         <div class="x_panel">
                             <div class="x_title">
                                 <h2>实践经历 <small>  </small></h2>
@@ -67,6 +67,8 @@
                                         <div class="form-group" >
                                             <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                                                 <button type="submit" class="btn btn-primary" >新增</button>
+                                                <button class="btn btn-default btn-pre" >上一项</button>
+                                                <button class="btn btn-default btn-next" >下一项</button>
                                             </div >
                                         </div>
                                     </form>
