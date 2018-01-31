@@ -13,6 +13,7 @@ public class ErrorDefines {
 	public static final int E_SVR_RUNTIME_DBFAILED			= 0x5002;		//数据库操作失败
 	public static final int E_SVR_RUNTIME_NOPARAM			= 0x5003;		//参数缺失
 	public static final int E_SVR_RUNTIME_NODATA			= 0x5004;		//数据不存在
+	public static final int E_SVR_RUNTIME_IO				= 0x5005;		//服务器IO错误
 	
 	public static final String E_JSON_FILE_PART				= "E100	文件未完全上传";
 	public static final String E_JSON_FILE_REMOTE			= "E101	服务器文件操作异常";

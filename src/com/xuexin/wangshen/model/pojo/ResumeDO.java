@@ -1,5 +1,7 @@
 package com.xuexin.wangshen.model.pojo;
 
+import java.text.SimpleDateFormat;
+
 public class ResumeDO {
 	private String strResumeGUID;			//简历GUID
 	private String strResumeName;			//简历名称
@@ -8,6 +10,11 @@ public class ResumeDO {
 	private String strResumeJOSN;			//简历JSON
 	private int nLastModUserID;				//最后编辑用户ID
 	private java.sql.Timestamp tsLastModified;	//最后修改时间
+	
+	//根据GUID和最后编辑时间戳生成唯一名称
+	public String getUniqueName() {
+		return strResumeGUID + "-" + new SimpleDateFormat("yyyyMMddHHmmss").format(tsLastModified);
+	}
 	
 	public String getStrResumeGUID() {
 		return strResumeGUID;

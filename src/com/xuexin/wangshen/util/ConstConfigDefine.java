@@ -9,6 +9,10 @@ public class ConstConfigDefine {
 	public static final String PATH_COMMON_FILE_REL		= "/upload/file/";		//通用文件相对路径
 	public static final String PATH_COMMON_IMAGE_REL	= "/upload/image/";		//图片相对路径
 	
+	public static final String PATH_RESUME_XHTML_REL	= "/resumes/xhtml/";	//简历网页相对路径
+	public static final String PATH_RESUME_DOCX_REL		= "/resumes/docx/";		//简历DOCX相对路径
+	public static final String PATH_RESUME_DOCX_TEMPL	= "/template/ResumeTemplate.docx";		//简历DOCX模板路径
+	
 	//各种文件类型
 	public static final String CONTENT_TYPE_XLS 	= "application/vnd.ms-excel";
 	public static final String CONTENT_TYPE_XLSX 	= "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
