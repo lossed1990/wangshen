@@ -45,7 +45,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="pricing_footer">
-                                                        <a href="javascript:void(0);" class="btn btn-success btn-block" role="button"> <span> 立刻新建</span></a>
+                                                        <a href="${path}/resume/resume-add.page" class="btn btn-success btn-block" role="button"> <span> 立刻新建</span></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -72,7 +72,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="pricing_footer">
-                                                        <a href="javascript:void(0);" class="btn btn-success btn-block" role="button"> <span> 前往查看</span></a>
+                                                        <a href="${path}/resume/resume-list.page" class="btn btn-success btn-block" role="button"> <span> 前往查看</span></a>
                                                     </div>
                                                 </div>
                                             </div>

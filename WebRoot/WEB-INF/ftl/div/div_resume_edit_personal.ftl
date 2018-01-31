@@ -1,5 +1,4 @@
 <#--  个人基本信息 预览  -->
-
 <div class="col-md-12 col-sm-12 col-xs-12" id="baseinfo">
     <div class="x_panel">
         <div class="x_title">
