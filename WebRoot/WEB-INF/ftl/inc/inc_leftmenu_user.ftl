@@ -1,6 +1,6 @@
 <#assign path=request.contextPath />
 
-<div class="col-md-3 left_col menu_fixed">
+<div class="col-md-3 left_col">
     <div class="left_col scroll-view">
         <div class="navbar nav_title" style="border: 0;">
             <a href="#" class="site_title"><i class="fa fa-paw"></i> <span>首页</span></a>
@@ -26,7 +26,7 @@
         <!-- sidebar menu -->
         <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             <div class="menu_section">
-                <ul class="nav side-menu">
+                <ul class="nav side-menu" id="left_menu">
                     <li><a><i class="fa fa-home"></i> 我的网申 <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                             <li><a href="${path}/resume/resume-list.page">我的简历</a></li>

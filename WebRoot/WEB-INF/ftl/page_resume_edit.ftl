@@ -43,7 +43,7 @@
                     <!--  毕业论文及发表期刊  -->
                     <#include "div/div_resume_edit_dissertation.ftl" />
                     <!--  begin 职业规划  -->
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="workplan">
                         <div class="x_panel">
                             <div class="x_title">
                                 <h2>职业规划 <small>  </small></h2>
@@ -78,6 +78,8 @@
                                         <div class="form-group" >
                                             <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                                                 <button type="submit" class="btn btn-primary" >新增</button>
+                                                <button class="btn btn-default btn-pre" >上一项</button>
+                                                <button class="btn btn-default btn-next" >下一项</button>
                                             </div >
                                         </div>
                                     </form>
@@ -88,7 +90,7 @@
                     </div>
                     <!--  end 职业规划  -->
                     <!--  begin 自我评价  -->
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="selfjudge">
                         <div class="x_panel">
                             <div class="x_title">
                                 <h2>自我评价 <small>  </small></h2>
@@ -123,6 +125,8 @@
                                         <div class="form-group" >
                                             <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                                                 <button type="submit" class="btn btn-primary" >新增</button>
+                                                <button class="btn btn-default btn-pre" >上一项</button>
+                                                <button class="btn btn-default btn-next" >下一项</button>
                                             </div >
                                         </div>
                                     </form>
@@ -133,7 +137,7 @@
                     </div>
                     <!--  end 自我评价  -->
                     <!--  begin 特长爱好  -->
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="speciality">
                         <div class="x_panel">
                             <div class="x_title">
                                 <h2>特长爱好 <small>  </small></h2>
@@ -168,6 +172,8 @@
                                         <div class="form-group" >
                                             <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                                                 <button type="submit" class="btn btn-primary" >新增</button>
+                                                <button class="btn btn-default btn-pre" >上一项</button>
+                                                <button class="btn btn-default btn-next" >下一项</button>
                                             </div >
                                         </div>
                                     </form>
@@ -178,7 +184,7 @@
                     </div>
                     <!--  end 特长爱好  -->
                     <!--  begin 自荐信  -->
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="selfrecomadation">
                         <div class="x_panel">
                             <div class="x_title">
                                 <h2>自荐信 <small>  </small></h2>
@@ -213,6 +219,8 @@
                                         <div class="form-group" >
                                             <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                                                 <button type="submit" class="btn btn-primary" >新增</button>
+                                                <button class="btn btn-default btn-pre" >上一项</button>
+                                                <button class="btn btn-default btn-next" >下一项</button>
                                             </div >
                                         </div>
                                     </form>
@@ -223,7 +231,7 @@
                     </div>
                     <!--  end 自荐信  -->
                     <!--  begin 其他说明  -->
-                    <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-md-12 col-sm-12 col-xs-12" id="otherinfo">
                         <div class="x_panel">
                             <div class="x_title">
                                 <h2>其他说明 <small>  </small></h2>
@@ -258,6 +266,8 @@
                                         <div class="form-group" >
                                             <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                                                 <button type="submit" class="btn btn-primary" >新增</button>
+                                                <button class="btn btn-default btn-pre" >上一项</button>
+                                                <button class="btn btn-default btn-next" >下一项</button>
                                             </div >
                                         </div>
                                     </form>
@@ -288,6 +298,8 @@
 <script src="${path}/vendors/bootstrapvalidator/js/language/zh_CN.js"></script>
 <script src="${path}/vendors/bootstrap-fileinput/js/fileinput.min.js"></script>
 <script src="${path}/vendors/bootstrap-fileinput/js/locales/zh.js"></script>
+
+<script src="${path}/js/resumeedit.js"></script>
 <script>
     //初始化日期选择框
     var daterangepicker_options = {};
@@ -304,8 +316,41 @@
         firstDay: 1
     };
 
+    var manager = Object.create(ModuleManager);
+    //通过模板id，获取配置详情，并初始化界面
+    $.ajax({    
+        type: "GET",
+        url: "${path}/resumetmpl/resumetemplates-detail.json",
+        cache:  false,
+        data: { 'temp_id': 2 },
+        <#--  data: { 'temp_id': ${RequestParameters['temp_id']} },  -->
+        dataType: "json",
+        success: function (result)  {
+            if (result.ok) {
+                manager.init(result.result);
+                manager.selectModule(0);
+
+                $('.btn-pre').click(function(){
+                    manager.preModule();
+                });
+
+                $('.btn-next').click(function(){
+                    manager.nextModule();
+                });
+            }            
+        },
+        error: function() {
+            toastr.error('简历模板配置信息获取失败，请刷新重试！');
+        } 
+    });
+
+    
+
     $(document).ready(function() {
-        initBaseinfoUI();
+        
+
+
+        <#--  initBaseinfoUI();
         initBaseinfoValidator();
         initAwardsUI();
         initAwardsValidator();
@@ -317,7 +362,7 @@
         initWorkUI();
         initCertificateUI();
         initFamily();
-        initDissertationUI();
+        initDissertationUI();  -->
     });
 
     function initBaseinfoUI() {
