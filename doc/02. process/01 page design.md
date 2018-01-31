@@ -393,8 +393,8 @@ $('#personal_scorerule').scorerule(['姓名','曾用名#1',...]);
 > resume_guid=简历guid
 
 【结果】跳转“简历编辑界面”
- 通过request(temp_id),获取模板id
- 通过request(resume_guid),获取新建简历guid
+ 通过$(temp_id),获取模板id
+ 通过$(resume_guid),获取新建简历guid
 
 
 ### 2、删除简历
@@ -450,198 +450,238 @@ $('#personal_scorerule').scorerule(['姓名','曾用名#1',...]);
 ## 八、简历内容json协议
 ```javascript
 {
-    "baseinfo":{
-        "name":"xxxx",
-        "old_name":"",
-        "sex":"男/女",
-        "birth_date":"1999-10-20",
-        "nation":"汉族",
-        "birthplace":"江苏盐城",
-        "party":"团员",
-        "party_entry_date":"1999-11-22",
-        "height_cm":180,
-        "weight_kg":100,
-        "bloodtype":"AB",
-        "marrage":"未婚",
-        "have_kid":"已育",
-        "heath":"健康",
-        "gaokao_place":"江苏",
-        "living_place":"江苏盐城",
-        "address":"xxxxxx",
-        "home_address":"xxxx",
-        "hukou_place":"xxxx",
-        "hukou_type":"xxxx",
-        "graduate_date":"1999-10-10",
-        "work_date":"1999-10-11",
-        "head_pic":"xxxxxxxx",
-        "live_pic":"xxxxx",
-        "student_pic":"xxxxxx",
-        "idcard_type":"xxxxxxx",
-        "idcard_num":"xxxxxxxxxx",
-        "email":"xxxxxx",
-        "fix_phone":"xxxxxx",
-        "mobile":"xxxxxxxx",
-        "postal":"xxxxx",
-        "emergency_contact":"xxxxx",
-        "emergency_phone":"xxxxxxx"
-    },
-    "education":{
-        "top_grade":"xxxxx",
-        "gaokao_level":"xxxxx",
-        "gaokao_point":111,
-        "edu_history":[
-            {
-                "sequence":1,
-                "start_date":"1999-10-10",
-                "end_date":"1999-10-10",
-                "stage":"高中",
-                "province":"湖北",
-                "school":"xxxx",
-                "institude":"学院",
-                "study":"专业",
-                "study_apect":"研究方向",
-                "gpa":"xxxxx",
-                "xuewei":"学位",
-                "study_type":"学习形式",
-                "edu_type":"教育类型",
-                "graduate_type":"xxxxx",
-                "graduate_pos":"毕业排名",
-                "scores":[
-                    {
-                    "xueke";"学科",
-                    "score":99
-                    }
-                    ,...
-                ]
-            },
-            ....
-        ]
-    },
-    "rewards":[
-        {
-            "name":"xxxx",
-            "level":"xxxx",
-            "source":"单位",
-            "times":"xxxx",
-            "date":"1922-10-10"
-        }
-    ],
-    "language":{
-        "level":"xxxx",
-        "score":"xxxxx",
-        "date":"1999-12-12",
-        "other":"xxxxx",
-        "local_lan":"xxxx",
-        "memo":"xxxx"
-    },
-    "computer":{
-        "name":"xxx",
-        "date":"1999-12-12",
-        "level":"xxxxxx"
-    },
-    "student_ganbu":[
-        {
-            "start_date":"1999-11-11",
-            "end_date":"1999-11-11",
-            "zhiwu_name":"xxxxx",
-            "zhiwu_type":"xxxxx",
-            "memo":"xxxxxx"
-        }
-    ],
-    "trainning":[
-        {
-            "start_date":"1999-11-11",
-            "end_date":"1999-11-11",
-            "name":"xxxxx",
-            "memo":"xxxxxx"
-        }
-    ],
-     "shijian":[
-        {
-            "start_date":"1999-11-11",
-            "end_date":"1999-11-11",
-            "name":"xxxxx",
-            "memo":"xxxxxx"
-        }
-    ],
-    "shixi":[
-        {
-            "start_date":"1999-11-11",
-            "end_date":"1999-11-11",
-            "hangye":"xxxxx",
-            "apartment":"xxxxxx",
-            "work":"xxxx",
-            "company_type":"xxxxx",
-            "work_type":"xxxxx",
-            "kpi_level":"xxx",
-            "work_memo":"xxxxx",
-            "salary":"xxxxxx",
-            "zhengming_people":"xxxx",
-            "zhengming_work":"xxxx",
-            "zhengming_phone":"xxxx",
-            "lizhi_info":"xxxxx"
-        }
-    ],
-    "zigezhengshu":[
-        {
-            "type":"xxxx",
-            "name":"xxxxx",
-            "got_date":"1999-10-10",
-            "source":"机构",
-            "cert_date":"认证时间",
-            "zhengshu_code":"xxxx",
-        }
-    ],
-    "family":[
-        {
-            "name":"xxx",
-            "sex":"xxxx",
-            "relation":"xxx",
-            "birthdate":"1999-10-10",
-            "status":"xxxxx",
-            "work_place":"xxxxx",
-            "work":"职务",
-            "zhengzhimianmao":"xxxxxx",
-            "edu_status":"xxxx"
-        }
-    ],
-    "dissertation":[
-        "name":"xxxx",
-        "level":"xxxxx",
-        "date":"xxxxx",
-        "author":"xxxxx",
-        "memo":"xxxx"
-    ],
-    "workplan":{
-        "plan":"xxxxx"
-    },
-    "selfjudge":{
-        "info":"xxxxx"
-    },
-    "speciality":{
-        "info":""
-    },
-    "selfrecomadation":{
-        "info":""
-    },
-    "otherinfo":{
-        "info":""
-    },
-    "targetbank":{
-        "bank":"xxx",
-        "area":"xxxx",
-        "reason":"xxxx",
-        "expect_salary":"xxxx",
-        "exam_place":"xxx",
-        "info_source":"xxxx"
-    },
-    "promise":{
-        "is_punished":true,
-        "is_disease":true,
-        "is_thisbank_worker":true,
-        "is_relative_worker":true
-    }
-    
+	"baseinfo": {
+		"name": "张嘎",
+		"old_name": "",
+		"sex": "男",
+		"birth_date": "1999-10-20",
+		"nation": "汉族",
+		"birthplace": "江苏盐城",
+		"party": "团员",
+		"party_entry_date": "1999-11-22",
+		"height_cm": 180,
+		"weight_kg": 100,
+		"bloodtype": "AB",
+		"marrage": "未婚",
+		"have_kid": "已育",
+		"heath": "健康",
+		"gaokao_place": "江苏",
+		"living_place": "江苏盐城",
+		"address": "江苏盐城工业园大棚基地98#",
+		"home_address": "开城工业园区2012号5#",
+		"hukou_place": "江苏",
+		"hukou_type": "城镇户口",
+		"graduate_date": "1999-10-10",
+		"work_date": "1999-10-11",
+		"head_pic": "IMG23000210214547",
+		"live_pic": "IMG23000210214547",
+		"student_pic": "IMG23000210214547",
+		"idcard_type": "身份证",
+		"idcard_num": "3065421454125478154",
+		"email": "type@live.com",
+		"fix_phone": "021-87541247",
+		"mobile": "159211214231",
+		"postal": "220002",
+		"emergency_contact": "大老板",
+		"emergency_phone": "15689745414"
+	},
+	"education": {
+		"top_grade": "本科",
+		"gaokao_level": "一本",
+		"gaokao_point": 655,
+		"edu_history": [{
+			"sequence": 1,
+			"start_date": "1999-10-10",
+			"end_date": "1999-10-10",
+			"stage": "高中",
+			"province": "湖北",
+			"school": "武汉外国语学院",
+			"institude": "学院",
+			"study": "英语",
+			"study_apect": "同声传译",
+			"gpa": "A",
+			"xuewei": "硕士",
+			"study_type": "全日制普通",
+			"edu_type": "脱产",
+			"graduate_type": "毕业",
+			"graduate_pos": "15",
+			"scores": [{
+					"xueke": "英语",
+					"score": 99
+				},
+				{
+					"xueke": "数学",
+					"score": 61
+				},
+				{
+					"xueke": "政治",
+					"score": 68
+				}
+			]
+		}]
+	},
+	"rewards": [{
+			"name": "青少年歌曲大赛",
+			"level": "市级",
+			"source": "青歌赛业余评审组",
+			"times": "1次",
+			"date": "1922-10-10"
+		},
+		{
+			"name": "中科杯同声传译锦标赛",
+			"level": "市级",
+			"source": "中科传媒",
+			"times": "1次",
+			"date": "1923-10-10"
+		}
+	],
+	"language": {
+		"level": "英语六级",
+		"score": "600",
+		"date": "1999-12-12",
+		"other": "葡萄牙语",
+		"local_lan": "吴语",
+		"memo": "能做到流利对话，写作，公式文章撰写"
+	},
+	"computer": {
+		"name": "计算机等级证书",
+		"date": "1999-12-12",
+		"level": "一级"
+	},
+	"student_ganbu": [{
+			"start_date": "1999-11-11",
+			"end_date": "1999-11-11",
+			"zhiwu_name": "学生会长",
+			"zhiwu_type": "学生会",
+			"memo": "独立运营学生会日常工作"
+		},
+		{
+			"start_date": "1999-11-11",
+			"end_date": "1999-11-11",
+			"zhiwu_name": "乒乓球协会主席",
+			"zhiwu_type": "乒乓球协会",
+			"memo": "乒乓球王牌选手"
+		}
+	],
+	"trainning": [{
+			"start_date": "1999-11-11",
+			"end_date": "1999-11-11",
+			"name": "野外生存训练营",
+			"memo": "培养在极端情况下的身体和心理的抗压能力"
+		},
+		{
+			"start_date": "1998-11-11",
+			"end_date": "1998-11-11",
+			"name": "民族唱法培训",
+			"memo": "培训关于国内歌曲的民族唱法演示训练"
+		}
+	],
+	"shijian": [{
+		"start_date": "1999-11-11",
+		"end_date": "1999-11-11",
+		"name": "街头卖艺",
+		"memo": "通过学习到的民族唱法在街头卖艺，评估学习成果，结果令人欣慰"
+	}],
+	"shixi": [{
+		"start_date": "1999-11-11",
+		"end_date": "1999-11-11",
+		"hangye": "银行",
+		"apartment": "内审部",
+		"work": "内审簿记",
+		"company_type": "国营央企",
+		"work_type": "实习",
+		"kpi_level": "优秀",
+		"work_memo": "通过在内审部的学习，掌握了银行内审的实际步骤和学习必要知识",
+		"salary": "5K",
+		"zhengming_people": "张大锤",
+		"zhengming_work": "内审部经理",
+		"zhengming_phone": "153541214587",
+		"lizhi_info": "实习到期"
+	}],
+	"zigezhengshu": [{
+			"type": "外语资格证书",
+			"name": "英语四级证书",
+			"got_date": "1999-10-10",
+			"source": "CET",
+			"cert_date": "1999-10-10",
+			"zhengshu_code": "X59874EF"
+		},
+		{
+			"type": "外语资格证书",
+			"name": "英语六级证书",
+			"got_date": "1999-10-10",
+			"source": "CET",
+			"cert_date": "1999-10-10",
+			"zhengshu_code": "BB69874EF"
+		}
+	],
+	"family": [{
+			"name": "张大噶",
+			"sex": "男",
+			"relation": "父子",
+			"birthdate": "1999-10-10",
+			"status": "有工作",
+			"work_place": "浙江",
+			"work": "经理",
+			"zhengzhimianmao": "党员",
+			"edu_status": "本科"
+		},
+		{
+			"name": "西门吹雪",
+			"sex": "女",
+			"relation": "母子",
+			"birthdate": "1999-10-10",
+			"status": "有工作",
+			"work_place": "浙江",
+			"work": "专员",
+			"zhengzhimianmao": "党员",
+			"edu_status": "本科"
+		}
+	],
+	"dissertation": [{
+			"name": "自然",
+			"level": "国际期刊",
+			"date": "1999-10-10",
+			"author": "张嘎",
+			"memo": "证明自然人在自然中的非线性能量推动"
+		},
+		{
+			"name": "自然",
+			"level": "国际期刊",
+			"date": "1999-10-11",
+			"author": "张嘎",
+			"memo": "反驳证明自然人在自然中的非线性能量推动"
+		}
+	],
+	"workplan": {
+		"plan": "从大学毕业后，先进入实习单位进行为期一年的实习，实习完成后进入银行行业进工作，在柜待满3年后转正成后台经理，熟悉银行内审部业务，最后升职为内审部经理"
+	},
+	"selfjudge": {
+		"info": "本身活泼开朗，身体健康，有集体意识和荣誉感，可以为集体牺牲自己的小利益，天生对数字敏感，可以胜任银行内的各种工作"
+	},
+	"speciality": {
+		"info": "本人会唱歌，跳舞，弹钢琴，拉小提琴，大提琴，架子鼓等，多才多艺，无人能敌"
+	},
+	"selfrecomadation": {
+		"info": "自荐本人进入贵银行的内审部门，本人凭借自己出色的数字敏感性，簿记的严谨性，完成各种复杂的内审工作"
+	},
+	"otherinfo": {
+		"info": "我进入银行后，必将严格遵守银行的各种规章制度，为银行的建设添砖加瓦"
+	},
+	"targetbank": {
+		"bank": "中国农业银行",
+		"area": "江苏盐城",
+		"reason": "离家里更近",
+		"expect_salary": "12K",
+		"exam_place": "江苏盐城",
+		"info_source": "银行招聘网站"
+	},
+	"promise": {
+		"is_punished": true,
+		"is_disease": true,
+		"is_thisbank_worker": true,
+		"is_relative_worker": true
+	}
 }
 ```
 
