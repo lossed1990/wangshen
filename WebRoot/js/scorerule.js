@@ -1217,7 +1217,7 @@ if (typeof Object.create !== 'function') {
             var info = self.$table.page.info();
             var dataRows = info.recordsTotal;
             for (var i = 0; i < dataRows; ++i) {
-                self.$table.row(i).remove().draw(false); 
+                self.$table.row(0).remove().draw(false); 
             }
 
             self.$score_input.val("");
@@ -1680,9 +1680,14 @@ if (typeof Object.create !== 'function') {
                     option += '<li><a class="rule-select">关键字规则</a></li>';
                 }
 
+                var isDisabled = '';
+                if (self.options.keys[i].hasOwnProperty('enable') && self.options.keys[i].enable == false) {
+                    isDisabled = 'disabled';
+                }
+
                 var strSubHtml = '<div class="form-group" id="' + self.options.keys[i].keypath + '">\
                                     <div class="col-md-2 col-sm-2 col-xs-12">\
-                                        <input class="check_grey check_key_enable" type="checkbox" checked/>\
+                                        <input class="check_grey check_key_enable" type="checkbox" checked ' + isDisabled + '/>\
                                         <label class="control-label">' + self.options.keys[i].label + '</label>\
                                     </div>\
                                     <div class="col-md-1 col-sm-1 col-xs-12">\
@@ -2274,63 +2279,78 @@ if (typeof Object.create !== 'function') {
         }, {
             "label": "起始日期",
             "ruletype": "",
-            "keypath": "education-edu_history-start_date"
+            "keypath": "education-edu_history-start_date",
+            "enable": false
         }, {
             "label": "结束日期",
             "ruletype": "",
-            "keypath": "education-edu_history-end_date"
+            "keypath": "education-edu_history-end_date",
+            "enable": false
         }, {
             "label": "阶段",
             "ruletype": "",
-            "keypath": "education-edu_history-stage"
+            "keypath": "education-edu_history-stage",
+            "enable": false
         }, {
             "label": "省份",
             "ruletype": "",
-            "keypath": "education-edu_history-province"
+            "keypath": "education-edu_history-province",
+            "enable": false
         }, {
             "label": "学校",
             "ruletype": "",
-            "keypath": "education-edu_history-school"
+            "keypath": "education-edu_history-school",
+            "enable": false
         }, {
             "label": "学院",
             "ruletype": "",
-            "keypath": "education-edu_history-institude"
+            "keypath": "education-edu_history-institude",
+            "enable": false
         }, {
             "label": "专业",
             "ruletype": "",
-            "keypath": "education-edu_history-study"
+            "keypath": "education-edu_history-study",
+            "enable": false
         }, {
             "label": "研究/专业方向",
             "ruletype": "",
-            "keypath": "education-edu_history-study_apect"
+            "keypath": "education-edu_history-study_apect",
+            "enable": false
         }, {
             "label": "平均绩点",
             "ruletype": "",
-            "keypath": "education-edu_history-gpa"
+            "keypath": "education-edu_history-gpa",
+            "enable": false
         }, {
             "label": "所获学位",
             "ruletype": "",
-            "keypath": "education-edu_history-xuewei"
+            "keypath": "education-edu_history-xuewei",
+            "enable": false
         }, {
             "label": "学习形式",
             "ruletype": "",
-            "keypath": "education-edu_history-study_type"
+            "keypath": "education-edu_history-study_type",
+            "enable": false
         }, {
             "label": "教育类型",
             "ruletype": "",
-            "keypath": "education-edu_history-edu_type"
+            "keypath": "education-edu_history-edu_type",
+            "enable": false
         }, {
             "label": "毕业方式",
             "ruletype": "",
-            "keypath": "education-edu_history-graduate_type"
+            "keypath": "education-edu_history-graduate_type",
+            "enable": false
         }, {
             "label": "毕业排名",
             "ruletype": "",
-            "keypath": "education-edu_history-graduate_pos"
+            "keypath": "education-edu_history-graduate_pos",
+            "enable": false
         }, {
             "label": "所学课程及成绩",
             "ruletype": "1,8",
-            "keypath": "education-edu_history-scores-score"
+            "keypath": "education-edu_history-scores-score",
+            "enable": false
         }]
     };
 

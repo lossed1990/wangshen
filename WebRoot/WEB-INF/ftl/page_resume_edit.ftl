@@ -246,26 +246,20 @@
         console.log('onGetResumeInfo>>data:');  //+ JSON.stringify(data)
         console.log(data);
         $.each(data,function(name,value) {
-            //两个特殊对待
-            if(name == 'baseinfo'){
-                return;
-            }
-
+            //教育经历特殊对待
             if(name == 'education'){
+                //基本信息
+                fillFromData(name,'resume-edudata',value);
+                //阶段信息
+                var history = value['edu_history'];
+                fillTabelData(name,'resume-table',history);
                 return;
             }
 
             if($.isArray(value)){
-                var $table = $('#' + name).find('table').DataTable();
-                for(var i = 0;i < value.length; ++i){
-                    $table.row.add(value[i]).draw(false);
-                }
+                fillTabelData(name,'resume-table',value);
             } else{
-                var elems = $('#' + name).find('.resume-data');
-                for(var i = 0;i < elems.length; ++i){
-                    var $elem = $(elems[i]);
-                    $elem.val(value[$elem.attr('id')]);
-                }
+                fillFromData(name,'resume-data',value);
             }
         });
     } 
@@ -345,13 +339,14 @@
     //所有非表格模块保存按钮事件
     $('.btn-resume-save').click(function(){
         var moduleid = $(this).attr('data');
-        var elems = $('#' + moduleid).find('.resume-data');
-        var value = {};
-        for(var i = 0;i < elems.length; ++i){
-            var $elem = $(elems[i]);
-            value[$elem.attr('id')] = $elem.val();  
+        //触发验证
+        $('#form_' + moduleid).data("bootstrapValidator").validate();
+        var flag = $('#form_' + moduleid).data("bootstrapValidator").isValid();
+        if(!flag){
+            return;  
         }
-        console.log('save data>>moduleid:' + moduleid +';value:' + JSON.stringify(value));
+
+        var value = formatFromData(moduleid, 'resume-data',false);
         ajaxSaveResumePart(moduleid ,value);
     });
  
@@ -376,15 +371,31 @@
         });
     }
 
+    function initFileInput() {
+        $(".resume-input-picture").fileinput({
+            language : 'zh',
+            uploadAsync: true,
+            uploadUrl: "${path}/file/common-upload.json", //上传的地址
+            allowedFileExtensions : ['jpg', 'png'],//接收的文件后缀,
+            maxFileCount: 1,
+            dropZoneEnabled: false,
+            showUpload: false,
+            enctype: 'multipart/form-data',
+            layoutTemplates: {
+                actionUpload:''
+            }
+        });
+    }
+
     //初始化所有的table
-    function initDataTables() {
-        var tables = $('body').find('.resume-table');
+    function initDataTables(classname,subclassname) {
+        var tables = $('body').find('.' + classname);
         for(var i = 0; i < tables.length; ++i){
-            initDataTable($(tables[i]));
+            initDataTable($(tables[i]), classname,subclassname);
         }
     }
 
-    function initDataTable($table) {
+    function initDataTable($table,classname,subclassname) {
         var operate = {
             "data": null,
             "className": "center",
@@ -393,7 +404,7 @@
         var columns = [];
 
         var moduleid = $table.attr('data');
-        var elems = $('#' + moduleid).find('.resume-data');
+        var elems = $('#' + moduleid).find('.' + subclassname);
         for(var j = 0;j < elems.length; ++j){
             var $elem = $(elems[j]);
             var column = {"data" : ""};
@@ -403,25 +414,36 @@
         columns.push(operate);
         console.log('initDataTable>>module:' + moduleid + ';columes:' + JSON.stringify(columns));
         console.log(columns);
-        $table.DataTable({
-            'columns': columns
-        });
 
-        bingDataTableMenuEvent($table);
+        if(classname == 'resume-mintable'){
+            $table.DataTable({
+                bFilter: false,         //去掉搜索框
+                bLengthChange: false,   //去掉每页显示多少条数据
+                'columns': columns
+            });
+        }else{
+            $table.DataTable({
+                'columns': columns
+            });
+        }
+
+        bingDataTableMenuEvent($table,classname,subclassname);
     }
 
-    function bingDataTableMenuEvent($table) {
+    function bingDataTableMenuEvent($table,classname,subclassname) {
         //修改Item事件
         $table.on( 'click', 'a.table-menu-edit', function (even)  {
-            var thetable = $(this).parents('table');
+            var thetable = $(this).parents('table.' + classname);
             var row = thetable.DataTable().row($(this).parents('tr'));
             var data = row.data();
 
             var moduleid = thetable.attr('data');
-            var elems = $('#' + moduleid).find('.resume-data');
-            for(var k = 0;k < elems.length; ++k){
-                var $elem = $(elems[k]);
-                $elem.val(data[$elem.attr('id')]);
+            fillFromData(moduleid, subclassname, data);
+
+            //教育经历特殊处理
+            if(moduleid == 'education'){
+                var scores = $.parseJSON($('#scores').val());   
+                fillTabelData('educationscores','resume-mintable',scores);
             }
 
             row.remove().draw(false); 
@@ -429,7 +451,7 @@
 
         //删除Item事件
         $table.on( 'click', 'a.table-menu-del', function (even)  {
-            var thetable = $(this).parents('table').DataTable();
+            var thetable = $(this).parents('table.' + classname).DataTable();
             thetable.row($(this).parents('tr')).remove().draw(false);
         }); 
     }
@@ -437,157 +459,265 @@
     //所有表格新增按钮事件
     $('.btn-resume-additem').click(function(){
         var moduleid = $(this).attr('data');
-        var $table = $('#' + moduleid).find('table').DataTable();
-        var elems = $('#' + moduleid).find('.resume-data');
-        var value = {};
-        for(var i = 0;i < elems.length; ++i){
-            var $elem = $(elems[i]);
-            value[$elem.attr('id')] = $elem.val();  
-            $elem.val("");
+        var $table = $('#' + moduleid).find('table.resume-table').DataTable();
+        var value = formatFromData(moduleid,'resume-data',true);
+        $table.row.add(value).draw(false);
+    });
+
+    //新增学科按钮事件
+    $('#btn-addscores').click(function(){
+        //触发验证
+        $('#form_educationscores').data("bootstrapValidator").validate();
+        var flag = $('#form_educationscores').data("bootstrapValidator").isValid();
+        if(!flag){
+            return;  
         }
-        console.log('additem>>moduleid:' + moduleid +';value:' + JSON.stringify(value));
+
+        var moduleid = $(this).attr('data');
+        var $table = $('#' + moduleid).find('table.resume-mintable').DataTable();
+        var value = formatFromData(moduleid,'resume-mindata',true);
+        $table.row.add(value).draw(false);
+    });
+
+    //新增教育经历按钮事件
+    $('#btn-addeducation').click(function(){
+        //触发验证
+        $('#form_educationhistory').data("bootstrapValidator").validate();
+        var flag = $('#form_educationhistory').data("bootstrapValidator").isValid();
+        if(!flag){
+            return;  
+        }
+
+        //获取学科及成绩
+        var scoresValue = formatTabelData('educationscores','resume-mintable',true);
+        $('#scores').val(JSON.stringify(scoresValue));
+
+        var $table = $('#education').find('table.resume-table').DataTable();
+        var value = formatFromData('education','resume-data',true);
         $table.row.add(value).draw(false);
     });
 
     //所有表格保存按钮事件
     $('.btn-resume-savetable').click(function(){
         var moduleid = $(this).attr('data');
-        var $table = $('#' + moduleid).find('table').DataTable();
+        //触发验证
+        $('#form_' + moduleid).data("bootstrapValidator").validate();
+        var flag = $('#form_' + moduleid).data("bootstrapValidator").isValid();
+        if(!flag){
+            return;  
+        }
+
+        var value = formatTabelData(moduleid,'resume-table',false);
+        console.log('savetable>>moduleid:' + moduleid +';value:' + JSON.stringify(value));
+        ajaxSaveResumePart(moduleid ,value);
+    });
+
+    //教育经历保存按钮事件
+    $('#btn-saveeducation').click(function(){
+        //触发验证
+        $('#form_education').data("bootstrapValidator").validate();
+        var flag = $('#form_education').data("bootstrapValidator").isValid();
+        if(!flag){
+            return;  
+        }
+
+        var moduleid = $(this).attr('data');
+        //基本信息
+        var value = formatFromData(moduleid,'resume-edudata',false);
+        //阶段信息
+        value['edu_history'] = formatTabelData(moduleid,'resume-table',false);
+
+        console.log('savetable>>moduleid:' + moduleid +';value:' + JSON.stringify(value));
+        ajaxSaveResumePart(moduleid ,value);
+    });
+
+    //个人信息图片上传事件
+    $("#head_pic_fileinput").on("fileuploaded", function(event, data, previewId, index) {
+        if(data.response.ok){
+            $("#head_pic").val(data.response.result);
+        }else{
+            //toastr.error(data.response.errorinfo);
+        }
+
+        var $elem = $("#live_pic_fileinput");
+        var data = $elem.val();
+        if (data) {
+            $elem.fileinput("upload");
+            return;
+        }
+
+        $elem = $("#student_pic_fileinput");
+        data = $elem.val();
+        if (data) {
+            $elem.fileinput("upload");
+            return;
+        }
+
+        var value = formatFromData('baseinfo', 'resume-data',false);
+        ajaxSaveResumePart('baseinfo' ,value);
+    });
+
+    $("#live_pic_fileinput").on("fileuploaded", function(event, data, previewId, index) {
+        if(data.response.ok){
+            $("#live_pic").val(data.response.result);
+        }else{
+            //toastr.error(data.response.errorinfo);
+        }
+
+        var $elem = $("#student_pic_fileinput");
+        var data = $elem.val();
+        if (data) {
+            $elem.fileinput("upload");
+            return;
+        }
+
+        var value = formatFromData('baseinfo', 'resume-data',false);
+        ajaxSaveResumePart('baseinfo' ,value);
+    });
+
+    $("#student_pic_fileinput").on("fileuploaded", function(event, data, previewId, index) {
+        if(data.response.ok){
+            $("#student_pic").val(data.response.result);
+        }else{
+            //toastr.error(data.response.errorinfo);
+        }
+
+        var value = formatFromData('baseinfo', 'resume-data',false);
+        ajaxSaveResumePart('baseinfo' ,value);
+    });
+
+    //个人信息保存按钮事件
+    $("#btn-savepersonal").click(function(){
+        //触发验证
+        $('#form_baseinfo').data("bootstrapValidator").validate();
+        var flag = $('#form_baseinfo').data("bootstrapValidator").isValid();
+        if(!flag){
+            return;  
+        }
+
+        var $elem = $("#head_pic_fileinput");
+        var data = $elem.val();
+        if (data) {
+            $elem.fileinput("upload");
+            return;
+        }
+
+        $elem = $("#live_pic_fileinput");
+        data = $elem.val();
+        if (data) {
+            $elem.fileinput("upload");
+            return;
+        }
+
+        $elem = $("#student_pic_fileinput");
+        data = $elem.val();
+        if (data) {
+            $elem.fileinput("upload");
+            return;
+        }
+
+        var value = formatFromData('baseinfo', 'resume-data',false);
+        ajaxSaveResumePart('baseinfo' ,value);
+    });
+
+    /**
+     * @brief 格式化表单数据 
+     *
+     * 遍历某控件下指定类的输入控件，根据id生成json数据
+     *
+     * @param pid {string}        包含表单的控件id
+     * @param subclass {string}   表单各项数据控件类名称
+     * @param clear {boolean}     是否清空控件内数据
+     *
+     * @return value {object}  json数据
+     */
+    function formatFromData(pid, subclass, clear){
+        var elems = $('#' + pid).find('.' + subclass);
+        var value = {};
+        for(var i = 0;i < elems.length; ++i){
+            var $elem = $(elems[i]);
+            value[$elem.attr('id')] = $elem.val(); 
+            if(clear){
+                $elem.val(""); 
+            }
+        }
+        console.log('formatFromData>>moduleid:' + pid +';value:' + JSON.stringify(value));
+        return value;
+    }
+
+    /**
+     * @brief 填充表单数据
+     *
+     * 根据json数据，遍历某控件下的指定类的输入控件，进行赋值 
+     *
+     * @param pid {string}      包含表单的控件id
+     * @param subclass {string} 表单各项数据控件类名称
+     * @param value {object}    表单数据
+     */
+    function fillFromData(pid, subclass, value){
+        var elems = $('#' + pid).find('.' + subclass);
+        for(var i = 0;i < elems.length; ++i){
+            var $elem = $(elems[i]);
+            $elem.val(value[$elem.attr('id')]);
+        }
+    }
+
+    /**
+     * @brief 格式化表格数据
+     *
+     * 查找某控件内的指定类表格控件，根据表格内容生成json数据 
+     * 
+     * @param pid {string}        包含表单的控件id
+     * @param subclass {string}   表单各项数据控件类名称
+     * @param clear {boolean}     是否清空控件内数据
+     * 
+     * @return value {array}   json数组
+     */
+    function formatTabelData(pid, subclass,clear){
+        var $table = $('#' + pid).find('table.' + subclass).DataTable();
         var value = [];
         var dataRows = $table.page.info().recordsTotal;
         for (var i = 0; i < dataRows; ++i) {
             value.push($table.row(i).data());
         }
-        console.log('savetable>>moduleid:' + moduleid +';value:' + JSON.stringify(value));
-        ajaxSaveResumePart(moduleid ,value);
-    });
 
-    $(document).ready(function() {
-        initDateRangePickers();
-        initDataTables();
-
-        <#--  initBaseinfoUI();
-        initBaseinfoValidator();
-        initAwardsUI();
-        initAwardsValidator();
-        initLanguageUI();
-        initComputerUI();
-        initStudentUI();
-        initTrainUI();
-        initPracticeUI();
-        initWorkUI();
-        initCertificateUI();
-        initFamily();
-        initDissertationUI();   -->
-    });
-
-    function initBaseinfoUI() {
-        //时间选择控件
-        $('#input_birthday').daterangepicker(daterangepicker_options, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-        });
-
-        $('#input_political_time').daterangepicker(daterangepicker_options, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-        });
-
-        $('#input_graduation_time').daterangepicker(daterangepicker_options, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-        });
-
-        $('#input_work_time').daterangepicker(daterangepicker_options, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-        });
-
-        $("#input-picture").fileinput({language : 'zh'});
-        $("#input-picture-normal").fileinput({language : 'zh'});
-        $("#input-picture-student").fileinput({language : 'zh'});
-    }
-
-    function initBaseinfoValidator(){
-        $('#form_edit_baseinfo').bootstrapValidator({
-            container: 'tooltip',
-            message: '有部分内容填写错误',
-            feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                name: {
-                    validators: {
-                        notEmpty: {
-                            message: '请输入姓名'
-                        }
-                    }
-                },
-                stature: {
-                    validators: {
-                        notEmpty: {
-                            message: '请输入身高'
-                        }
-                    }
-                },
-                weight: {
-                    validators: {
-                        notEmpty: {
-                            message: '请输入体重'
-                        }
-                    }
-                }
+        //清空表格数据
+        if(clear) {
+            for (var k = 0; k < dataRows; ++k) {
+                $table.row(0).remove().draw(false);
             }
-        });
-    }
-
-    function initAwardsUI(){
-        //时间选择控件
-        $('#input_awards_time').daterangepicker(daterangepicker_options, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-        });
-
-        //table test
-        var $m_ui_table_awards = $("#table_awards");  
-        var m_table_awards_columns = [ { 
-                "data": "name"
-            },        {    
-                "data": "level"
-            },        {    
-                "data": "unit"
-            },        {  
-                "data": "count"
-            },        {  
-                "data": "time"
-            },        {  
-                "data":  null,
-                "className":   "center",
-                "defaultContent":   '<a id="delrow" href="#"><i class="fa fa-trash-o"></i>修改</a>&nbsp;&nbsp;<a id="delrow" href="#"><i class="fa fa-trash-o"></i>删除</a>'      
-            }];
-        var m_sourceSelectAwards = new Array(); 
-        
-        var subAwardsItem = {
-            name: '1',
-            level: '中国银行',
-            unit: '中国银行',
-            count: '中国银行',
-            time: '中国银行',
-        };
-        m_sourceSelectAwards.push(subAwardsItem);
-
-        $m_ui_table_awards.DataTable({
-            'bAutoWidth': true,
-            'destroy': true, //可重新加载
-            'data': m_sourceSelectAwards,
-            'columns': m_table_awards_columns
-        });
-
-        $m_ui_table_awards.removeAttr("style");
+        }
+        return value;
     }
 
     /**
-     * 初始化获奖阶段新增form的输入验证器
+     * @brief 填充表格数据
+     *
+     * 根据json数据，查找某控件内的指定类表格控件，填充数据  
+     *
+     * @param pid {string}      包含表格的控件id
+     * @param subclass {string} 表格类名称
+     * @param value {array}     表格数据
      */
-    function initAwardsValidator() {
-        $('#form_edit_awards').bootstrapValidator({
+    function fillTabelData(pid, subclass, value){
+        var $table = $('#' + pid).find('table.' + subclass).DataTable();
+        for(var i = 0;i < value.length; ++i){
+            $table.row.add(value[i]).draw(false);
+        }
+    }
+
+
+    $(document).ready(function() {
+        initDateRangePickers();
+        initFileInput();
+        initDataTables('resume-table','resume-data');
+        initDataTables('resume-mintable','resume-mindata');
+        initValidator();
+    });
+
+
+    function initValidator(){
+        $('#form_baseinfo').bootstrapValidator({
             container: 'tooltip',
             message: '有部分内容填写错误',
             feedbackIcons: {
@@ -596,380 +726,161 @@
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
-                name: {
+                height_cm: {
                     validators: {
-                        notEmpty: {
-                            message: '请输入获奖名称'
+                        digits: {
+                            message: '该值只能包含数字。'
                         }
                     }
                 },
-                unit: {
+                weight_kg: {
                     validators: {
-                        notEmpty: {
-                            message: '请输入获奖单位'
+                        digits: {
+                            message: '该值只能包含数字。'
                         }
                     }
-                },
-                count: {
+                }
+            }
+        });
+
+        $('#form_education').bootstrapValidator({
+            container: 'tooltip',
+            message: '有部分内容填写错误',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                gaokao_point: {
                     validators: {
-                        notEmpty: {
-                            message: '请输入获奖次数'
+                        digits: {
+                            message: '该值只能包含数字。'
+                        }
+                    }
+                }
+            }
+        });
+
+        $('#form_educationscores').bootstrapValidator({
+            container: 'tooltip',
+            message: '有部分内容填写错误',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                score: {
+                    validators: {
+                        regexp: {
+                            regexp: /^1?[1-9]?\d([.]\d)?$/,
+                            message: '得分不合法'
+                        }
+                    }
+                }
+            }
+        });
+
+        $('#form_educationhistory').bootstrapValidator({
+            container: 'tooltip',
+            message: '有部分内容填写错误',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                graduate_pos: {
+                    validators: {
+                        digits: {
+                            message: '该值只能包含数字。'
+                        }
+                    }
+                }
+            }
+        });
+        
+        $('#form_rewards').bootstrapValidator({
+            container: 'tooltip',
+            message: '有部分内容填写错误',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                times: {
+                    validators: {
+                        digits: {
+                            message: '该值只能包含数字。'
+                        }
+                    }
+                }
+            }
+        });
+
+        $('#form_language').bootstrapValidator({
+            container: 'tooltip',
+            message: '有部分内容填写错误',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                score: {
+                    validators: {
+                        regexp: {
+                            regexp: /^1?[1-9]?\d([.]\d)?$/,
+                            message: '得分不合法'
+                        }
+                    }
+                }
+            }
+        });
+
+        $('#form_shixi').bootstrapValidator({
+            container: 'tooltip',
+            message: '有部分内容填写错误',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                salary: {
+                    validators: {
+                        regexp: {
+                            regexp: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/,
+                            message: '金额不合法'
+                        }
+                    }
+                }
+            }
+        });
+
+        $('#form_targetbank').bootstrapValidator({
+            container: 'tooltip',
+            message: '有部分内容填写错误',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                expect_salary: {
+                    validators: {
+                        regexp: {
+                            regexp: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/,
+                            message: '金额不合法'
                         }
                     }
                 }
             }
         });
     }
-
-    function initLanguageUI(){
-        //时间选择控件
-        $('#language-date').daterangepicker(daterangepicker_options, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-        });
-    }
-
-    function initComputerUI(){
-        //时间选择控件
-        $('#computer-date').daterangepicker(daterangepicker_options, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-        });
-    }
-
-    function initStudentUI() {
-        //时间选择控件
-        $('#input_studentworks_begin_time').daterangepicker(daterangepicker_options, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-        });
-
-        $('#input_studentworks_end_time').daterangepicker(daterangepicker_options, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-        });
-        
-        //table test
-        var $m_ui_table = $("#table_student_works");  
-        var m_table_columns = [ { 
-                "data": "begintime"
-            },        {    
-                "data": "endtime"
-            },        {    
-                "data": "name"
-            },        {  
-                "data": "type"
-            },        {  
-                "data": "describe"
-            },        {  
-                "data":  null,
-                "className":   "center",
-                "defaultContent":   '<a id="delrow" href="#"><i class="fa fa-trash-o"></i>修改</a>&nbsp;&nbsp;<a id="delrow" href="#"><i class="fa fa-trash-o"></i>删除</a>'      
-            }];
-        var m_source = new Array(); 
-        
-        var subItem = {
-            begintime: '2017-01-01',
-            endtime: '2017-11-01',
-            name: '中国银行',
-            type: '中国银行',
-            describe: '中国银行',
-        };
-        m_source.push(subItem);
-
-        $m_ui_table.DataTable({
-            'bAutoWidth': true,
-            'destroy': true, //可重新加载
-            'data': m_source,
-            'columns': m_table_columns
-        });
-
-        $m_ui_table.removeAttr("style");
-    }
-
-    function initTrainUI() {
-        //时间选择控件
-        $('#trainning-start_date').daterangepicker(daterangepicker_options, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-        });
-
-        $('#trainning-end_date').daterangepicker(daterangepicker_options, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-        });
-
-        $("#table_trainning").DataTable({
-            'columns': [ { 
-                "data": "trainning-start_date"
-            },        {    
-                "data": "trainning-end_date"
-            },        {    
-                "data": "trainning-name"
-            },        {    
-                "data": "trainning-memo"
-            },        {  
-                "data":  null,
-                "className":   "center",
-                "defaultContent":   '<a id="delrow" href="#"><i class="fa fa-trash-o"></i>修改</a>&nbsp;&nbsp;<a id="delrow" href="#"><i class="fa fa-trash-o"></i>删除</a>'      
-            }]
-        });
-    }
-
-    function initPracticeUI() {
-        //时间选择控件
-        $('#input_practice_begin_time').daterangepicker(daterangepicker_options, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-        });
-
-        $('#input_practice_end_time').daterangepicker(daterangepicker_options, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-        });
-        
-        //table test
-        var $m_ui_table = $("#table_practice");  
-        var m_table_columns = [ { 
-                "data": "begintime"
-            },        {    
-                "data": "endtime"
-            },        {    
-                "data": "name"
-            },        {  
-                "data": "describe"
-            },        {  
-                "data":  null,
-                "className":   "center",
-                "defaultContent":   '<a id="delrow" href="#"><i class="fa fa-trash-o"></i>修改</a>&nbsp;&nbsp;<a id="delrow" href="#"><i class="fa fa-trash-o"></i>删除</a>'      
-            }];
-        var m_source = new Array(); 
-        
-        var subItem = {
-            begintime: '2017-01-01',
-            endtime: '2017-11-01',
-            name: '中国银行',
-            describe: '中国银行',
-        };
-        m_source.push(subItem);
-
-        $m_ui_table.DataTable({
-            'bAutoWidth': true,
-            'destroy': true, //可重新加载
-            'data': m_source,
-            'columns': m_table_columns
-        });
-
-        $m_ui_table.removeAttr("style");
-    }
-    
-    function initWorkUI() {
-        //时间选择控件
-        $('#input_work_begin_time').daterangepicker(daterangepicker_options, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-        });
-
-        $('#input_work_end_time').daterangepicker(daterangepicker_options, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-        });
-        
-        //table test
-        var $m_ui_table = $("#table_work");  
-        var m_table_columns = [ { 
-                "data": "begintime"
-            },        {    
-                "data": "endtime"
-            },        {    
-                "data": "industry"
-            },        {  
-                "data": "unit"
-            },        {  
-                "data": "post"
-            },        {  
-                "data": "unittype"
-            },        {  
-                "data": "worktype"
-            },        {  
-                "data": "worklevel"
-            },        {  
-                "data": "pay"
-            },        {  
-                "data": "reterence"
-            },        {  
-                "data": "reterencetype"
-            },        {  
-                "data": "reterencetel"
-            },        {  
-                "data":  null,
-                "className":   "center",
-                "defaultContent":   '<a id="delrow" href="#"><i class="fa fa-trash-o"></i>修改</a>&nbsp;&nbsp;<a id="delrow" href="#"><i class="fa fa-trash-o"></i>删除</a>'      
-            }];
-        var m_source = new Array(); 
-        
-        var subItem = {
-            begintime: '2017-01-01',
-            endtime: '2017-11-01',
-            industry: '中国银行',
-            unit: '中国银行',
-            post: '中国银行',
-            unittype: '中国银行',
-            worktype: '中国银行',
-            worklevel: '中国银行',
-            pay: '中国银行',
-            reterence: '中国银行',
-            reterencetype: '中国银行',
-            reterencetel: '中国银行',
-        };
-        m_source.push(subItem);
-
-        $m_ui_table.DataTable({
-            'bAutoWidth': true,
-            'destroy': true, //可重新加载
-            'data': m_source,
-            'columns': m_table_columns
-        });
-
-        $m_ui_table.removeAttr("style");
-    }
-
-    function initCertificateUI() {
-        //时间选择控件
-        $('#input_certificate_time').daterangepicker(daterangepicker_options, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-        });
-
-        //table test
-        var $m_ui_table = $("#table_certificate");  
-        var m_table_columns = [ { 
-                "data": "type"
-            },        {    
-                "data": "name"
-            },        {    
-                "data": "year"
-            },        {  
-                "data": "unit"
-            },        {  
-                "data": "time"
-            },        {  
-                "data": "id"
-            },        {  
-                "data":  null,
-                "className":   "center",
-                "defaultContent":   '<a id="delrow" href="#"><i class="fa fa-trash-o"></i>修改</a>&nbsp;&nbsp;<a id="delrow" href="#"><i class="fa fa-trash-o"></i>删除</a>'      
-            }];
-        var m_source = new Array(); 
-        
-        var subItem = {
-            type: '2017-01-01',
-            name: '2017-11-01',
-            year: '中国银行',
-            unit: '中国银行',
-            time: '中国银行',
-            id: '中国银行',
-        };
-        m_source.push(subItem);
-
-        $m_ui_table.DataTable({
-            'bAutoWidth': true,
-            'destroy': true, //可重新加载
-            'data': m_source,
-            'columns': m_table_columns
-        });
-
-        $m_ui_table.removeAttr("style");
-    }
-
-    function initFamily() {
-        //时间选择控件
-        $('#input_family_birthday_time').daterangepicker(daterangepicker_options, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-        });
-
-        //table test
-        var $m_ui_table = $("#table_family");  
-        var m_table_columns = [ { 
-                "data": "name"
-            },        {    
-                "data": "sex"
-            },        {    
-                "data": "type"
-            },        {  
-                "data": "birthday"
-            },        {  
-                "data": "status"
-            },        {  
-                "data": "unit"
-            },        {  
-                "data": "post"
-            },        {  
-                "data": "politics"
-            },        {  
-                "data": "education"
-            },        {  
-                "data":  null,
-                "className":   "center",
-                "defaultContent":   '<a id="delrow" href="#"><i class="fa fa-trash-o"></i>修改</a>&nbsp;&nbsp;<a id="delrow" href="#"><i class="fa fa-trash-o"></i>删除</a>'      
-            }];
-        var m_source = new Array(); 
-        
-        var subItem = {
-            name: '2017-01-01',
-            sex: '2017-11-01',
-            type: '中国银行',
-            birthday: '中国银行',
-            status: '中国银行',
-            unit: '中国银行',
-            post: '中国银行',
-            politics: '中国银行',
-            education: '中国银行',
-        };
-        m_source.push(subItem);
-
-        $m_ui_table.DataTable({
-            'bAutoWidth': true,
-            'destroy': true, //可重新加载
-            'data': m_source,
-            'columns': m_table_columns
-        });
-
-        $m_ui_table.removeAttr("style");
-    }
-
-    function initDissertationUI() {
-        //时间选择控件
-        $('#input_dissertation_time').daterangepicker(daterangepicker_options, function(start, end, label) {
-            console.log(start.toISOString(), end.toISOString(), label);
-        });
-
-        //table test
-        var $m_ui_table = $("#table_dissertation");  
-        var m_table_columns = [ { 
-                "data": "name"
-            },        {    
-                "data": "type"
-            },        {    
-                "data": "time"
-            },        {  
-                "data": "author"
-            },        {  
-                "data": "level"
-            },        {  
-                "data":  null,
-                "className":   "center",
-                "defaultContent":   '<a id="delrow" href="#"><i class="fa fa-trash-o"></i>修改</a>&nbsp;&nbsp;<a id="delrow" href="#"><i class="fa fa-trash-o"></i>删除</a>'      
-            }];
-        var m_source = new Array(); 
-        
-        var subItem = {
-            name: '2017-01-01',
-            type: '2017-11-01',
-            time: '中国银行',
-            author: '中国银行',
-            level: '中国银行',
-        };
-        m_source.push(subItem);
-
-        $m_ui_table.DataTable({
-            'bAutoWidth': true,
-            'destroy': true, //可重新加载
-            'data': m_source,
-            'columns': m_table_columns
-        });
-
-        $m_ui_table.removeAttr("style");
-    }
+  
 </script>
 
 </body>

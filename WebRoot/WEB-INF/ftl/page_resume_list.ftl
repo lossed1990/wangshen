@@ -80,9 +80,21 @@
     m_sourceSelect.push(subItem);
 
     $m_ui_table.DataTable({
-        destroy: true, //可重新加载
-        data: m_sourceSelect,
-        columns: m_tablecolumns
+        <#--  destroy: true, //可重新加载
+        data: m_sourceSelect,  -->
+        columns: m_tablecolumns,
+        serverSide: true,
+        "ajax": {
+            "type": "POST",
+            "url": "${path}/resume/resume-list-datatable.json",
+            "contentType": "application/json",
+            "dataType": "json",
+            "data": function ( d ) {
+                return $.extend( {}, d, {
+                    "userid": '1'
+                });
+            }
+        }
     });
 
     $m_ui_table.removeAttr("style");

@@ -26,7 +26,11 @@ var DivModule = {
     initElem: function() {
         var self = this;
         for (var i = 0; i < self.hideSubs.length; ++i) {
-            $('#' + self.hideSubs[i]).hide();
+            console.log('hide sub key:' + self.hideSubs[i]);
+            var keys = self.hideSubs[i].split('-');
+            if (keys.length >= 2) {
+                $('#' + keys[0]).find($('#' + keys[1])).hide();
+            }
         }
         self.hide();
     },

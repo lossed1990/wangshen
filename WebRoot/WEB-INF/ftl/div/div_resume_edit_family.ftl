@@ -84,7 +84,12 @@
                     </div>
                     <label class="control-label col-md-1 col-sm-1 col-xs-12">政治面貌</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
-                        <input type="text" class="form-control resume-data" id="zhengzhimianmao" placeholder="">
+                        <select class="form-control resume-data" id="zhengzhimianmao">
+                            <option>中共党员</option>
+                            <option>中共预备党员</option>
+                            <option>团员</option>
+                            <option>群众</option>
+                        </select>
                     </div>
                     <label class="control-label col-md-1 col-sm-1 col-xs-12">教育情况</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
