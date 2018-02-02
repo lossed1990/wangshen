@@ -9,7 +9,7 @@
 <body class="nav-md">
 <div class="container body">
     <div class="main_container">
-        <#include "inc/inc_leftmenu_user.ftl" />
+        <#include "inc/inc_leftmenu_admin.ftl" />
 
         <#include "inc/inc_toprightnav.ftl" />
 
@@ -34,6 +34,7 @@
                                         <tr>
                                             <th>简历编号</th>
                                             <th>简历模板</th>
+                                            <th>用户手机号</th>
                                             <th>最后修改时间</th>
                                             <th>操作</th>
                                         </tr>
@@ -68,6 +69,8 @@
             "data": "resume_id"
         },        {    
             "data": "tmplname"
+        },        {    
+            "data": "usermobile"
         },        {    
             "data": "lastmodtime"
         },        {    

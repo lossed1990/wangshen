@@ -72,6 +72,15 @@ public class ResumesAction {
 
 		return "page_resume_add";
 	}
+	
+	// 管理员浏览所有简历
+	@RequestMapping(value = "/admin-resume-list.page", method = RequestMethod.GET)
+	public String adminResumeList(Model model) {
+
+		logger.info("transfer to FreeMarker view");
+
+		return "page_admin_resume_list";
+	}
 
 	// 浏览所有简历
 	@RequestMapping(value = "/resume-list.page", method = RequestMethod.GET)

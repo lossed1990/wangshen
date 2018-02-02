@@ -32,12 +32,12 @@
                                                 <div class="mask">
                                                     <p>进入功能项</p>
                                                     <div class="tools tools-bottom">
-                                                        <a href="${path}/resume/resume-list.page"><i class="fa fa-pencil"></i></a>
+                                                        <a href="${path}/resume/admin-resume-list.page"><i class="fa fa-pencil"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="caption">
-                                                <a href="${path}/resume/resume-list.page">学员信息简历浏览</a>
+                                                <a href="${path}/resume/admin-resume-list.page">学员信息简历浏览</a>
                                             </div>
                                         </div>
                                     </div>

@@ -2133,131 +2133,163 @@ if (typeof Object.create !== 'function') {
         "keys": [{
             "label": "姓名",
             "ruletype": "",
-            "keypath": "baseinfo-name"
+            "keypath": "baseinfo-name",
+            "enable": false
         }, {
             "label": "曾用名",
             "ruletype": "",
-            "keypath": "baseinfo-old_name"
+            "keypath": "baseinfo-old_name",
+            "enable": false
         }, {
             "label": "性别",
             "ruletype": "",
-            "keypath": "baseinfo-sex"
+            "keypath": "baseinfo-sex",
+            "enable": false
         }, {
             "label": "出生年月",
             "ruletype": "",
-            "keypath": "baseinfo-birth_date"
+            "keypath": "baseinfo-birth_date",
+            "enable": false
         }, {
             "label": "民族",
             "ruletype": "",
-            "keypath": "baseinfo-nation"
+            "keypath": "baseinfo-nation",
+            "enable": false
         }, {
             "label": "籍贯",
             "ruletype": "",
-            "keypath": "baseinfo-birthplace"
+            "keypath": "baseinfo-birthplace",
+            "enable": false
         }, {
             "label": "政治面貌",
             "ruletype": "",
-            "keypath": "baseinfo-party"
+            "keypath": "baseinfo-party",
+            "enable": false
         }, {
             "label": "入党团时间",
             "ruletype": "",
-            "keypath": "baseinfo-party_entry_date"
+            "keypath": "baseinfo-party_entry_date",
+            "enable": false
         }, {
             "label": "身高",
             "ruletype": "1,5",
-            "keypath": "baseinfo-height_cm"
+            "keypath": "baseinfo-height_cm",
+            "enable": false
         }, {
             "label": "体重",
             "ruletype": "1,6",
-            "keypath": "baseinfo-weight_kg"
+            "keypath": "baseinfo-weight_kg",
+            "enable": false
         }, {
             "label": "血型",
             "ruletype": "",
-            "keypath": "baseinfo-bloodtype"
+            "keypath": "baseinfo-bloodtype",
+            "enable": false
         }, {
             "label": "婚姻状况",
             "ruletype": "",
-            "keypath": "baseinfo-marrage"
+            "keypath": "baseinfo-marrage",
+            "enable": false
         }, {
             "label": "生育状况",
             "ruletype": "",
-            "keypath": "baseinfo-have_kid"
+            "keypath": "baseinfo-have_kid",
+            "enable": false
         }, {
             "label": "健康状况",
             "ruletype": "",
-            "keypath": "baseinfo-heath"
+            "keypath": "baseinfo-heath",
+            "enable": false
         }, {
             "label": "生源地",
             "ruletype": "",
-            "keypath": "baseinfo-gaokao_place"
+            "keypath": "baseinfo-gaokao_place",
+            "enable": false
         }, {
             "label": "现居住地",
             "ruletype": "",
-            "keypath": "baseinfo-living_place"
+            "keypath": "baseinfo-living_place",
+            "enable": false
         }, {
             "label": "通讯地址",
             "ruletype": "",
-            "keypath": "baseinfo-address"
+            "keypath": "baseinfo-address",
+            "enable": false
         }, {
             "label": "家庭地址",
             "ruletype": "",
-            "keypath": "baseinfo-home_address"
+            "keypath": "baseinfo-home_address",
+            "enable": false
         }, {
             "label": "户口所在地",
             "ruletype": "",
-            "keypath": "baseinfo-hukou_place"
+            "keypath": "baseinfo-hukou_place",
+            "enable": false
         }, {
             "label": "户口类别",
             "ruletype": "",
-            "keypath": "baseinfo-hukou_type"
+            "keypath": "baseinfo-hukou_type",
+            "enable": false
         }, {
             "label": "毕业时间",
             "ruletype": "",
-            "keypath": "baseinfo-graduate_date"
+            "keypath": "baseinfo-graduate_date",
+            "enable": false
         }, {
             "label": "参加工作时间",
             "ruletype": "",
-            "keypath": "baseinfo-work_date"
+            "keypath": "baseinfo-work_date",
+            "enable": false
         }, {
             "label": "证件类型",
             "ruletype": "",
-            "keypath": "baseinfo-idcard_type"
+            "keypath": "baseinfo-idcard_type",
+            "enable": false
         }, {
             "label": "证件号",
             "ruletype": "1,3,4",
-            "keypath": "baseinfo-idcard_num"
+            "keypath": "baseinfo-idcard_num",
+            "enable": false
         }, {
             "label": "移动电话",
             "ruletype": "1,2,4",
-            "keypath": "baseinfo-mobile"
+            "keypath": "baseinfo-mobile",
+            "enable": false
         }, {
             "label": "固定电话",
             "ruletype": "",
-            "keypath": "baseinfo-fix_phone"
+            "keypath": "baseinfo-fix_phone",
+            "enable": false
         }, {
             "label": "E-mail",
             "ruletype": "",
-            "keypath": "baseinfo-email"
+            "keypath": "baseinfo-email",
+            "enable": false
         }, {
             "label": "紧急联系人",
             "ruletype": "",
-            "keypath": "baseinfo-emergency_contact"
+            "keypath": "baseinfo-emergency_contact",
+            "enable": false
         }, {
             "label": "紧急联系人电话",
             "ruletype": "1,2,4",
-            "keypath": "baseinfo-emergency_phone"
+            "keypath": "baseinfo-emergency_phone",
+            "enable": false
         }, {
             "label": "免冠一寸照",
             "ruletype": "",
-            "keypath": "baseinfo-head_pic"
+            "keypath": "baseinfo-head_pic",
+            "enable": false
         }, {
             "label": "近期生活照",
             "ruletype": "",
-            "keypath": "baseinfo-live_pic"
+            "keypath": "baseinfo-live_pic",
+            "enable": false
         }, {
             "label": "学生证照片",
             "ruletype": "",
-            "keypath": "baseinfo-student_pic"
+            "keypath": "baseinfo-student_pic",
+            "enable": false
         }]
     };
 
@@ -2267,15 +2299,18 @@ if (typeof Object.create !== 'function') {
         "keys": [{
             "label": "最高学历",
             "ruletype": "",
-            "keypath": "education-top_grade"
+            "keypath": "education-top_grade",
+            "enable": false
         }, {
             "label": "高考录取批次",
             "ruletype": "",
-            "keypath": "education-gaokao_level"
+            "keypath": "education-gaokao_level",
+            "enable": false
         }, {
             "label": "高考分数",
             "ruletype": "",
-            "keypath": "education-gaokao_point"
+            "keypath": "education-gaokao_point",
+            "enable": false
         }, {
             "label": "起始日期",
             "ruletype": "",
@@ -2360,23 +2395,28 @@ if (typeof Object.create !== 'function') {
         "keys": [{
             "label": "获奖名称",
             "ruletype": "",
-            "keypath": "rewards-name"
+            "keypath": "rewards-name",
+            "enable": false
         }, {
             "label": "获奖级别",
             "ruletype": "",
-            "keypath": "rewards-level"
+            "keypath": "rewards-level",
+            "enable": false
         }, {
             "label": "颁发单位",
             "ruletype": "",
-            "keypath": "rewards-source"
+            "keypath": "rewards-source",
+            "enable": false
         }, {
             "label": "获奖次数",
             "ruletype": "",
-            "keypath": "rewards-times"
+            "keypath": "rewards-times",
+            "enable": false
         }, {
             "label": "获奖时间",
             "ruletype": "",
-            "keypath": "rewards-date"
+            "keypath": "rewards-date",
+            "enable": false
         }]
     };
 
@@ -2386,27 +2426,33 @@ if (typeof Object.create !== 'function') {
         "keys": [{
             "label": "证书级别",
             "ruletype": "",
-            "keypath": "language-level"
+            "keypath": "language-level",
+            "enable": false
         }, {
             "label": "具体成绩",
             "ruletype": "",
-            "keypath": "language-score"
+            "keypath": "language-score",
+            "enable": false
         }, {
             "label": "获证日期",
             "ruletype": "",
-            "keypath": "language-date"
+            "keypath": "language-date",
+            "enable": false
         }, {
             "label": "其他外语掌握情况",
             "ruletype": "",
-            "keypath": "language-other"
+            "keypath": "language-other",
+            "enable": false
         }, {
             "label": "方言掌握情况",
             "ruletype": "",
-            "keypath": "language-local_lan"
+            "keypath": "language-local_lan",
+            "enable": false
         }, {
             "label": "其它说明",
             "ruletype": "",
-            "keypath": "language-memo"
+            "keypath": "language-memo",
+            "enable": false
         }]
     };
 
@@ -2416,15 +2462,18 @@ if (typeof Object.create !== 'function') {
         "keys": [{
             "label": "证书级别",
             "ruletype": "",
-            "keypath": "computer-name"
+            "keypath": "computer-name",
+            "enable": false
         }, {
             "label": "获取时间",
             "ruletype": "",
-            "keypath": "computer-date"
+            "keypath": "computer-date",
+            "enable": false
         }, {
             "label": "掌握程度",
             "ruletype": "",
-            "keypath": "computer-level"
+            "keypath": "computer-level",
+            "enable": false
         }]
     };
 
@@ -2434,23 +2483,28 @@ if (typeof Object.create !== 'function') {
         "keys": [{
             "label": "起始时间",
             "ruletype": "",
-            "keypath": "student_ganbu-start_date"
+            "keypath": "student_ganbu-start_date",
+            "enable": false
         }, {
             "label": "结束时间",
             "ruletype": "",
-            "keypath": "student_ganbu-end_date"
+            "keypath": "student_ganbu-end_date",
+            "enable": false
         }, {
             "label": "职务名称",
             "ruletype": "",
-            "keypath": "student_ganbu-zhiwu_name"
+            "keypath": "student_ganbu-zhiwu_name",
+            "enable": false
         }, {
             "label": "职务类别",
             "ruletype": "",
-            "keypath": "student_ganbu-zhiwu_type"
+            "keypath": "student_ganbu-zhiwu_type",
+            "enable": false
         }, {
             "label": "工作业绩",
             "ruletype": "",
-            "keypath": "student_ganbu-memo"
+            "keypath": "student_ganbu-memo",
+            "enable": false
         }]
     };
 
@@ -2460,19 +2514,23 @@ if (typeof Object.create !== 'function') {
         "keys": [{
             "label": "起始时间",
             "ruletype": "",
-            "keypath": "trainning-start_date"
+            "keypath": "trainning-start_date",
+            "enable": false
         }, {
             "label": "结束时间",
             "ruletype": "",
-            "keypath": "trainning-end_date"
+            "keypath": "trainning-end_date",
+            "enable": false
         }, {
             "label": "培训项目名称",
             "ruletype": "",
-            "keypath": "trainning-name"
+            "keypath": "trainning-name",
+            "enable": false
         }, {
             "label": "内容描述",
             "ruletype": "",
-            "keypath": "trainning-memo"
+            "keypath": "trainning-memo",
+            "enable": false
         }]
     };
 
@@ -2482,19 +2540,23 @@ if (typeof Object.create !== 'function') {
         "keys": [{
             "label": "起始时间",
             "ruletype": "",
-            "keypath": "shijian-start_date"
+            "keypath": "shijian-start_date",
+            "enable": false
         }, {
             "label": "结束时间",
             "ruletype": "",
-            "keypath": "shijian-end_date"
+            "keypath": "shijian-end_date",
+            "enable": false
         }, {
             "label": "培训项目名称",
             "ruletype": "",
-            "keypath": "shijian-name"
+            "keypath": "shijian-name",
+            "enable": false
         }, {
             "label": "内容描述",
             "ruletype": "",
-            "keypath": "shijian-memo"
+            "keypath": "shijian-memo",
+            "enable": false
         }]
     };
 
@@ -2504,59 +2566,73 @@ if (typeof Object.create !== 'function') {
         "keys": [{
             "label": "起始时间",
             "ruletype": "",
-            "keypath": "shixi-start_date"
+            "keypath": "shixi-start_date",
+            "enable": false
         }, {
             "label": "结束时间",
             "ruletype": "",
-            "keypath": "shixi-end_date"
+            "keypath": "shixi-end_date",
+            "enable": false
         }, {
             "label": "所在行业",
             "ruletype": "",
-            "keypath": "shixi-hangye"
+            "keypath": "shixi-hangye",
+            "enable": false
         }, {
             "label": "所在单位及部门",
             "ruletype": "",
-            "keypath": "shixi-apartment"
+            "keypath": "shixi-apartment",
+            "enable": false
         }, {
             "label": "所在岗位",
             "ruletype": "",
-            "keypath": "shixi-work"
+            "keypath": "shixi-work",
+            "enable": false
         }, {
             "label": "单位性质",
             "ruletype": "",
-            "keypath": "shixi-company_type"
+            "keypath": "shixi-company_type",
+            "enable": false
         }, {
             "label": "工作类型",
             "ruletype": "",
-            "keypath": "shixi-work_type"
+            "keypath": "shixi-work_type",
+            "enable": false
         }, {
             "label": "绩效考核等级",
             "ruletype": "",
-            "keypath": "shixi-kpi_level"
+            "keypath": "shixi-kpi_level",
+            "enable": false
         }, {
             "label": "工作经历描述",
             "ruletype": "",
-            "keypath": "shixi-work_memo"
+            "keypath": "shixi-work_memo",
+            "enable": false
         }, {
             "label": "薪资（税前含福利）",
             "ruletype": "",
-            "keypath": "shixi-salary"
+            "keypath": "shixi-salary",
+            "enable": false
         }, {
             "label": "证明人",
             "ruletype": "",
-            "keypath": "shixi-zhengming_people"
+            "keypath": "shixi-zhengming_people",
+            "enable": false
         }, {
             "label": "证明人职务",
             "ruletype": "",
-            "keypath": "shixi-zhengming_work"
+            "keypath": "shixi-zhengming_work",
+            "enable": false
         }, {
             "label": "证明人电话",
             "ruletype": "",
-            "keypath": "shixi-zhengming_phone"
+            "keypath": "shixi-zhengming_phone",
+            "enable": false
         }, {
             "label": "离职原因",
             "ruletype": "",
-            "keypath": "shixi-lizhi_info"
+            "keypath": "shixi-lizhi_info",
+            "enable": false
         }]
     };
 
@@ -2566,27 +2642,33 @@ if (typeof Object.create !== 'function') {
         "keys": [{
             "label": "证书类别",
             "ruletype": "",
-            "keypath": "zigezhengshu-type"
+            "keypath": "zigezhengshu-type",
+            "enable": false
         }, {
             "label": "证书名称",
             "ruletype": "",
-            "keypath": "zigezhengshu-name"
+            "keypath": "zigezhengshu-name",
+            "enable": false
         }, {
             "label": "获得年份",
             "ruletype": "",
-            "keypath": "zigezhengshu-got_date"
+            "keypath": "zigezhengshu-got_date",
+            "enable": false
         }, {
             "label": "认证机构",
             "ruletype": "",
-            "keypath": "zigezhengshu-source"
+            "keypath": "zigezhengshu-source",
+            "enable": false
         }, {
             "label": "认证时间",
             "ruletype": "",
-            "keypath": "zigezhengshu-cert_date"
+            "keypath": "zigezhengshu-cert_date",
+            "enable": false
         }, {
             "label": "证书编号",
             "ruletype": "",
-            "keypath": "zigezhengshu-zhengshu_code"
+            "keypath": "zigezhengshu-zhengshu_code",
+            "enable": false
         }]
     };
 
@@ -2596,39 +2678,48 @@ if (typeof Object.create !== 'function') {
         "keys": [{
             "label": "姓名",
             "ruletype": "",
-            "keypath": "family-name"
+            "keypath": "family-name",
+            "enable": false
         }, {
             "label": "性别",
             "ruletype": "",
-            "keypath": "family-sex"
+            "keypath": "family-sex",
+            "enable": false
         }, {
             "label": "关系",
             "ruletype": "",
-            "keypath": "family-relation"
+            "keypath": "family-relation",
+            "enable": false
         }, {
             "label": "出生年月",
             "ruletype": "",
-            "keypath": "family-birthdate"
+            "keypath": "family-birthdate",
+            "enable": false
         }, {
             "label": "人员状态",
             "ruletype": "",
-            "keypath": "family-status"
+            "keypath": "family-status",
+            "enable": false
         }, {
             "label": "工作单位",
             "ruletype": "",
-            "keypath": "family-work_place"
+            "keypath": "family-work_place",
+            "enable": false
         }, {
             "label": "担任职务",
             "ruletype": "",
-            "keypath": "family-work"
+            "keypath": "family-work",
+            "enable": false
         }, {
             "label": "政治面貌",
             "ruletype": "",
-            "keypath": "family-zhengzhimianmao"
+            "keypath": "family-zhengzhimianmao",
+            "enable": false
         }, {
             "label": "教育情况",
             "ruletype": "",
-            "keypath": "family-edu_status"
+            "keypath": "family-edu_status",
+            "enable": false
         }]
     };
 
@@ -2638,23 +2729,28 @@ if (typeof Object.create !== 'function') {
         "keys": [{
             "label": "论文/期刊名称",
             "ruletype": "",
-            "keypath": "dissertation-name"
+            "keypath": "dissertation-name",
+            "enable": false
         }, {
             "label": "刊物级别",
             "ruletype": "",
-            "keypath": "dissertation-level"
+            "keypath": "dissertation-level",
+            "enable": false
         }, {
             "label": "刊载时间/出版时间",
             "ruletype": "",
-            "keypath": "dissertation-date"
+            "keypath": "dissertation-date",
+            "enable": false
         }, {
             "label": "作者",
             "ruletype": "",
-            "keypath": "dissertation-author"
+            "keypath": "dissertation-author",
+            "enable": false
         }, {
             "label": "文章/专著简介",
             "ruletype": "",
-            "keypath": "dissertation-memo"
+            "keypath": "dissertation-memo",
+            "enable": false
         }]
     };
 
@@ -2664,7 +2760,8 @@ if (typeof Object.create !== 'function') {
         "keys": [{
             "label": "未来五年的职业规划",
             "ruletype": "",
-            "keypath": "workplan-plan"
+            "keypath": "workplan-plan",
+            "enable": false
         }]
     };
 
@@ -2674,7 +2771,8 @@ if (typeof Object.create !== 'function') {
         "keys": [{
             "label": "自我评价",
             "ruletype": "",
-            "keypath": "selfjudge-info"
+            "keypath": "selfjudge-info",
+            "enable": false
         }]
     };
 
@@ -2684,7 +2782,8 @@ if (typeof Object.create !== 'function') {
         "keys": [{
             "label": "特长爱好",
             "ruletype": "",
-            "keypath": "speciality-info"
+            "keypath": "speciality-info",
+            "enable": false
         }]
     };
 
@@ -2694,7 +2793,8 @@ if (typeof Object.create !== 'function') {
         "keys": [{
             "label": "自荐信",
             "ruletype": "",
-            "keypath": "selfrecomadation-info"
+            "keypath": "selfrecomadation-info",
+            "enable": false
         }]
     };
 
@@ -2704,7 +2804,8 @@ if (typeof Object.create !== 'function') {
         "keys": [{
             "label": "其他说明",
             "ruletype": "",
-            "keypath": "otherinfo-info"
+            "keypath": "otherinfo-info",
+            "enable": false
         }]
     };
 
@@ -2714,27 +2815,33 @@ if (typeof Object.create !== 'function') {
         "keys": [{
             "label": "报考银行",
             "ruletype": "",
-            "keypath": "targetbank-bank"
+            "keypath": "targetbank-bank",
+            "enable": false
         }, {
             "label": "报考地区",
             "ruletype": "",
-            "keypath": "targetbank-area"
+            "keypath": "targetbank-area",
+            "enable": false
         }, {
             "label": "报考上述地区的理由",
             "ruletype": "",
-            "keypath": "targetbank-reason"
+            "keypath": "targetbank-reason",
+            "enable": false
         }, {
             "label": "期望年薪（税前含福利）",
             "ruletype": "1,4,8",
-            "keypath": "targetbank-expect_salary"
+            "keypath": "targetbank-expect_salary",
+            "enable": false
         }, {
             "label": "期望参加笔试地点",
             "ruletype": "",
-            "keypath": "targetbank-exam_place"
+            "keypath": "targetbank-exam_place",
+            "enable": false
         }, {
             "label": "招聘信息来源",
             "ruletype": "",
-            "keypath": "targetbank-info_source"
+            "keypath": "targetbank-info_source",
+            "enable": false
         }]
     };
 
@@ -2744,19 +2851,23 @@ if (typeof Object.create !== 'function') {
         "keys": [{
             "label": "是否曾受过处罚或处分",
             "ruletype": "",
-            "keypath": "promise-is_punished"
+            "keypath": "promise-is_punished",
+            "enable": false
         }, {
             "label": "是否曾患过重大疾病",
             "ruletype": "",
-            "keypath": "promise-is_disease"
+            "keypath": "promise-is_disease",
+            "enable": false
         }, {
             "label": "是否是本行员工",
             "ruletype": "",
-            "keypath": "promise-is_thisbank_worker"
+            "keypath": "promise-is_thisbank_worker",
+            "enable": false
         }, {
             "label": "是否有亲属在本行工作",
             "ruletype": "",
-            "keypath": "promise-is_relative_worker"
+            "keypath": "promise-is_relative_worker",
+            "enable": false
         }]
     };
 })(jQuery, window, document);
