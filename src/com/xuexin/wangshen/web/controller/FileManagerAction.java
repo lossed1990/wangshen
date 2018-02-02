@@ -1,7 +1,11 @@
 package com.xuexin.wangshen.web.controller;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -9,6 +13,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -130,7 +135,7 @@ public class FileManagerAction {
     
     
     //通用文件下载
-    @RequestMapping(value = "/download.page", method=RequestMethod.GET)
+    @RequestMapping(value = "/download-common.page", method=RequestMethod.GET)
     public ResponseEntity<byte[]> commonDownload(HttpServletRequest request,
     		@RequestParam("fid") String fid) throws Exception {
     	
@@ -168,5 +173,61 @@ public class FileManagerAction {
         
         return new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, HttpStatus.CREATED);  
     }
-	  
+    
+    //兼容性文件下载
+    @RequestMapping(value = "/download.page", method=RequestMethod.GET)
+    public void commonFileDownload(HttpServletRequest request, HttpServletResponse response,
+    						@RequestParam("fid") String fid) throws Exception {
+    	
+    	//检查参数
+    	if(fid == null || fid.length() <= 1) {
+    		response.setStatus(HttpStatus.BAD_REQUEST.value());
+    		return;
+    	}
+    	
+    	//获取文件信息
+    	FileInfoDO fileinfo = service_file.getFileInfo(fid);
+    	
+    	if(fileinfo == null) {
+    		//找不到文件
+    		response.setStatus(HttpStatus.NOT_FOUND.value());
+    		return;
+    	}
+    	
+    	//文件路径
+    	String path = request.getServletContext().getRealPath(ConstConfigDefine.PATH_COMMON_FILE_REL);
+        File file = new File(path + File.separator + fileinfo.getStrFilePath());
+        
+        //检查文件是否存在
+        if(!file.exists()) {
+        	//找不到文件
+    		response.setStatus(HttpStatus.NOT_FOUND.value());
+    		return;
+        }
+		
+		//获取服务端文件名
+		String strFileName = fileinfo.getStrFileID() + "." + fileinfo.getStrFileExt();
+		
+		 //文件类型描述
+        String conttype = contentMap.get(fileinfo.getStrFileExt().toLowerCase());
+        
+        //反馈头设置
+		response.reset(); 
+		response.setStatus(HttpStatus.CREATED.value());
+		response.setHeader("Connection", "close");
+	    response.setHeader("Content-Disposition", "attachment; filename=\"" + strFileName + "\"");  
+	    response.addHeader("Content-Length", Long.toString(fileinfo.getnFileSize()));
+	    response.setContentType(conttype);
+	    
+	    //输出文件流
+        InputStream in = new FileInputStream(file);          
+        byte[] data = new byte[in.available()];  
+        in.read(data);  
+        in.close();
+	    
+	    OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());  
+	    outputStream.write(data);  
+	    outputStream.flush();  
+	    outputStream.close();
+    }	  
 }
