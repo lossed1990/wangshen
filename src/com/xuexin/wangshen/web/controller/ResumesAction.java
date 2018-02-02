@@ -31,10 +31,12 @@ import com.xuexin.wangshen.model.pojo.PagingInfo;
 import com.xuexin.wangshen.model.pojo.ResumeDO;
 import com.xuexin.wangshen.model.pojo.ResumeListVO;
 import com.xuexin.wangshen.model.pojo.ResumePartDTO;
+import com.xuexin.wangshen.model.pojo.ResumeTemplateDO;
 import com.xuexin.wangshen.model.pojo.datatable.DatatableRequestParam;
 import com.xuexin.wangshen.model.pojo.datatable.DatatablesResponse;
 import com.xuexin.wangshen.service.GlobalService;
 import com.xuexin.wangshen.service.ResumeService;
+import com.xuexin.wangshen.service.ResumeTemplateService;
 import com.xuexin.wangshen.util.ConstConfigDefine;
 import com.xuexin.wangshen.util.ErrorDefines;
 import com.xuexin.wangshen.util.WebContextResouceBundleReader;
@@ -57,12 +59,16 @@ public class ResumesAction {
 
 	@Resource(name = "resumeService")
 	private ResumeService service_resume;
+	
+	@Resource(name = "tmplService")
+	private ResumeTemplateService service_tmpl;
 
 	// 用户添加简历
 	@RequestMapping(value = "/resume-add.page", method = RequestMethod.GET)
 	public String resumeAdd(Model model) {
 
-		logger.info("transfer to FreeMarker view");
+		List<ResumeTemplateDO> lsttmpls = service_tmpl.listTemplateInfo(true);
+		model.addAttribute("lstTemps", lsttmpls);
 
 		return "page_resume_add";
 	}
