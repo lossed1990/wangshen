@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -26,8 +27,12 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xuexin.wangshen.model.pojo.CommonResultDTO;
+import com.xuexin.wangshen.model.pojo.PagingInfo;
 import com.xuexin.wangshen.model.pojo.ResumeDO;
+import com.xuexin.wangshen.model.pojo.ResumeListVO;
 import com.xuexin.wangshen.model.pojo.ResumePartDTO;
+import com.xuexin.wangshen.model.pojo.datatable.DatatableRequestParam;
+import com.xuexin.wangshen.model.pojo.datatable.DatatablesResponse;
 import com.xuexin.wangshen.service.GlobalService;
 import com.xuexin.wangshen.service.ResumeService;
 import com.xuexin.wangshen.util.ConstConfigDefine;
@@ -69,6 +74,31 @@ public class ResumesAction {
 		logger.info("transfer to FreeMarker view");
 
 		return "page_resume_list";
+	}
+	
+	// 适配datatable简历列表
+	@RequestMapping(value = "/resume-list-datatable.json", method = RequestMethod.POST, consumes = "application/json")
+	@ResponseBody
+	public DatatablesResponse<ResumeListVO> resumeListDatatableJSON(Model model, @RequestBody DatatableRequestParam param) {
+
+		DatatablesResponse<ResumeListVO> result = new DatatablesResponse<ResumeListVO>();
+		
+		//获取分页信息
+		PagingInfo page = new PagingInfo();
+		page.setnPageSize(param.getLength());						//分页大小
+		page.setnPageIndex(param.getStart() / param.getLength());	//当前页面
+		
+		//用户id
+		int nUserID = param.getUserid();
+		
+		List<ResumeListVO> lstResumes = service_resume.listResumesInPages(nUserID, page);
+		
+		result.setData(lstResumes);
+		result.setDraw(param.getDraw());
+		result.setRecordsFiltered(page.getnTotalCount());
+		result.setRecordsTotal(page.getnTotalCount());
+
+		return result;
 	}
 
 	// 编辑简历
@@ -217,7 +247,8 @@ public class ResumesAction {
 		}
 		
 		//填充简历数据
-		model.addAttribute("resume", resume);
+		model.addAttribute("info", resume);
+		model.addAttribute("resume", JSON.parseObject(resume.getStrResumeJOSN()));
 		
 		//如果只是预览视图，则直接生成预览页面，预览页面带打印和下载链接
 		if(strType == null) {

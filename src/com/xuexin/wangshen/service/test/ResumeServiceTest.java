@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.xuexin.wangshen.model.pojo.PagingInfo;
 import com.xuexin.wangshen.model.pojo.ResumeListVO;
 import com.xuexin.wangshen.service.ResumeService;
+import com.xuexin.wangshen.util.HelperUtilClass;
 
 
 /*
@@ -38,7 +39,8 @@ public class ResumeServiceTest {
 	@Test
 	public void testListResumeInPage() {
 		
-		generate(new File("D:\\Work\\Private\\chartNodeServer\\resume.xhtml"), new File("D:/1.docx"));  
+	
+		generate(new File("D:\\Work\\JAVA\\workspace\\wangshen\\WebRoot\\resumes\\xhtml\\542A183D-7D7E-4FFA-92D0-6A4D6FBF32E0-20180130111157.html"), new File("D:/1.docx"));  
 		
 		/*
 		PagingInfo pageinfo = new PagingInfo();

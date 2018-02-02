@@ -90,9 +90,14 @@
 	<!-- 分页查询简历 -->
 	<resultMap id="RM_ResumeInfoListVO" type="com.xuexin.wangshen.model.pojo.ResumeListVO">
 		<id column="c_resumeid" property="resume_id" jdbcType="VARCHAR" />
+		<id column="c_resumename" property="resume_name" jdbcType="VARCHAR" />
+		<result column="un_tempid" property="tmplid" jdbcType="INTEGER" />
 		<result column="vc_tempname" property="tmplname" jdbcType="VARCHAR" />
 		<result column="vc_temppic" property="tmplpic" jdbcType="VARCHAR" />
-		<association property="resume" resultMap="RM_ResumeInfo"/>
+		<result column="un_userid" property="userid" jdbcType="INTEGER" />
+		<result column="c_mobilenumder" property="usermobile" jdbcType="CHAR" />
+		<result column="un_lastmodifieduser" property="nlastmoduser" jdbcType="INTEGER" />
+		<result column="dtime_lastmodified" property="lastmodtime" jdbcType="TIMESTAMP" />
 	</resultMap>
 	
 	<select id="listResumesInPageByUser" resultMap="RM_ResumeInfoListVO" statementType="PREPARED">
@@ -103,12 +108,14 @@
 		  tmp.vc_tempname,
 		  tmp.vc_temppic,
 		  rs.un_userid,
-		  rs.js_resume,
+      	  user.c_mobilenumder,
 		  rs.un_lastmodifieduser,
 		  rs.dtime_lastmodified
 		FROM resumes AS rs
 		LEFT JOIN rstemplate AS tmp 
-		ON rs.un_tempid = tmp.un_tempid
+		ON rs.un_tempid = tmp.un_tempid 
+		LEFT JOIN users AS user 
+    	ON rs.un_userid = user.un_uid 
 		WHERE rs.bi_deleteflag = 0 
 		<if test="nUserID != 0">
 		AND rs.un_userid = #{nUserID} 

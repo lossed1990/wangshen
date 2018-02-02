@@ -1,5 +1,11 @@
 package com.xuexin.wangshen.util;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Base64;
+
 public class HelperUtilClass {
 
 	//获取文件扩展名
@@ -26,4 +32,28 @@ public class HelperUtilClass {
 		return "NA";
 	}
 	
+	//文件转base64
+	public static final String ConvertImageFileToBase64(File imgFile, String imgType)
+	{
+        byte[] data = null; 
+        String strBase64 = "";
+
+        try   
+        {  
+        	InputStream in = new FileInputStream(imgFile);          
+            data = new byte[in.available()];  
+            in.read(data);  
+            in.close();
+            
+            //对字节数组Base64编码
+            strBase64 += "data:image/" + imgType + ";base64,";
+            strBase64 += Base64.getEncoder().encodeToString(data);
+        }   
+        catch (IOException e)  
+        {  
+            e.printStackTrace();  
+        }
+        
+        return strBase64;
+     }
 }
