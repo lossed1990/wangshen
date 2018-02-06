@@ -156,69 +156,18 @@
         </div>
         <div class="form-group">
             <label class="control-label col-md-1 col-sm-1 col-xs-12">免冠一寸照</label>
-            <div class="col-md-3 col-md-offset-1">
-                <div class="thumbnail">
-                    <div class="image view view-first">
-                        <img style="width: 100%; display: block;" id="head_pic" src="" alt="image" />
-                    </div>
-                    <div class="caption">
-                        <p>免冠一寸照</p>
-                    </div>
-                </div>
+            <div class="col-md-3">
+                <img style="width: 100%; display: block;" id="head_pic" src="" alt="image" />
             </div>
-            <div class="col-md-3 col-md-offset-1">
-                <div class="thumbnail">
-                    <div class="image view view-first">
-                        <img style="width: 100%; display: block;" id="live_pic" src="" alt="image" />
-                    </div>
-                    <div class="caption">
-                        <p>近期生活照</p>
-                    </div>
-                </div>
+            <label class="control-label col-md-1 col-sm-1 col-xs-12">近期生活照</label>
+            <div class="col-md-3">
+                <img style="width: 100%; display: block;" id="live_pic" src="" alt="image" />
             </div>
-            <div class="col-md-3 col-md-offset-1">
-                <div class="thumbnail">
-                    <div class="image view view-first">
-                        <img style="width: 100%; display: block;" id="student_pic" src="" alt="image" />
-                    </div>
-                    <div class="caption">
-                        <p>学生证照片</p>
-                    </div>
-                </div>
+            <label class="control-label col-md-1 col-sm-1 col-xs-12">学生证照片</label>
+            <div class="col-md-3">
+                <img style="width: 100%; display: block;" id="student_pic" src="" alt="image" />
             </div>
         </div>
-        <#--  <div class="form-group">
-            <div class="col-md-3 col-md-offset-1">
-                <div class="thumbnail">
-                    <div class="image view view-first">
-                        <img style="width: 100%; display: block;" id="head_pic" src="" alt="image" />
-                    </div>
-                    <div class="caption">
-                        <p>免冠一寸照</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-md-offset-1">
-                <div class="thumbnail">
-                    <div class="image view view-first">
-                        <img style="width: 100%; display: block;" id="live_pic" src="" alt="image" />
-                    </div>
-                    <div class="caption">
-                        <p>近期生活照</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 col-md-offset-1">
-                <div class="thumbnail">
-                    <div class="image view view-first">
-                        <img style="width: 100%; display: block;" id="student_pic" src="" alt="image" />
-                    </div>
-                    <div class="caption">
-                        <p>学生证照片</p>
-                    </div>
-                </div>
-            </div>
-        </div>  -->
     </div >
 </div>
 

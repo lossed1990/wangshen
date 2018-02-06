@@ -229,7 +229,7 @@
             type: "GET",
             url: "${path}/resume/resume-part-detail.json",
             cache:  false,
-            data: { 'resume_id': 'B876C63E-1E3A-4F9F-B7AA-E035D4A79744'},
+            data: { 'resume_id': '8234CF54-00D1-46E1-A4C5-62F2DB694E3B'},
             <#--  data: { 'resume_id': '${resume_guid}'},  -->
             dataType: "json",
             success: function (result)  {
@@ -243,9 +243,39 @@
         });
     }
 
-    function fillResumeData(name,data) {
-        var $elem = $('#' + name);
+    function fillResumeData(idname,data) {
+        var $elem = $('#' + idname);
         if($elem.length > 0){
+            //特殊处理
+            if(idname == 'education'){
+                $.each(data, function(name, value) {
+                    if(name == 'edu_history') {
+                        if($.isArray(value)) {
+                            var $tbody = $elem.find('tbody'); 
+                            if($tbody.length > 0){
+                                var items = $tbody.attr('data').split('-');
+                                for(var i = 0; i < value.length; ++i){
+                                    var $tr = $('<tr></tr>');
+                                    for(var k = 0; k < items.length; ++k) {
+                                        var $td = $('<td></td>');
+                                        $td.html(value[i][items[k]]);
+                                        $tr.append($td);
+                                    }
+                                    $tbody.append($tr);
+                                }
+                            }
+                        }
+                       return;
+                    }
+                    
+                    var $item = $elem.find('#' + name); 
+                    if($item.length > 0){ 
+                        $item.val(value);
+                    }
+                });
+                return;
+            }
+
             if($.isArray(data)) {
                 var $tbody = $elem.find('tbody'); 
                 if($tbody.length > 0){
