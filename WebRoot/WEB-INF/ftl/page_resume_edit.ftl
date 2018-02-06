@@ -340,10 +340,13 @@
     $('.btn-resume-save').click(function(){
         var moduleid = $(this).attr('data');
         //触发验证
-        $('#form_' + moduleid).data("bootstrapValidator").validate();
-        var flag = $('#form_' + moduleid).data("bootstrapValidator").isValid();
-        if(!flag){
-            return;  
+        var $eleForm = $('#form_' + moduleid);
+        if($eleForm.length > 0){
+            $eleForm.data("bootstrapValidator").validate();
+            var flag = $eleForm.data("bootstrapValidator").isValid();
+            if(!flag){
+                return;  
+            }
         }
 
         var value = formatFromData(moduleid, 'resume-data',false);
@@ -501,10 +504,13 @@
     $('.btn-resume-savetable').click(function(){
         var moduleid = $(this).attr('data');
         //触发验证
-        $('#form_' + moduleid).data("bootstrapValidator").validate();
-        var flag = $('#form_' + moduleid).data("bootstrapValidator").isValid();
-        if(!flag){
-            return;  
+        var $eleForm = $('#form_' + moduleid);
+        if($eleForm.length > 0){
+            $eleForm.data("bootstrapValidator").validate();
+            var flag = $eleForm.data("bootstrapValidator").isValid();
+            if(!flag){
+                return;  
+            }
         }
 
         var value = formatTabelData(moduleid,'resume-table',false);

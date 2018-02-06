@@ -300,8 +300,75 @@
 <#include "inc/inc_commonjs.ftl" />
 <#include "inc/inc_datatablejs.ftl" />
 
-<script src="${path}/vendors/bootstrapvalidator/js/bootstrapValidator.min.js"></script>
-<script src="${path}/vendors/bootstrapvalidator/js/language/zh_CN.js"></script>
+<script>
+    ajaxGetResumeInfo(onGetResumeInfo);
+
+    /**
+     * 获取简历信息回调,上数据
+     */
+    function onGetResumeInfo(data) {
+        console.log('onGetResumeInfo>>data:');  //+ JSON.stringify(data)
+        console.log(data);
+        $.each(data,function(name,value) {
+            fillResumeData(name,value);
+            <#--  //教育经历特殊对待
+            if(name == 'education'){
+                //基本信息
+                fillFromData(name,'resume-edudata',value);
+                //阶段信息
+                var history = value['edu_history'];
+                fillTabelData(name,'resume-table',history);
+                return;
+            }
+
+            if($.isArray(value)){
+                fillTabelData(name,'resume-table',value);
+            } else{
+                fillFromData(name,'resume-data',value);
+            }  -->
+        });
+    } 
+
+    /**
+     * @brief 获取简历信息
+     */
+    function ajaxGetResumeInfo(callback) {
+        $.ajax({    
+            type: "GET",
+            url: "${path}/resume/resume-part-detail.json",
+            cache:  false,
+            data: { 'resume_id': 'B876C63E-1E3A-4F9F-B7AA-E035D4A79744'},
+            <#--  data: { 'resume_id': '${resume_guid}'},  -->
+            dataType: "json",
+            success: function (result)  {
+                if (result.ok) {
+                    callback(result.result);
+                }            
+            },
+            error: function() {
+                toastr.error('简历信息获取失败，请刷新重试！');
+            } 
+        });
+    }
+
+    function fillResumeData(name,data) {
+        var $elem = $('#' + name);
+        if($elem.length > 0){
+            $.each(data, function(name,value) {
+                var $item = $elem.find('#' + name); 
+                if($item.length > 0){ 
+                    if(name == 'head_pic' || name == 'live_pic' || name == 'student_pic'){
+                        if(value != ''){
+                            $item.attr('src','${path}/file/download.page?fid=' + value);       
+                        }
+                    } else {
+                        $item.val(value);
+                    }  
+                }
+            });
+        }
+    }
+</script>
 
 </body>
 </html>
