@@ -25,7 +25,7 @@
                 <th>毕业排名</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody data="">
             <tr>
                 <td>起始日期</td>
                 <td>结束日期</td>

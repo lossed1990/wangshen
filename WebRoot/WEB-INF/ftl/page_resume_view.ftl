@@ -60,43 +60,21 @@
                     </div>
                     <!--  begin 职业规划  -->
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
+                        <div class="x_panel" id="workplan">
                             <div class="x_title">
                                 <h2>职业规划 <small>  </small></h2>
-                                <ul class="nav navbar-right panel_toolbox">
-                                    <li>
-                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#">Settings 1</a></li>
-                                            <li><a href="#">Settings 2</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="close-link"><i class="fa fa-close"></i></a>
-                                    </li>
-                                </ul>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
                                 <!-- begin edit --> 
                                 <div class="form-horizontal form-label-left">
-                                    <form id="form_edit_occupational_plan">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-1 col-sm-1 col-xs-12">未来五年职业规划</label>
-                                            <div class="col-md-11 col-sm-11 col-xs-12">
-                                                <textarea required="required" class="form-control" name="" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
-                                                    data-parsley-validation-threshold="10"></textarea>
-                                            </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-1 col-sm-1 col-xs-12">未来五年职业规划</label>
+                                        <div class="col-md-11 col-sm-11 col-xs-12">
+                                            <textarea required="required" class="form-control" id="plan" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
+                                                data-parsley-validation-threshold="10" readonly></textarea>
                                         </div>
-                                        <div class="form-group" >
-                                            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
-                                                <button type="submit" class="btn btn-primary" >新增</button>
-                                            </div >
-                                        </div>
-                                    </form>
+                                    </div>
                                 </div >
                                 <!-- end edit --> 
                             </div>
@@ -105,43 +83,21 @@
                     <!--  end 职业规划  -->
                     <!--  begin 自我评价  -->
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
+                        <div class="x_panel" id="selfjudge">
                             <div class="x_title">
                                 <h2>自我评价 <small>  </small></h2>
-                                <ul class="nav navbar-right panel_toolbox">
-                                    <li>
-                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#">Settings 1</a></li>
-                                            <li><a href="#">Settings 2</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="close-link"><i class="fa fa-close"></i></a>
-                                    </li>
-                                </ul>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
                                 <!-- begin edit --> 
                                 <div class="form-horizontal form-label-left">
-                                    <form id="form_edit_self_evaluation">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-1 col-sm-1 col-xs-12">自我评价</label>
-                                            <div class="col-md-11 col-sm-11 col-xs-12">
-                                                <textarea required="required" class="form-control" name="" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
-                                                    data-parsley-validation-threshold="10"></textarea>
-                                            </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-1 col-sm-1 col-xs-12">自我评价</label>
+                                        <div class="col-md-11 col-sm-11 col-xs-12">
+                                            <textarea required="required" class="form-control" id="info" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
+                                                data-parsley-validation-threshold="10" readonly></textarea>
                                         </div>
-                                        <div class="form-group" >
-                                            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
-                                                <button type="submit" class="btn btn-primary" >新增</button>
-                                            </div >
-                                        </div>
-                                    </form>
+                                    </div>
                                 </div >
                                 <!-- end edit --> 
                             </div>
@@ -150,43 +106,21 @@
                     <!--  end 自我评价  -->
                     <!--  begin 特长爱好  -->
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
+                        <div class="x_panel" id="speciality">
                             <div class="x_title">
                                 <h2>特长爱好 <small>  </small></h2>
-                                <ul class="nav navbar-right panel_toolbox">
-                                    <li>
-                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#">Settings 1</a></li>
-                                            <li><a href="#">Settings 2</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="close-link"><i class="fa fa-close"></i></a>
-                                    </li>
-                                </ul>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
                                 <!-- begin edit --> 
                                 <div class="form-horizontal form-label-left">
-                                    <form id="form_edit_hobby">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-1 col-sm-1 col-xs-12">特长爱好</label>
-                                            <div class="col-md-11 col-sm-11 col-xs-12">
-                                                <textarea required="required" class="form-control" name="" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
-                                                    data-parsley-validation-threshold="10"></textarea>
-                                            </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-1 col-sm-1 col-xs-12">特长爱好</label>
+                                        <div class="col-md-11 col-sm-11 col-xs-12">
+                                            <textarea required="required" class="form-control" id="info" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
+                                                data-parsley-validation-threshold="10" readonly></textarea>
                                         </div>
-                                        <div class="form-group" >
-                                            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
-                                                <button type="submit" class="btn btn-primary" >新增</button>
-                                            </div >
-                                        </div>
-                                    </form>
+                                    </div>
                                 </div >
                                 <!-- end edit --> 
                             </div>
@@ -195,43 +129,21 @@
                     <!--  end 特长爱好  -->
                     <!--  begin 自荐信  -->
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
+                        <div class="x_panel" id="selfrecomadation">
                             <div class="x_title">
                                 <h2>自荐信 <small>  </small></h2>
-                                <ul class="nav navbar-right panel_toolbox">
-                                    <li>
-                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#">Settings 1</a></li>
-                                            <li><a href="#">Settings 2</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="close-link"><i class="fa fa-close"></i></a>
-                                    </li>
-                                </ul>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
                                 <!-- begin edit --> 
                                 <div class="form-horizontal form-label-left">
-                                    <form id="form_edit_letter">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-1 col-sm-1 col-xs-12">自荐信</label>
-                                            <div class="col-md-11 col-sm-11 col-xs-12">
-                                                <textarea required="required" class="form-control" name="" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
-                                                    data-parsley-validation-threshold="10"></textarea>
-                                            </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-1 col-sm-1 col-xs-12">自荐信</label>
+                                        <div class="col-md-11 col-sm-11 col-xs-12">
+                                            <textarea required="required" class="form-control" id="info" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
+                                                data-parsley-validation-threshold="10" readonly></textarea>
                                         </div>
-                                        <div class="form-group" >
-                                            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
-                                                <button type="submit" class="btn btn-primary" >新增</button>
-                                            </div >
-                                        </div>
-                                    </form>
+                                    </div>
                                 </div >
                                 <!-- end edit --> 
                             </div>
@@ -240,43 +152,21 @@
                     <!--  end 自荐信  -->
                     <!--  begin 其他说明  -->
                     <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
+                        <div class="x_panel" id="otherinfo">
                             <div class="x_title">
                                 <h2>其他说明 <small>  </small></h2>
-                                <ul class="nav navbar-right panel_toolbox">
-                                    <li>
-                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#">Settings 1</a></li>
-                                            <li><a href="#">Settings 2</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="close-link"><i class="fa fa-close"></i></a>
-                                    </li>
-                                </ul>
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
                                 <!-- begin edit --> 
                                 <div class="form-horizontal form-label-left">
-                                    <form id="form_edit_other">
-                                        <div class="form-group">
-                                            <label class="control-label col-md-1 col-sm-1 col-xs-12">其他说明</label>
-                                            <div class="col-md-11 col-sm-11 col-xs-12">
-                                                <textarea required="required" class="form-control" name="" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
-                                                    data-parsley-validation-threshold="10"></textarea>
-                                            </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-1 col-sm-1 col-xs-12">其他说明</label>
+                                        <div class="col-md-11 col-sm-11 col-xs-12">
+                                            <textarea required="required" class="form-control" id="info" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
+                                                data-parsley-validation-threshold="10" readonly></textarea>
                                         </div>
-                                        <div class="form-group" >
-                                            <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
-                                                <button type="submit" class="btn btn-primary" >新增</button>
-                                            </div >
-                                        </div>
-                                    </form>
+                                    </div>
                                 </div >
                                 <!-- end edit --> 
                             </div>
@@ -284,8 +174,10 @@
                     </div>
                     <!--  end 其他说明  -->
                     <!--  begin 报考银行、薪资收入、报考地区  -->
+                    <#include "div/div_resume_view_targetbank.ftl" />
                     <!--  end 报考银行、薪资收入、报考地区  -->
                     <!--  begin 是否具有以下情况  -->
+                    <#include "div/div_resume_view_promise.ftl" />
                     <!--  end 是否具有以下情况  -->
                 </div>
             </div>
@@ -354,18 +246,35 @@
     function fillResumeData(name,data) {
         var $elem = $('#' + name);
         if($elem.length > 0){
-            $.each(data, function(name,value) {
-                var $item = $elem.find('#' + name); 
-                if($item.length > 0){ 
-                    if(name == 'head_pic' || name == 'live_pic' || name == 'student_pic'){
-                        if(value != ''){
-                            $item.attr('src','${path}/file/download.page?fid=' + value);       
+            if($.isArray(data)) {
+                var $tbody = $elem.find('tbody'); 
+                if($tbody.length > 0){
+                    var items = $tbody.attr('data').split('-');
+                    for(var i = 0; i < data.length; ++i){
+                        var $tr = $('<tr></tr>');
+                        for(var k = 0; k < items.length; ++k) {
+                            var $td = $('<td></td>');
+                            $td.html(data[i][items[k]]);
+                            $tr.append($td);
                         }
-                    } else {
-                        $item.val(value);
-                    }  
+                        $tbody.append($tr);
+                    }
                 }
-            });
+            }
+            else{
+                $.each(data, function(name,value) {
+                    var $item = $elem.find('#' + name); 
+                    if($item.length > 0){ 
+                        if(name == 'head_pic' || name == 'live_pic' || name == 'student_pic'){
+                            if(value != ''){
+                                $item.attr('src','${path}/file/download.page?fid=' + value);       
+                            }
+                        } else {
+                            $item.val(value);
+                        }  
+                    }
+                });
+            }
         }
     }
 </script>

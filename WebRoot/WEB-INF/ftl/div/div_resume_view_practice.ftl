@@ -1,10 +1,9 @@
 <#--  实践经历 预览  -->
-
 <div class="x_title">
     <h2>实践经历 <small>  </small></h2>
     <div class="clearfix"></div>
 </div>
-<div class="x_content">
+<div class="x_content" id="shijian">
     <table class="table table-striped table-bordered">
         <thead>
             <tr>
@@ -14,13 +13,7 @@
                 <th>内容描述</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>开始时间</td>
-                <td>结束时间</td>
-                <td>项目名称</td>
-                <td>内容描述</td>
-            </tr>
+        <tbody data="start_date-end_date-name-memo">
         </tbody>
     </table>
 </div>
