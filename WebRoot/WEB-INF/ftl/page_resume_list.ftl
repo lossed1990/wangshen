@@ -1,5 +1,5 @@
 <#assign path=request.contextPath />
-<#assign as_currentuser=Session.user.strUsername />
+<#assign as_currentuser=Session.userss.strUsername />
 
 <!DOCTYPE html>
 <html lang="zh">
@@ -94,7 +94,7 @@
             "dataType": 'json',
             "data": function ( d ) {
                                 
-                d.userid = ${Session.user.nUserID};
+                d.userid = ${Session.userss.nUserID};
                 return JSON.stringify(d);
             }
         }
