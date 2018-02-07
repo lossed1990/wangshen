@@ -14,6 +14,7 @@ import java.util.Set;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -31,6 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.xuexin.wangshen.model.pojo.CommonResultDTO;
 import com.xuexin.wangshen.model.pojo.FileInfoDO;
+import com.xuexin.wangshen.model.pojo.UserInSessionDTO;
 import com.xuexin.wangshen.service.FileService;
 import com.xuexin.wangshen.util.ConstConfigDefine;
 import com.xuexin.wangshen.util.ErrorDefines;
@@ -74,14 +76,15 @@ public class FileManagerAction {
 	
 	@Resource(name="fileService")
 	private FileService service_file;
-	
+		
 	//通用文件上传
     @RequestMapping(value = "/common-upload.json", method=RequestMethod.POST)
     @ResponseBody
-    public CommonResultDTO commonUpload(HttpServletRequest request,
-            @RequestParam("file") MultipartFile file) {
+    public CommonResultDTO commonUpload(HttpServletRequest request, HttpSession session,
+            						@RequestParam("file") MultipartFile file) {
     	
     	CommonResultDTO result = new CommonResultDTO();
+    	UserInSessionDTO user = (UserInSessionDTO) session.getAttribute(ConstConfigDefine.SESSION_NAME_USER);
     	
         if(!file.isEmpty()) {
 
@@ -107,7 +110,7 @@ public class FileManagerAction {
 	            fileinfo.setnFileSize(file.getSize());
 	            fileinfo.setStrFilePath(fileName);
 	            fileinfo.setStrFileExt(fileExt);
-	            //TODO: 设置当前用户id
+	            fileinfo.setnUpUserID(user.getnUserID());
 	            
 	            if(service_file.saveFileInfo(fileinfo) == 1) {
 	            	

@@ -6,6 +6,9 @@ public class ConstConfigDefine {
 	
 	public static final int ADS_INFO_TYPE_BASE64	= 1;			//Base64内容广告类型
 	
+	public static final String SYSTEM_ADMIN_NAME	= "admin";		//系统管理员账号
+	public static final String SESSION_NAME_USER	= "user";		//用户Session名
+	
 	public static final String PATH_COMMON_FILE_REL		= "/upload/file/";		//通用文件相对路径
 	public static final String PATH_COMMON_IMAGE_REL	= "/upload/image/";		//图片相对路径
 	

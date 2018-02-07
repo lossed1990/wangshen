@@ -46,7 +46,7 @@ public class HelperUtilClass {
             in.close();
             
             //对字节数组Base64编码
-            strBase64 += "data:image/" + imgType + ";base64,";
+            strBase64 += "data:image/" + imgType.toLowerCase() + ";base64,";
             strBase64 += Base64.getEncoder().encodeToString(data);
         }   
         catch (IOException e)  

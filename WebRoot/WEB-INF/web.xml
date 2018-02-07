@@ -5,6 +5,7 @@
 	version="3.1">
 	<display-name>xuexin</display-name>
 
+	<!-- 页面编码过滤 -->
 	<filter>
 		<filter-name>CharacterEncodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -19,11 +20,21 @@
 		</init-param>
 	</filter>
 
-	<!-- 配置过滤器Encoding -->
 	<filter-mapping>
 		<filter-name>CharacterEncodingFilter</filter-name>
-		<!-- 过滤所有页面 -->
 		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<!-- Session过滤器 -->
+	<filter>
+	    <filter-name>sessionFilter</filter-name>
+	    <filter-class>com.xuexin.wangshen.web.controller.UserSessionFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+	    <filter-name>sessionFilter</filter-name>
+	    <url-pattern>*.page</url-pattern>
+		<url-pattern>*.json</url-pattern>
 	</filter-mapping>
 
 	<context-param>

@@ -19,11 +19,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.xuexin.wangshen.model.pojo.AdminUserLoginInputFormDTO;
 import com.xuexin.wangshen.model.pojo.RemoteValiteResultDTO;
+import com.xuexin.wangshen.model.pojo.UserInSessionDTO;
 import com.xuexin.wangshen.model.pojo.UserInfoDO;
 import com.xuexin.wangshen.model.pojo.UserInfoInputFormDTO;
 import com.xuexin.wangshen.model.pojo.UserLoginInputFormDTO;
 import com.xuexin.wangshen.service.GlobalService;
 import com.xuexin.wangshen.service.UserInfoService;
+import com.xuexin.wangshen.util.ConstConfigDefine;
 import com.xuexin.wangshen.util.ErrorDefines;
 import com.xuexin.wangshen.util.WebContextResouceBundleReader;
 
@@ -43,10 +45,6 @@ public class UserAction {
 	    @RequestMapping(value = "/user-wellcome.page", method=RequestMethod.GET)
 	    public String userWellcome(Model model) {
 	    	
-
-	    	
-
-
 	        return "page_user_wellcome";
 	    }
 	    
@@ -54,9 +52,6 @@ public class UserAction {
 	    @RequestMapping(value = "/admin-wellcome.page", method=RequestMethod.GET)
 	    public String adminWellcome(Model model) {
 	    	
-
-
-
 	        return "page_admin_wellcome";
 	    }
 	    
@@ -99,8 +94,9 @@ public class UserAction {
 	    		return "page_admin_login";
 	    	}
 	    	
-	    	//通过检查
-	    	//TODO: 可以向session保存用户对象
+	    	//通过检查，保存到session
+	    	UserInSessionDTO usersess = new UserInSessionDTO(userinfo);
+	    	session.setAttribute(ConstConfigDefine.SESSION_NAME_USER, usersess);
 
 	    	//跳转到管理员欢迎页
 	        return "redirect:admin-wellcome.page";
@@ -109,8 +105,6 @@ public class UserAction {
 	    //用户登陆页
 	    @RequestMapping(value = "/login.page", method=RequestMethod.GET)
 	    public String userLogin(Model model, HttpSession session) {
-
-	    	
 
 	        return "page_user_login";
 	    }
@@ -157,8 +151,9 @@ public class UserAction {
 	    		return "page_user_login";
 	    	}
 	    	
-	    	//通过检查
-	    	//TODO: 可以向session保存用户对象
+	    	//通过检查，保存到session
+	    	UserInSessionDTO usersess = new UserInSessionDTO(userinfo);
+	    	session.setAttribute(ConstConfigDefine.SESSION_NAME_USER, usersess);
 
 	    	//跳转到用户欢迎页
 	        return "redirect:user-wellcome.page";
@@ -182,6 +177,7 @@ public class UserAction {
 	    		
 	    		//解析错误码
 	    		model.addAttribute("error", WebContextResouceBundleReader.makeRuntimeErrorInfoByCode(e.getMessage(), request));
+	    		logger.error(e.getMessage());
 
 	            return "page_runtime_exception";  
 	    	}
@@ -228,5 +224,14 @@ public class UserAction {
 	    	}
 	    			
 	        return result;
+	    }
+	    
+	    //用户登出页
+	    @RequestMapping(value = "/logout.page", method=RequestMethod.GET)
+	    public String userLogout(Model model, HttpSession session) {
+
+	    	session.removeAttribute(ConstConfigDefine.SESSION_NAME_USER);
+	        
+	    	return "redirect:login.page";
 	    }
 }

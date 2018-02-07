@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.docx4j.convert.in.xhtml.XHTMLImporter;
 import org.docx4j.convert.in.xhtml.XHTMLImporterImpl;
@@ -27,13 +28,16 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xuexin.wangshen.model.pojo.CommonResultDTO;
+import com.xuexin.wangshen.model.pojo.FileInfoDO;
 import com.xuexin.wangshen.model.pojo.PagingInfo;
 import com.xuexin.wangshen.model.pojo.ResumeDO;
 import com.xuexin.wangshen.model.pojo.ResumeListVO;
 import com.xuexin.wangshen.model.pojo.ResumePartDTO;
 import com.xuexin.wangshen.model.pojo.ResumeTemplateDO;
+import com.xuexin.wangshen.model.pojo.UserInSessionDTO;
 import com.xuexin.wangshen.model.pojo.datatable.DatatableRequestParam;
 import com.xuexin.wangshen.model.pojo.datatable.DatatablesResponse;
+import com.xuexin.wangshen.service.FileService;
 import com.xuexin.wangshen.service.GlobalService;
 import com.xuexin.wangshen.service.ResumeService;
 import com.xuexin.wangshen.service.ResumeTemplateService;
@@ -62,6 +66,9 @@ public class ResumesAction {
 	
 	@Resource(name = "tmplService")
 	private ResumeTemplateService service_tmpl;
+	
+	@Resource(name="fileService")
+	private FileService service_file;
 
 	// 用户添加简历
 	@RequestMapping(value = "/resume-add.page", method = RequestMethod.GET)
@@ -118,18 +125,19 @@ public class ResumesAction {
 
 	// 编辑简历
 	@RequestMapping(value = "/resume-edit.page", method = RequestMethod.GET)
-	public String resumeEdit(Model model, HttpServletRequest request, 
+	public String resumeEdit(Model model, HttpServletRequest request, HttpSession session,
 							@RequestParam(value = "temp_id", required = false) Integer nTemplateID, 
 							@RequestParam(value = "resume_guid", required = false) String strResumeGUID) {
 
 		ResumeDO resume = new ResumeDO();
+		UserInSessionDTO user = (UserInSessionDTO) session.getAttribute(ConstConfigDefine.SESSION_NAME_USER);
 		
 		//通过参数判断是否新建
 		if(nTemplateID != null) {
 			
 			resume.setnTemplateID(nTemplateID);
+			resume.setnUserID(user.getnUserID());
 			
-			//TODO: 设置用户参数
 			if(service_resume.saveNewResume(resume) == 0) {
 				// 作为运行时错误，数据库操作失败
 				model.addAttribute("error", WebContextResouceBundleReader
@@ -169,8 +177,6 @@ public class ResumesAction {
 	@RequestMapping(value = "/resume-view.page", method = RequestMethod.GET)
 	public String resumeView(Model model) {
 
-		logger.info("transfer to FreeMarker view");
-
 		return "page_resume_view";
 	}
 	
@@ -190,12 +196,12 @@ public class ResumesAction {
 	// 保存简历某一模块
 	@RequestMapping(value = "/resume-part-save.json", method = RequestMethod.POST, consumes = "application/json")
 	@ResponseBody
-	public CommonResultDTO resumePartSave(@RequestBody ResumePartDTO partresume) {
+	public CommonResultDTO resumePartSave(HttpSession session, @RequestBody ResumePartDTO partresume) {
 
 		CommonResultDTO result = new CommonResultDTO();
+		UserInSessionDTO user = (UserInSessionDTO) session.getAttribute(ConstConfigDefine.SESSION_NAME_USER);
 		
-		//TODO: 获取当前用户信息
-		int nEffected = service_resume.updateResumePart(1, partresume);
+		int nEffected = service_resume.updateResumePart(user.getnUserID(), partresume);
 		
 		if(nEffected == 0) {
 			
@@ -263,11 +269,34 @@ public class ResumesAction {
 		
 		//填充简历数据
 		model.addAttribute("info", resume);
-		model.addAttribute("resume", JSON.parseObject(resume.getStrResumeJOSN()));
+		JSONObject resumeObj = JSON.parseObject(resume.getStrResumeJOSN());
+		model.addAttribute("resume", resumeObj);
 		
-		//如果只是预览视图，则直接生成预览页面，预览页面带打印和下载链接
+		//如果只是打印预览视图，则直接生成预览页面
 		if(strType == null) {
 			return "page_resume_view_print_withlink";
+		}
+		
+		//转换图片路径为服务器路径，以便转换成docx
+		JSONObject jsBaseinfo = resumeObj.getJSONObject("baseinfo");
+		if(jsBaseinfo != null) {
+			
+			//获取图片路径
+			String strHeadPicPath = getFileRelativePathOnServerByFileID(request, jsBaseinfo.getString("head_pic"));
+			String strLivePicPath = getFileRelativePathOnServerByFileID(request, jsBaseinfo.getString("live_pic"));
+			String strStudentPicPath = getFileRelativePathOnServerByFileID(request, jsBaseinfo.getString("student_pic"));
+			
+			if(strHeadPicPath != null && strHeadPicPath.length() > 0) {
+				model.addAttribute("strHeadPicPath", strHeadPicPath);
+			}
+			
+			if(strLivePicPath != null && strLivePicPath.length() > 0) {
+				model.addAttribute("strLivePicPath", strLivePicPath);
+			}
+			
+			if(strStudentPicPath != null && strStudentPicPath.length() > 0) {
+				model.addAttribute("strStudentPicPath", strStudentPicPath);
+			}
 		}
 		
 		//根据简历ID和时间戳检测静态XHTML, DOCX是否已经生成
@@ -299,7 +328,11 @@ public class ResumesAction {
                 model.addAttribute("request", request);
                 
                 //在指定目录生成XHTML文件
-                tXhtmlFtl.process(model, new OutputStreamWriter(new FileOutputStream(xHtmlFile), "UTF-8"));                
+                FileOutputStream fos = new FileOutputStream(xHtmlFile);
+                OutputStreamWriter osw = new OutputStreamWriter(fos, "UTF-8");
+                tXhtmlFtl.process(model, osw);
+                fos.close();
+                osw.close();
         	}
         	
         	//如果请求xhtml，则可以直接跳转到生成的XHTML文件，到此为止
@@ -345,5 +378,28 @@ public class ResumesAction {
 				.makeRuntimeErrorInfoByCode(Integer.toHexString(ErrorDefines.E_SVR_RUNTIME_IO), request));
 
 		return "page_runtime_exception";
+	}
+	
+	/*
+	 * 通过文件id获取文件在服务器上的相对路径，帮助方法
+	 */
+	public String getFileRelativePathOnServerByFileID(HttpServletRequest request, String strFID) {
+		
+		//获取文件信息
+		if(strFID != null & strFID.length() > 0) {
+			FileInfoDO fileHead = service_file.getFileInfo(strFID);
+			if(strFID != null) {
+				//文件路径
+		    	String path = request.getServletContext().getRealPath(ConstConfigDefine.PATH_COMMON_FILE_REL);
+		    	String fileRelativePath = path + File.separator + fileHead.getStrFilePath();
+		        File file = new File(fileRelativePath);
+		        
+		        if(file.exists()) {
+		        	return "file:/" + fileRelativePath;
+		        }
+			}
+		}
+		
+		return null;
 	}
 }
