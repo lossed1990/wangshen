@@ -205,7 +205,7 @@
         <#if (education.edu_history)??>
         <h3>教育经历</h3>        	
         	<#list education.edu_history ? sort_by("sequence") as edu_history>
-		    <p>
+        	<p/>
 		    <table>
 		    	<tr>
 			    	<th>起始日期</th>
@@ -278,7 +278,6 @@
 	    		</tr>
 	    		</#if>
 	    	</table>
-		    </p>
 			</#list>
         </#if>
     </div>
@@ -291,30 +290,29 @@
 	<h2>获奖经历</h2>
 
 	<#list rewards as reward>
-	<p>
-		<table>
-		<tr>
-			<th>获奖名称</th>
-			<td>${reward.name!}</td>
-		</tr>
-		<tr>
-			<th>获奖级别</th>
-			<td>${reward.level!}</td>
-		</tr>
-		<tr>
-			<th>颁发单位</th>
-			<td>${reward.source!}</td>
-		</tr>
-		<tr>
-			<th>获奖次数</th>
-			<td>${reward.times!}</td>
-		</tr>
-		<tr>
-			<th>获奖时间</th>
-			<td>${reward.date!}</td>
-		</tr>
-		</table>
-	</p>
+	<p/>
+	<table>
+	<tr>
+		<th>获奖名称</th>
+		<td>${reward.name!}</td>
+	</tr>
+	<tr>
+		<th>获奖级别</th>
+		<td>${reward.level!}</td>
+	</tr>
+	<tr>
+		<th>颁发单位</th>
+		<td>${reward.source!}</td>
+	</tr>
+	<tr>
+		<th>获奖次数</th>
+		<td>${reward.times!}</td>
+	</tr>
+	<tr>
+		<th>获奖时间</th>
+		<td>${reward.date!}</td>
+	</tr>
+	</table>
 	</#list>
 	</div>
 </#if>
@@ -386,7 +384,7 @@
 	<div id="student_ganbu"> 
 	<h2>学生干部任职情况/学生工作</h2>
 	<#list student_ganbu as ganbu>
-	<p>
+	<p/>
 	<table>
 		<tr>
 			<th>开始时间</th>
@@ -409,7 +407,6 @@
 			<td>${ganbu.memo!}</td>
 		</tr>
 	</table>
-	</p>
 	</#list>
 	</div>
 </#if>
@@ -420,7 +417,7 @@
 	<div id="trainning"> 
 	<h2>培训经历</h2>
 	<#list trainning as train>
-	<p>
+	<p/>
 	<table>
 		<tr>
 			<th>开始时间</th>
@@ -439,7 +436,6 @@
 			<td>${train.memo!}</td>
 		</tr>
 	</table>
-	</p>
 	</#list>
 	</div>
 </#if>
@@ -450,7 +446,7 @@
 	<div id="shijian"> 
 	<h2>实践经历</h2>
 	<#list shijian as shijian_value>
-	<p>
+	<p/>
 	<table>
 		<tr>
 			<th>开始时间</th>
@@ -469,7 +465,6 @@
 			<td>${shijian_value.memo!}</td>
 		</tr>
 	</table>
-	</p>
 	</#list>
 	</div>
 </#if>
@@ -480,7 +475,7 @@
 	<div id="shixi"> 
 	<h2>实习经历</h2>
 	<#list shixi as shixi_value>
-	<p>
+	<p/>
 	<table>
 		<tr>
 			<th>开始时间</th>
@@ -539,7 +534,6 @@
 			<td>${shixi_value.lizhi_info!}</td>
 		</tr>
 	</table>
-	</p>
 	</#list>
 	</div>
 </#if>
@@ -550,7 +544,7 @@
 	<div id="zigezhengshu"> 
 	<h2>专业职业资格证书</h2>
 	<#list zigezhengshu as zhengshu>
-	<p>
+	<p/>
 	<table>
 		<tr>
 			<th>证书类别</th>
@@ -577,7 +571,6 @@
 			<td>${zhengshu.zhengshu_code!}</td>
 		</tr>
 	</table>
-	</p>
 	</#list>
 	</div>
 </#if>
@@ -588,7 +581,7 @@
 	<div id="family"> 
 	<h2>家庭背景与社会资源</h2>
 	<#list family as family_value>
-	<p>
+	<p/>
 	<table>
 		<tr>
 			<th>姓名</th>
@@ -627,7 +620,6 @@
 			<td>${family_value.edu_status!}</td>
 		</tr>
 	</table>
-	</p>
 	</#list>
 	</div>
 </#if>
@@ -638,7 +630,7 @@
 	<div id="dissertation"> 
 	<h2>毕业论文及发表期刊</h2>
 	<#list dissertation as dissert>
-	<p>
+	<p/>
 	<table>
 		<tr>
 			<th>论文/期刊名称</th>
@@ -661,7 +653,6 @@
 			<td>${dissert.memo!}</td>
 		</tr>
 	</table>
-	</p>
 	</#list>
 	</div>
 </#if>
