@@ -205,7 +205,7 @@
 
         <#if (education.edu_history)??>
         <h3>教育经历</h3>        	
-        	<#list education.edu_history ? sort_by("sequence") as edu_history>
+        	<#list education.edu_history ? sort_by("start_date") ? reverse as edu_history>
 		    <p>
 		    <table>
 		    	<tr>
