@@ -1,5 +1,5 @@
 <#assign path=request.contextPath />
-<#assign as_currentuser="张大锤" />
+<#assign as_currentuser=Session.userss.strUsername />
 <!DOCTYPE html>
 <html lang="zh">
 
@@ -642,7 +642,15 @@
         var value = {};
         for(var i = 0;i < elems.length; ++i){
             var $elem = $(elems[i]);
-            value[$elem.attr('id')] = $elem.val(); 
+            var elemid = $elem.attr('id');
+            if(elemid == 'score'){ //转浮点
+                value[elemid] = parseFloat($elem.val()); 
+            } else if(elemid == 'scores'){ //转数组
+                value[elemid] = eval($elem.val());
+            }
+            else{
+                value[elemid] = $elem.val(); 
+            }
             if(clear){
                 $elem.val(""); 
             }

@@ -1,5 +1,5 @@
 <#assign path=request.contextPath />
-<#assign as_currentuser="张大锤" />
+<#assign as_currentuser=Session.userss.strUsername />
 <!DOCTYPE html>
 <html lang="zh">
 
@@ -184,6 +184,30 @@
         </div>
         <!-- /page content -->
 
+        <div class="modal fade bs-example-modal-lg" id="modal_score" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">网申简历评分</h4>
+                    </div>
+                    <div class="modal-body" id="chart_body">
+                        <div>
+                            <h5 class="fa fa-hand-o-right">总得分</h5>
+                            <h3 style="text-align:center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总得分：<span style="color:red">36</span></h3>
+                        </div>
+                        <div>
+                            <h5 class="fa fa-bar-chart">网申各项得分柱状图</h5>
+                            <div id="chart_score" style="width: 890px;height:300px;"></div> 
+                        </div>
+                        <hr />
+                        <div id="ads">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <#include "inc/inc_footer.ftl" />
 
     </div>
@@ -192,7 +216,104 @@
 <#include "inc/inc_commonjs.ftl" />
 <#include "inc/inc_datatablejs.ftl" />
 
+ <!-- 引入 ECharts 文件 -->
+<script src="${path}/js/echarts.simple.min.js"></script>
+<script type="text/javascript" src="${path}/js/jquery.base64.js"></script>
+
 <script>
+    getAdsConfig();
+
+    function getAdsConfig() {
+        $.ajax({    
+            type: "GET",
+            url: "${path}/config/ads-get.json",
+            dataType: "json",
+            success: function (data)  {
+                if (data.ok) {
+                    $('#ads').html($.base64.atob(data.result, true));
+                }
+            } 
+        }); 
+    }
+
+    var chartContainer = document.getElementById('chart_score');
+    var chartBody = document.getElementById('chart_body');
+
+    //用于使chart自适应高度和宽度,通过窗体高宽计算容器高宽
+    var resizeChartContainer = function () {
+        chartContainer.style.width = chartBody.clientWidth+'px';
+        console.log('width:' + chartContainer.style.width);
+    };
+
+    // 基于准备好的dom，初始化echarts实例
+    var scoreChart = echarts.init(chartContainer);
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            text: ''
+        },
+        tooltip: {},
+        legend: {
+            data:['销量'],
+            width: chartContainer.style.width
+        },
+        xAxis: {
+            axisLabel:{
+                interval:0,
+                rotate:-40,
+                fontSize:10
+            },
+            data: ["个人基本信息","教育背景","获奖阶段","外语能力描述","计算机能力描述","学生工作",
+                   "培训经历","实践经历","实习经历","资格证书","家庭背景","毕业论文",
+                   "职业规划","自我评价","特长爱好","自荐信","其他说明","报考银行","其他承诺"
+            ]
+        },
+        yAxis:{
+            axisLine: {
+                show: false
+            },
+            axisTick: {
+                show: false
+            },
+            axisLabel: {
+                textStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        series: [{
+            name: '销量',
+            type: 'bar',
+            data: [5, 20, 36, 100, 10, 20,
+            5, 20, 36, 10, 10, 20,
+            5, 20, 36, 10, 10, 20,20],
+            itemStyle: {
+                normal: {
+                    color: function(params) {
+                        var colorList = [
+                            '#3398DB'
+                        ];
+                        return colorList[params.dataIndex]
+                    }
+                }
+            },
+        }]
+    };
+    
+    // 使用刚指定的配置项和数据显示图表。
+    scoreChart.setOption(option);
+    
+    window.onresize = function () {
+        //重置容器高宽
+        resizeChartContainer();
+        scoreChart.resize();
+    };
+
+    $('#modal_score').modal();
+    resizeChartContainer();
+    scoreChart.resize();
+
     ajaxGetResumeInfo(onGetResumeInfo);
 
     /**
@@ -203,21 +324,6 @@
         console.log(data);
         $.each(data,function(name,value) {
             fillResumeData(name,value);
-            <#--  //教育经历特殊对待
-            if(name == 'education'){
-                //基本信息
-                fillFromData(name,'resume-edudata',value);
-                //阶段信息
-                var history = value['edu_history'];
-                fillTabelData(name,'resume-table',history);
-                return;
-            }
-
-            if($.isArray(value)){
-                fillTabelData(name,'resume-table',value);
-            } else{
-                fillFromData(name,'resume-data',value);
-            }  -->
         });
     } 
 

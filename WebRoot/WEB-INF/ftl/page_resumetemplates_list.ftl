@@ -1,5 +1,5 @@
 <#assign path=request.contextPath />
-<#assign as_currentuser="张大锤" />
+<#assign as_currentuser=Session.userss.strUsername />
 <!DOCTYPE html>
 <html lang="zh">
 

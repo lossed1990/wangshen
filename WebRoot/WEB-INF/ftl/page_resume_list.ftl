@@ -61,7 +61,6 @@
 <#include "inc/inc_datatablejs.ftl" />
 
 <script>
-    //table test
     var $m_ui_table = $("#table_resume");  
     
     var m_tablecolumns = [ { 
@@ -73,15 +72,8 @@
         },        {    
             "data":  null,
             "className":   "center",
-            "defaultContent":   '<a id="delrow" href="#"><i class="fa fa-trash-o"></i>预览</a>&nbsp;&nbsp;<a id="delrow" href="#"><i class="fa fa-trash-o"></i>修改</a>'      
+            "defaultContent":   '<a id="menu_view" href="#"><i class="fa fa-trash-o"></i>预览</a>&nbsp;&nbsp;<a id="menu_edit" href="#"><i class="fa fa-trash-o"></i>修改</a>'      
         }];
-    var m_sourceSelect = new Array(); 
-      
-    var subItem = {
-        id: '1',
-        type: '中国银行',
-    };
-    m_sourceSelect.push(subItem);
 
     $m_ui_table.DataTable({
         "columns": m_tablecolumns,
@@ -98,6 +90,23 @@
                 return JSON.stringify(d);
             }
         }
+    });
+
+    $m_ui_table.on( 'click', 'a#menu_view', function (even)  {        
+        even.preventDefault; 
+                
+        var data = $m_ui_table.DataTable().row( $(this).parents('tr') ).data();  
+        window.location.href = '${path}/resume/resume-view.page?resume_guid=' + data.resume_id;
+        //window.location.href = '${path}/resume/resume-view-print.page?resume_id=' + data.resume_id;
+
+        
+    });
+
+    $m_ui_table.on( 'click', 'a#menu_edit', function (even)  {        
+        even.preventDefault; 
+                
+        var data = $m_ui_table.DataTable().row( $(this).parents('tr') ).data();  
+        window.location.href = '${path}/resume/resume-edit.page?resume_guid=' + data.resume_id;
     });
 
 </script>

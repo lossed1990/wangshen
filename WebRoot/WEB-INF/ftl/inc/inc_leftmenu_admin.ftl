@@ -41,7 +41,7 @@
         <!-- /sidebar menu -->
 
         <!-- /menu footer buttons -->
-        <div class="sidebar-footer hidden-small">
+        <#--  <div class="sidebar-footer hidden-small">
             <a data-toggle="tooltip" data-placement="top" title="系统配置">
                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
             </a>
@@ -54,7 +54,7 @@
             <a data-toggle="tooltip" data-placement="top" title="登出">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
             </a>
-        </div>
+        </div>  -->
         <!-- /menu footer buttons -->
     </div>
 </div>
