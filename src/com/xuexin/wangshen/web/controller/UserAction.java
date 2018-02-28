@@ -2,6 +2,10 @@ package com.xuexin.wangshen.web.controller;
 
 import static nl.captcha.Captcha.NAME;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,21 +17,30 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.xuexin.wangshen.model.pojo.AdminUserLoginInputFormDTO;
+import com.xuexin.wangshen.model.pojo.CommonResultDTO;
+import com.xuexin.wangshen.model.pojo.ConfigWxMobileGateDTO;
 import com.xuexin.wangshen.model.pojo.RemoteValiteResultDTO;
 import com.xuexin.wangshen.model.pojo.UserInSessionDTO;
 import com.xuexin.wangshen.model.pojo.UserInfoDO;
 import com.xuexin.wangshen.model.pojo.UserInfoInputFormDTO;
 import com.xuexin.wangshen.model.pojo.UserLoginInputFormDTO;
+import com.xuexin.wangshen.model.pojo.UserPassChangeDTO;
+import com.xuexin.wangshen.model.pojo.jdcloud.WxInterfaceResponseDTO;
+import com.xuexin.wangshen.service.ConfigService;
 import com.xuexin.wangshen.service.GlobalService;
 import com.xuexin.wangshen.service.UserInfoService;
 import com.xuexin.wangshen.util.ConstConfigDefine;
 import com.xuexin.wangshen.util.ErrorDefines;
 import com.xuexin.wangshen.util.WebContextResouceBundleReader;
+import com.xuexin.wangshen.util.jdcloud.RequestModel;
+import com.xuexin.wangshen.util.jdcloud.WxApiCall;
 
 @Controller
 @RequestMapping("/user")
@@ -41,197 +54,346 @@ public class UserAction {
 	@Resource(name="userService")
 	private UserInfoService service_user;
 	
-		//用户欢迎页
-	    @RequestMapping(value = "/user-wellcome.page", method=RequestMethod.GET)
-	    public String userWellcome(Model model) {
-	    	
-	        return "page_user_wellcome";
-	    }
-	    
-	    //管理员欢迎页
-	    @RequestMapping(value = "/admin-wellcome.page", method=RequestMethod.GET)
-	    public String adminWellcome(Model model) {
-	    	
-	        return "page_admin_wellcome";
-	    }
-	    
-	    //管理员登陆页GET
-	    @RequestMapping(value = "/admin-login.page", method=RequestMethod.GET)
-	    public String adminLogin(Model model, HttpSession session) { 	
+	@Resource(name="configService")
+	private ConfigService service_config;
+	
+	//用户欢迎页
+    @RequestMapping(value = "/user-wellcome.page", method=RequestMethod.GET)
+    public String userWellcome(Model model) {
+    	
+        return "page_user_wellcome";
+    }
+    
+    //管理员欢迎页
+    @RequestMapping(value = "/admin-wellcome.page", method=RequestMethod.GET)
+    public String adminWellcome(Model model) {
+    	
+        return "page_admin_wellcome";
+    }
+    
+    //管理员登陆页GET
+    @RequestMapping(value = "/admin-login.page", method=RequestMethod.GET)
+    public String adminLogin(Model model, HttpSession session) { 	
 
-	        return "page_admin_login";
-	    }
-	    
-	    //管理员登陆验证POST
-	    @RequestMapping(value = "/admin-login.page", method=RequestMethod.POST)
-	    public String adminLoginCheck(Model model, @ModelAttribute("user") @Valid AdminUserLoginInputFormDTO user, 
-	    		BindingResult bindingResult, HttpServletRequest request, HttpSession session) {
-	    	
-	    	//服务端输入验证已完成
-	    	if(bindingResult.hasErrors()) {
-	    		return "page_admin_login";
-	    	}
-	    	
-	    	//验证码
-	    	String strSavedCap = session.getAttribute(NAME).toString();
-	    	if(strSavedCap.compareToIgnoreCase(user.getCaptcha()) != 0) {
-	    		
-	    		bindingResult.rejectValue("captcha", 
-	    								Integer.toHexString(ErrorDefines.E_SVR_CAPTCHA_ERROR), 
-	    								WebContextResouceBundleReader.getErrorDescription(ErrorDefines.E_SVR_CAPTCHA_ERROR, request));
-	    		
-	    		return "page_admin_login";
-	    	}
-	    		 
-	    	//管理员实际检查
-	    	UserInfoDO userinfo = service_user.getAdminInfo(user);
-	    	if(userinfo == null) {
-	    		
-	    		bindingResult.rejectValue("password", 
-						Integer.toHexString(ErrorDefines.E_SVR_LOGIN_MISMATCH), 
-						WebContextResouceBundleReader.getErrorDescription(ErrorDefines.E_SVR_LOGIN_MISMATCH, request));
+        return "page_admin_login";
+    }
+    
+    //管理员登陆验证POST
+    @RequestMapping(value = "/admin-login.page", method=RequestMethod.POST)
+    public String adminLoginCheck(Model model, @ModelAttribute("user") @Valid AdminUserLoginInputFormDTO user, 
+    		BindingResult bindingResult, HttpServletRequest request, HttpSession session) {
+    	
+    	//服务端输入验证已完成
+    	if(bindingResult.hasErrors()) {
+    		return "page_admin_login";
+    	}
+    	
+    	//验证码
+    	String strSavedCap = session.getAttribute(NAME).toString();
+    	if(strSavedCap.compareToIgnoreCase(user.getCaptcha()) != 0) {
+    		
+    		bindingResult.rejectValue("captcha", 
+    								Integer.toHexString(ErrorDefines.E_SVR_CAPTCHA_ERROR), 
+    								WebContextResouceBundleReader.getErrorDescription(ErrorDefines.E_SVR_CAPTCHA_ERROR, request));
+    		
+    		return "page_admin_login";
+    	}
+    		 
+    	//管理员实际检查
+    	UserInfoDO userinfo = service_user.getAdminInfo(user);
+    	if(userinfo == null) {
+    		
+    		bindingResult.rejectValue("password", 
+					Integer.toHexString(ErrorDefines.E_SVR_LOGIN_MISMATCH), 
+					WebContextResouceBundleReader.getErrorDescription(ErrorDefines.E_SVR_LOGIN_MISMATCH, request));
 
-	    		return "page_admin_login";
-	    	}
-	    	
-	    	//通过检查，保存到session
-	    	UserInSessionDTO usersess = new UserInSessionDTO(userinfo);
-	    	session.setAttribute(ConstConfigDefine.SESSION_NAME_USER, usersess);
+    		return "page_admin_login";
+    	}
+    	
+    	//通过检查，保存到session
+    	UserInSessionDTO usersess = new UserInSessionDTO(userinfo);
+    	session.setAttribute(ConstConfigDefine.SESSION_NAME_USER, usersess);
 
-	    	//跳转到管理员欢迎页
-	        return "redirect:admin-wellcome.page";
-	    }
-	    
-	    //用户登陆页
-	    @RequestMapping(value = "/login.page", method=RequestMethod.GET)
-	    public String userLogin(Model model, HttpSession session) {
+    	//跳转到管理员欢迎页
+        return "redirect:admin-wellcome.page";
+    }
+    
+    //用户登陆页
+    @RequestMapping(value = "/login.page", method=RequestMethod.GET)
+    public String userLogin(Model model, HttpSession session) {
 
-	        return "page_user_login";
-	    }
-	    
-	    //用户登陆验证
-	    @RequestMapping(value = "/login.page", method=RequestMethod.POST)
-	    public String userLoginCheck(Model model, @ModelAttribute("user") @Valid UserLoginInputFormDTO user, 
-	    		BindingResult bindingResult, HttpServletRequest request, HttpSession session) {
-	    	
-	    	//服务端输入验证已完成
-	    	if(bindingResult.hasErrors()) {
-	    		return "page_user_login";
-	    	}
-	    	
-	    	//验证码
-	    	String strSavedCap = session.getAttribute(NAME).toString();
-	    	if(strSavedCap.compareToIgnoreCase(user.getCaptcha()) != 0) {
-	    		
-	    		bindingResult.rejectValue("captcha", 
-	    								Integer.toHexString(ErrorDefines.E_SVR_CAPTCHA_ERROR), 
-	    								WebContextResouceBundleReader.getErrorDescription(ErrorDefines.E_SVR_CAPTCHA_ERROR, request));
-	    		
-	    		return "page_user_login";
-	    	}
-	    	
-	    	//检查用户存在性
-	    	if(service_user.countUserByPhone(user.getPhonenumber()) <= 0) {
-	    		
-	    		bindingResult.rejectValue("phonenumber", 
-						Integer.toHexString(ErrorDefines.E_SVR_PHONE_NOEXIST), 
-						WebContextResouceBundleReader.getErrorDescription(ErrorDefines.E_SVR_PHONE_NOEXIST, request));
+        return "page_user_login";
+    }
+    
+    //用户登陆验证
+    @RequestMapping(value = "/login.page", method=RequestMethod.POST)
+    public String userLoginCheck(Model model, @ModelAttribute("user") @Valid UserLoginInputFormDTO user, 
+    		BindingResult bindingResult, HttpServletRequest request, HttpSession session) {
+    	
+    	//服务端输入验证已完成
+    	if(bindingResult.hasErrors()) {
+    		return "page_user_login";
+    	}
+    	
+    	//验证码
+    	String strSavedCap = session.getAttribute(NAME).toString();
+    	if(strSavedCap.compareToIgnoreCase(user.getCaptcha()) != 0) {
+    		
+    		bindingResult.rejectValue("captcha", 
+    								Integer.toHexString(ErrorDefines.E_SVR_CAPTCHA_ERROR), 
+    								WebContextResouceBundleReader.getErrorDescription(ErrorDefines.E_SVR_CAPTCHA_ERROR, request));
+    		
+    		return "page_user_login";
+    	}
+    	
+    	//检查用户存在性
+    	if(service_user.countUserByPhone(user.getPhonenumber()) <= 0) {
+    		
+    		bindingResult.rejectValue("phonenumber", 
+					Integer.toHexString(ErrorDefines.E_SVR_PHONE_NOEXIST), 
+					WebContextResouceBundleReader.getErrorDescription(ErrorDefines.E_SVR_PHONE_NOEXIST, request));
 
-	    		return "page_user_login";
-	    	}
-	 
-	    	//用户实际检查
-	    	UserInfoDO userinfo = service_user.getUserInfo(user);
-	    	if(userinfo == null) {
-	    		
-	    		bindingResult.rejectValue("password", 
-						Integer.toHexString(ErrorDefines.E_SVR_LOGIN_MISMATCH), 
-						WebContextResouceBundleReader.getErrorDescription(ErrorDefines.E_SVR_LOGIN_MISMATCH, request));
+    		return "page_user_login";
+    	}
+ 
+    	//用户实际检查
+    	UserInfoDO userinfo = service_user.getUserInfo(user);
+    	if(userinfo == null) {
+    		
+    		bindingResult.rejectValue("password", 
+					Integer.toHexString(ErrorDefines.E_SVR_LOGIN_MISMATCH), 
+					WebContextResouceBundleReader.getErrorDescription(ErrorDefines.E_SVR_LOGIN_MISMATCH, request));
 
-	    		return "page_user_login";
-	    	}
-	    	
-	    	//通过检查，保存到session
-	    	UserInSessionDTO usersess = new UserInSessionDTO(userinfo);
-	    	session.setAttribute(ConstConfigDefine.SESSION_NAME_USER, usersess);
+    		return "page_user_login";
+    	}
+    	
+    	//通过检查，保存到session
+    	UserInSessionDTO usersess = new UserInSessionDTO(userinfo);
+    	session.setAttribute(ConstConfigDefine.SESSION_NAME_USER, usersess);
 
-	    	//跳转到用户欢迎页
-	        return "redirect:user-wellcome.page";
-	    }
-	    	    
-	    //用户注册
-	    @RequestMapping(value = "/user-register.page", method=RequestMethod.POST)
-	    public String userRegister(Model model, @ModelAttribute("user") @Valid UserInfoInputFormDTO user, 
-	    		BindingResult bindingResult, HttpServletRequest request, HttpSession session) {
-	    	
-	    	//服务端输入验证已完成
-	    	if(bindingResult.hasErrors()) {
-	    		return "page_user_reg_failed";
-	    	}
-	    	
-	    	//调用service执行插入，事物层级在该层，可能会抛出用户重复的异常
-	    	try {
-	    		service_user.saveUserInfo(user);
-	    		
-	    	} catch(RuntimeException e) {
-	    		
-	    		//解析错误码
-	    		model.addAttribute("error", WebContextResouceBundleReader.makeRuntimeErrorInfoByCode(e.getMessage(), request));
-	    		logger.error(e.getMessage());
+    	//跳转到用户欢迎页
+        return "redirect:user-wellcome.page";
+    }
+    	    
+    //用户注册
+    @RequestMapping(value = "/user-register.page", method=RequestMethod.POST)
+    public String userRegister(Model model, @ModelAttribute("user") @Valid UserInfoInputFormDTO user, 
+    		BindingResult bindingResult, HttpServletRequest request, HttpSession session) {
+    	
+    	//服务端输入验证已完成
+    	if(bindingResult.hasErrors()) {
+    		return "page_user_reg_failed";
+    	}
+    	
+    	//调用service执行插入，事物层级在该层，可能会抛出用户重复的异常
+    	try {
+    		service_user.saveUserInfo(user);
+    		
+    	} catch(RuntimeException e) {
+    		
+    		//解析错误码
+    		model.addAttribute("error", WebContextResouceBundleReader.makeRuntimeErrorInfoByCode(e.getMessage(), request));
+    		logger.error(e.getMessage());
 
-	            return "page_runtime_exception";  
-	    	}
+            return "page_runtime_exception";  
+    	}
+    	
+    	//用户注册成功，清除短信验证码，防止用户利用同一验证码在session有效期内重复注册
+    	session.removeAttribute(ConstConfigDefine.SESSION_PREV_WXVAL);
+    	session.removeAttribute(ConstConfigDefine.SESSION_CODE_WXVAL);
 
-	        return "page_user_reg_ok";
-	    }
-	    
-	    //登陆验证码匹配
-	    @RequestMapping(value = "/check-captcha.json", method=RequestMethod.GET)
-	    @ResponseBody
-	    public RemoteValiteResultDTO checkCaptcha(Model model, HttpSession session, String captcha) {
-	    		    	
-	    	RemoteValiteResultDTO result = new RemoteValiteResultDTO();
-	    	result.setValid(false);
-	    	
-	    	//从Session取值比对
-	    	String strSavedCap = session.getAttribute(NAME).toString();
-	    	
-	    	if(captcha != null && strSavedCap != null) {
-	    		
-	    		if(captcha.compareToIgnoreCase(strSavedCap) == 0) {
-	    			
-	    			result.setValid(true);
-	    		}
-	    	}
+        return "page_user_reg_ok";
+    }
+    
+    //登陆验证码匹配
+    @RequestMapping(value = "/check-captcha.json", method=RequestMethod.GET)
+    @ResponseBody
+    public RemoteValiteResultDTO checkCaptcha(Model model, HttpSession session, String captcha) {
+    		    	
+    	RemoteValiteResultDTO result = new RemoteValiteResultDTO();
+    	result.setValid(false);
+    	
+    	//从Session取值比对
+    	String strSavedCap = session.getAttribute(NAME).toString();
+    	
+    	if(captcha != null && strSavedCap != null) {
+    		
+    		if(captcha.compareToIgnoreCase(strSavedCap) == 0) {
+    			
+    			result.setValid(true);
+    		}
+    	}
 
-	        return result;
-	    }
-	    
-	    //用户号码唯一性验证
-	    @RequestMapping(value = "/check-user-validation.json", method=RequestMethod.GET)
-	    @ResponseBody
-	    public RemoteValiteResultDTO checkUserValidation(Model model, String phonenumber) {
-	    		    	
-	    	RemoteValiteResultDTO result = new RemoteValiteResultDTO();
-	    	result.setValid(false);
-	    		    	
-	    	//检查号码是否唯一
-	    	if(phonenumber != null && phonenumber.length() > 1) {
-	    		
-	    		if(service_user.countUserByPhone(phonenumber) == 0) {
-	    			result.setValid(true);
-	    		}
-	    	}
-	    			
-	        return result;
-	    }
-	    
-	    //用户登出页
-	    @RequestMapping(value = "/logout.page", method=RequestMethod.GET)
-	    public String userLogout(Model model, HttpSession session) {
+        return result;
+    }
+    
+    //用户号码唯一性验证
+    @RequestMapping(value = "/check-user-validation.json", method=RequestMethod.GET)
+    @ResponseBody
+    public RemoteValiteResultDTO checkUserValidation(Model model, String phonenumber) {
+    		    	
+    	RemoteValiteResultDTO result = new RemoteValiteResultDTO();
+    	result.setValid(false);
+    		    	
+    	//检查号码是否唯一
+    	if(phonenumber != null && phonenumber.length() > 1) {
+    		
+    		if(service_user.countUserByPhone(phonenumber) == 0) {
+    			result.setValid(true);
+    		}
+    	}
+    			
+        return result;
+    }
+    
+    //注册手机验证码
+    @RequestMapping(value = "/check-phonecode-validation.json", method=RequestMethod.GET)
+    @ResponseBody
+    public RemoteValiteResultDTO checkPhoneCodeValidation(Model model, HttpSession session, String phonevalidate) {
+    		    	
+    	RemoteValiteResultDTO result = new RemoteValiteResultDTO();
+    	result.setValid(false);
+    		    	
+    	//匹配验证码
+    	if(phonevalidate != null && phonevalidate.length() > 1) {
+    		
+    		String strValidateCode = (String)session.getAttribute(ConstConfigDefine.SESSION_CODE_WXVAL);
+    		
+    		if(strValidateCode != null && strValidateCode.length() > 0) {
+    			if(strValidateCode.compareToIgnoreCase(phonevalidate) == 0) {
+    				result.setValid(true);
+    			}
+    		}
+    	}
+    			
+        return result;
+    }
+    
+    //用户登出页
+    @RequestMapping(value = "/logout.page", method=RequestMethod.GET)
+    public String userLogout(Model model, HttpSession session) {
 
-	    	session.removeAttribute(ConstConfigDefine.SESSION_NAME_USER);
-	        
-	    	return "redirect:login.page";
-	    }
+    	session.removeAttribute(ConstConfigDefine.SESSION_NAME_USER);
+        
+    	return "redirect:login.page";
+    }
+    
+    //用户修改自身密码
+    @RequestMapping(value = "/change-user-password.json", method=RequestMethod.POST, consumes = "application/json")
+    @ResponseBody
+    public CommonResultDTO changeUserPassword(Model model, HttpSession session, 
+    												@RequestBody UserPassChangeDTO changepass) {
+    		    	
+    	CommonResultDTO result = new CommonResultDTO();
+    	result.setOk(false);
+    	
+    	//获取当前用户
+    	UserInSessionDTO userss = (UserInSessionDTO) session.getAttribute(ConstConfigDefine.SESSION_NAME_USER);
+    	UserInfoDO userdo = null;
+    		    	
+    	//检查用户旧密码
+    	if(ConstConfigDefine.SYSTEM_ADMIN_NAME.compareToIgnoreCase(userss.getStrUsername()) == 0) {
+    		//管理员修改
+    		//验证旧密码
+    		AdminUserLoginInputFormDTO admin = new AdminUserLoginInputFormDTO();
+    		admin.setAdminuser(userss.getStrUsername());
+    		admin.setPassword(changepass.getOldpass());
+    		
+    		userdo = service_user.getAdminInfo(admin);
+    		
+    	} else {
+    		//普通用户修改
+    		//验证旧密码
+    		UserLoginInputFormDTO reguser = new UserLoginInputFormDTO();
+    		reguser.setPhonenumber(userss.getStrMobile());
+    		reguser.setPassword(changepass.getOldpass());
+    		
+    		userdo = service_user.getUserInfo(reguser);
+    	}
+    	
+    	//旧密码无效
+    	if(userdo == null) {
+			result.setErrorinfo(ErrorDefines.E_JSON_USERPASSWRONG);
+			return result;
+		}
+		
+		//修改密码
+		userdo.setStrPassHash(changepass.getNewpass());
+		int nEffected = service_user.updatePassword(userdo);
+		if(nEffected == 1) {
+			result.setOk(true);
+		} else {
+			result.setErrorinfo(ErrorDefines.E_JSON_NOCHANGE);
+		}
+    			
+        return result;
+    }
+    
+    //发送注册验证码
+    @RequestMapping(value = "/send-mobile-validation.json", method=RequestMethod.GET)
+    @ResponseBody
+    public CommonResultDTO sendMobileValidation(HttpSession session, String mobile) {
+
+    	CommonResultDTO result = new CommonResultDTO();
+    	result.setOk(false);
+    	
+    	//防止flooding，一分钟内禁止重复请求发送
+    	Long lLastMilsec = (Long)session.getAttribute(ConstConfigDefine.SESSION_PREV_WXVAL);
+    	if(lLastMilsec != null) {
+    		if((System.currentTimeMillis() - lLastMilsec.longValue()) < 55*1000) {
+    			
+    			result.setErrorinfo(ErrorDefines.E_JSON_FLOODING);
+    			return result;
+    		}
+    	}
+    	
+    	//获取短信网关配置
+    	ConfigWxMobileGateDTO config = service_config.getWxMobileConfig();
+    	
+    	//检查配置
+    	if(config == null || config.getUri() == null || config.getAppkey() == null || config.getContent() == null) {
+    		result.setErrorinfo(ErrorDefines.E_JSON_SYSCONFIG);
+    		return result;
+    	}
+    	
+    	RequestModel model = new RequestModel();
+		model.setGwUrl(config.getUri());
+		model.setAppkey(config.getAppkey());
+		
+		//短信信息
+        Random rd = new Random(System.currentTimeMillis());
+        String strValidateNum = String.format("%04d", rd.nextInt(9999));
+        String strContent = config.getContent().replaceAll("\\*",strValidateNum);
+		
+		Map<String, Object> queryMap = new HashMap<String, Object>();
+		queryMap.put("mobile", mobile); 		//手机号码
+		queryMap.put("content", strContent); 	//短信内容
+		model.setQueryParams(queryMap);
+		
+		//执行请求
+		WxApiCall call = new WxApiCall();
+		call.setModel(model);
+		String strResp = call.request();
+		
+		//检查反馈
+		if(strResp != null && strResp.length() > 0) {
+			WxInterfaceResponseDTO resp = JSON.parseObject(strResp, WxInterfaceResponseDTO.class);
+			
+			//执行成功
+			if(resp != null && resp.getCode() != null && resp.getCode().compareTo("10000") == 0) {
+				result.setOk(true);
+				
+				//记录session时间戳和验证码
+				session.setAttribute(ConstConfigDefine.SESSION_PREV_WXVAL, Long.valueOf(System.currentTimeMillis()));
+				session.setAttribute(ConstConfigDefine.SESSION_CODE_WXVAL, strValidateNum);
+				
+				return result;
+			}
+		}
+		
+		//记录错误信息
+		logger.error(strResp);
+        
+    	return result;
+    }
 }

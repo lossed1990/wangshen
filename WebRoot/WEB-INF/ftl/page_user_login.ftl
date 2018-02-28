@@ -96,7 +96,7 @@
                     <div class="form-group">
                         <input type="text" class="form-control"
                                placeholder="<@spring.message code="page.user.reg.mobilenumber"/>" name="phonenumber"
-                               required=""/>
+                               id="idRegMobile" required=""/>
                     </div>
 
                     <div class="row form-group">
@@ -110,7 +110,7 @@
                         </div>
                         <div class="col-xs-5 text-center">
                             <button type="button" class="btn btn-primary"
-                                    autocomplete="off"><@spring.message code="page.user.reg.getmobilecode"/></button>
+                                    id="btnSendValidation" autocomplete="off"><@spring.message code="page.user.reg.getmobilecode"/></button>
                         </div>
                     </div>
 
@@ -191,6 +191,12 @@
                     validators: {
                         notEmpty: {
                             message: '<@spring.message code="page.user.ajax.mobilecodemust"/>'
+                        },
+                        remote: {
+                            url: '${path}/user/check-phonecode-validation.json',
+                            message: '<@spring.message code="page.user.ajax.badvalidatecode"/>',
+                            delay: 1000,
+                            type: 'GET'
                         }
                     }
                 },
@@ -274,7 +280,41 @@
             var $input = $(e.target).find("input[name=password]");
             $input.val(new Hashes.SHA256().hex($input.val()));
         });
+
+        $('#btnSendValidation').click(function () {
+            var btnSend = $(this);
+            if($('#regform').data("bootstrapValidator").isValidField('phonenumber')) {
+                $.ajax({
+                    url: "${path}/user/send-mobile-validation.json",
+                    data: { mobile : $('#idRegMobile').val() },
+                    success: function (response, status) {
+                        if(status == "success") {
+                            if(response.ok) {
+                                time(btnSend, 60);
+                            }
+                        }
+                    },
+                    dataType: "json"
+                });
+            } else {
+                $('#regform').data("bootstrapValidator").validateField('phonenumber');
+            }
+        });
     });
+
+    function time(o, wait) {
+        if (wait == 0) {
+            o.removeAttr("disabled");
+            o.html('<@spring.message code="page.user.reg.getmobilecode"/>');
+        } else {
+            o.attr("disabled", true);
+            o.html(wait + " S");
+            wait--;
+            setTimeout(function() {
+                    time(o, wait)
+                }, 1000);
+        }
+    }
 </script>
 
 </body>

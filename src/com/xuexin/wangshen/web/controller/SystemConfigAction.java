@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.xuexin.wangshen.model.pojo.AdsDO;
 import com.xuexin.wangshen.model.pojo.AdsPRConfigDTO;
 import com.xuexin.wangshen.model.pojo.CommonResultDTO;
+import com.xuexin.wangshen.model.pojo.ConfigWxMobileGateDTO;
 import com.xuexin.wangshen.service.AdsService;
+import com.xuexin.wangshen.service.ConfigService;
 import com.xuexin.wangshen.service.GlobalService;
 import com.xuexin.wangshen.util.ConstConfigDefine;
 import com.xuexin.wangshen.util.ErrorDefines;
@@ -30,6 +33,9 @@ public class SystemConfigAction {
 	
 	@Resource(name="adsService")
 	private AdsService service_ads;
+	
+	@Resource(name="configService")
+	private ConfigService service_config;
 	
     //广告设置页面
     @RequestMapping(value = "/ads-edit.page", method=RequestMethod.GET)
@@ -88,5 +94,29 @@ public class SystemConfigAction {
     	}
     	
         return result;
+    }
+    
+    //短信网关页面
+    @RequestMapping(value = "/wx-mobile-edit.page", method=RequestMethod.GET)
+    public String wxMobileEditView(Model model) {
+    	
+    	ConfigWxMobileGateDTO config = service_config.getWxMobileConfig();
+    	
+    	model.addAttribute("config", config);
+    	
+        return "page_wxmobile_edit";
+    }
+    
+    //短信网关页面
+    @RequestMapping(value = "/wx-mobile-edit.page", method=RequestMethod.POST)
+    public String wxMobileEditPost(Model model, @ModelAttribute ConfigWxMobileGateDTO config) {
+    	    	
+    	service_config.updateWxMobileConfig(config);
+    	
+    	ConfigWxMobileGateDTO confignow = service_config.getWxMobileConfig();
+    	
+    	model.addAttribute("config", confignow);
+    	
+        return "page_wxmobile_edit";
     }
 }

@@ -60,4 +60,11 @@ public class UserInfoServiceImpl implements UserInfoService {
 		//直接调用DAO，不匹配则返回null
 		return dao_userinfo.getAdminInfoByUserAndPass(admin.getAdminuser(), admin.getPassword());
 	}
+
+	@Override
+	public int updatePassword(UserInfoDO user) {
+
+		//直接调用DAO，成功返回1
+		return dao_userinfo.updatePasswordByUserID(user);
+	}
 }

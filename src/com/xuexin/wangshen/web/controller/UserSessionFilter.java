@@ -23,7 +23,9 @@ public class UserSessionFilter extends OncePerRequestFilter {
 											"/user/login.page", 
 											"/user/user-register.page",
 											"/user/check-captcha.json", 
-											"/user/check-user-validation.json" };
+											"/user/check-user-validation.json",
+											"/user/send-mobile-validation.json",
+											"/user/check-phonecode-validation.json" };
 
 		// 请求的uri
 		String uri = request.getRequestURI();

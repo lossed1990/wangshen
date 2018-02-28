@@ -23,4 +23,11 @@ public class ErrorDefines {
 	public static final String E_JSON_NODATA				= "E201	查询结果不存在";
 	public static final String E_JSON_NOCHANGE				= "E202	未修改任何数据";
 	public static final String E_JSON_LACKPARAM				= "E203	参数缺失";
+	public static final String E_JSON_FLOODING				= "E204	请求过于频繁";
+	public static final String E_JSON_SYSCONFIG				= "E205	系统配置不正确";
+	public static final String E_JSON_BADDATA				= "E206	系统脏数据";
+	
+	public static final String E_JSON_USERPASSWRONG			= "E301	用户旧密码错误";
+	
+	public static final String E_JSON_RESUME_BAD			= "E801	简历有绝对不合格项目，简历视为无效";
 }

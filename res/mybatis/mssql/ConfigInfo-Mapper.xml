@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xuexin.wangshen.dao.ConfigDAO">
+
+	<!-- 获取系统配置 -->
+	<select id="getSystemConfigByKey" resultType="java.lang.String" parameterType="java.lang.String" statementType="PREPARED">
+		SELECT
+			vc_value
+		FROM config 
+		WHERE vc_key = #{value};
+	</select>
+	
+	<!-- 更新系统配置 -->
+	<update id="updateSystemConfigByKey" statementType="PREPARED">  
+        UPDATE config 
+		SET
+		vc_value = #{value}
+		WHERE
+		  vc_key = #{key}
+		;
+	</update>
+
+</mapper>

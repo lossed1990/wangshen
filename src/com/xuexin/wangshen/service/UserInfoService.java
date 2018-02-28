@@ -27,4 +27,9 @@ public interface UserInfoService {
 	 * 通过用户名密码获取用户信息，用于管理员登陆
 	 */
 	UserInfoDO getAdminInfo(AdminUserLoginInputFormDTO admin);
+	
+	/*
+	 * 修改密码
+	 */
+	int updatePassword(UserInfoDO user);
 }

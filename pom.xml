@@ -25,6 +25,7 @@
         <commonsfileupload.version>1.3.1</commonsfileupload.version>
         <docx4j.version>3.3.6</docx4j.version>
         <docx4j.xhtmlimport.version>3.3.6-1</docx4j.xhtmlimport.version>
+        <unirest.version>1.4.9</unirest.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -171,6 +172,11 @@
 		    <groupId>org.docx4j</groupId>
 		    <artifactId>docx4j-ImportXHTML</artifactId>
 		    <version>${docx4j.xhtmlimport.version}</version>
+		</dependency>
+		<dependency>
+		    <groupId>com.mashape.unirest</groupId>
+		    <artifactId>unirest-java</artifactId>
+		    <version>${unirest.version}</version>
 		</dependency>
     </dependencies>
 </project>

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -27,6 +28,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.xuexin.wangshen.model.pojo.BasicDataResumeSectionsDO;
 import com.xuexin.wangshen.model.pojo.CommonResultDTO;
 import com.xuexin.wangshen.model.pojo.FileInfoDO;
 import com.xuexin.wangshen.model.pojo.PagingInfo;
@@ -35,14 +37,17 @@ import com.xuexin.wangshen.model.pojo.ResumeListVO;
 import com.xuexin.wangshen.model.pojo.ResumePartDTO;
 import com.xuexin.wangshen.model.pojo.ResumeTemplateDO;
 import com.xuexin.wangshen.model.pojo.UserInSessionDTO;
+import com.xuexin.wangshen.model.pojo.charts.BarChartVO;
 import com.xuexin.wangshen.model.pojo.datatable.DatatableRequestParam;
 import com.xuexin.wangshen.model.pojo.datatable.DatatablesResponse;
+import com.xuexin.wangshen.service.ConfigService;
 import com.xuexin.wangshen.service.FileService;
 import com.xuexin.wangshen.service.GlobalService;
 import com.xuexin.wangshen.service.ResumeService;
 import com.xuexin.wangshen.service.ResumeTemplateService;
 import com.xuexin.wangshen.util.ConstConfigDefine;
 import com.xuexin.wangshen.util.ErrorDefines;
+import com.xuexin.wangshen.util.HelperUtilClass;
 import com.xuexin.wangshen.util.WebContextResouceBundleReader;
 
 import freemarker.template.Template;
@@ -69,6 +74,9 @@ public class ResumesAction {
 	
 	@Resource(name="fileService")
 	private FileService service_file;
+	
+	@Resource(name="configService")
+	private ConfigService service_config;
 
 	// 用户添加简历
 	@RequestMapping(value = "/resume-add.page", method = RequestMethod.GET)
@@ -84,16 +92,12 @@ public class ResumesAction {
 	@RequestMapping(value = "/admin-resume-list.page", method = RequestMethod.GET)
 	public String adminResumeList(Model model) {
 
-		logger.info("transfer to FreeMarker view");
-
 		return "page_admin_resume_list";
 	}
 
 	// 浏览所有简历
 	@RequestMapping(value = "/resume-list.page", method = RequestMethod.GET)
 	public String resumeList(Model model) {
-
-		logger.info("transfer to FreeMarker view");
 
 		return "page_resume_list";
 	}
@@ -244,6 +248,79 @@ public class ResumesAction {
 				//提取某个模块
 				result.setResult(jsObj.getJSONObject(strSecName));
 			}
+		}
+		
+		return result;
+	}
+	
+	//计算简历分值
+	@RequestMapping(value = "/resume-marks-caculation.json", method = RequestMethod.GET)
+	@ResponseBody
+	public CommonResultDTO resumeMarksCaculation(@RequestParam("resume_id") String strGUID) {
+
+		CommonResultDTO result = new CommonResultDTO();
+		
+		//获取简历信息
+		ResumeDO resume = service_resume.getResumeByGUID(strGUID);
+		
+		if(resume == null) {
+			//未找到
+			result.setErrorinfo(ErrorDefines.E_JSON_NODATA);
+		} else {
+			//通过简历模板id找到简历模板
+			ResumeTemplateDO restmpl = service_tmpl.getTemplateInfo(resume.getnTemplateID());
+			
+			if(restmpl == null) {
+				//未找到对应模板，应该是逻辑错误
+				result.setErrorinfo(ErrorDefines.E_JSON_BADDATA);
+				return result;
+			}
+			
+			//获取区块列表
+			List<BasicDataResumeSectionsDO> lstSections = service_config.listResumeSections();
+			if(lstSections == null || lstSections.size() == 0) {
+				//未找到基础数据，系统未正常配置
+				result.setErrorinfo(ErrorDefines.E_JSON_SYSCONFIG);
+				return result;
+			}
+			
+			//获取简历和模板
+			String strResume = resume.getStrResumeJOSN();
+			String strResTempl = restmpl.getStrTempJson();
+			
+			JSONObject jsResume = JSON.parseObject(strResume);
+			JSONObject jsResTempl = JSON.parseObject(strResTempl);
+			
+			//遍历区块，计算分数
+			List<BarChartVO> lstBarMarks = new ArrayList<BarChartVO>();
+			for(int i = 0; i < lstSections.size(); i++) {
+				BasicDataResumeSectionsDO sec = lstSections.get(i);
+				
+				//检查模板是否配置了字段
+				if(jsResTempl.containsKey(sec.getSection_key())) {
+					JSONObject objTmplSec = jsResTempl.getJSONObject(sec.getSection_key());
+					
+					double dbSecMarks = HelperUtilClass.CaculateSectionMarks(objTmplSec, jsResume);
+					
+					//有绝对不合格项目
+					if(dbSecMarks == Double.NEGATIVE_INFINITY) {
+						
+						result.setErrorinfo(ErrorDefines.E_JSON_RESUME_BAD);
+						return result;
+					} else if(dbSecMarks == Double.NaN) {
+						//项目隐藏或者无有效评分项目
+						continue;
+					}
+					else
+					{
+						//项目有评分
+						lstBarMarks.add(new BarChartVO(sec.getSection_name(), dbSecMarks));
+					}
+				}
+			}
+			
+			result.setResult(lstBarMarks);
+			result.setOk(true);
 		}
 		
 		return result;

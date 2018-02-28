@@ -23,7 +23,7 @@ import com.xuexin.wangshen.util.UniqueGenerator;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "file:WebRoot/WEB-INF/applicationContext.xml" })
-//@Transactional
+@Transactional
 public class ResumeManagmentDAOTest {
 	
 	@Autowired

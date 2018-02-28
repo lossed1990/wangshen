@@ -75,5 +75,17 @@
 			AND c_username = #{strUsername} 
 			AND c_passhash = #{strPass};
 	</select>
+	
+	<!-- 密码修改 -->
+	<update id="updatePasswordByUserID" parameterType="com.xuexin.wangshen.model.pojo.UserInfoDO" 
+			statementType="PREPARED">
+		UPDATE users 
+		SET
+		  c_passhash = #{strPassHash} -- c_passhash - VARCHAR(255) NOT NULL
+		 ,dtime_lastmodified = NOW() -- dtime_lastmodified - DATETIME NOT NULL
+		WHERE
+		  un_uid = #{nUID}
+		;
+	</update>
 
 </mapper>

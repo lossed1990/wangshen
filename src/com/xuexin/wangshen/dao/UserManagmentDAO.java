@@ -25,4 +25,9 @@ public interface UserManagmentDAO {
 	 * 通过用户名密码获取用户
 	 */
 	UserInfoDO getAdminInfoByUserAndPass(@Param(value="strUsername")String strUsername, @Param(value="strPass")String strPass);
+	
+	/*
+	 * 修改用户密码
+	 */
+	int updatePasswordByUserID(UserInfoDO user);
 }

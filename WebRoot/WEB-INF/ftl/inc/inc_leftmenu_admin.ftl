@@ -33,6 +33,7 @@
                             <li><a href="${path}/resume/admin-resume-list.page">学员简历信息浏览</a></li>
                             <li><a href="${path}/resumetmpl/resumetemplates-list.page">银行简历模板配置</a></li>
                             <li><a href="${path}/config/ads-edit.page">广告展示内容配置</a></li>
+                            <li><a href="${path}/config/wx-mobile-edit.page">短信网关配置</a></li>
                         </ul>
                     </li>
                 </ul>
