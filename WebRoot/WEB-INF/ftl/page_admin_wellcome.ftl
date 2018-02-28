@@ -8,7 +8,7 @@
 <body class="nav-md">
 <div class="container body">
     <div class="main_container">
-        <#include "inc/inc_leftmenu_admin.ftl" />
+        <#include "inc/inc_leftmenu_user.ftl" />
 
         <#include "inc/inc_toprightnav.ftl" />
 
@@ -25,7 +25,7 @@
                             <div class="x_content">
                                 <div class="row">
                                     <!-- begin x_content --> 
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="thumbnail">
                                             <div class="image view view-first">
                                                 <img style="width: 100%; display: block;" src="${path}/image/media.jpg" alt="image" />
@@ -41,7 +41,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="thumbnail">
                                             <div class="image view view-first">
                                                 <img style="width: 100%; display: block;" src="${path}/image/media.jpg" alt="image" />
@@ -57,7 +57,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <div class="thumbnail">
                                             <div class="image view view-first">
                                                 <img style="width: 100%; display: block;" src="${path}/image/media.jpg" alt="image" />
@@ -70,6 +70,22 @@
                                             </div>
                                             <div class="caption">
                                                 <a href="${path}/config/ads-edit.page">广告展示内容配置</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="thumbnail">
+                                            <div class="image view view-first">
+                                                <img style="width: 100%; display: block;" src="${path}/image/media.jpg" alt="image" />
+                                                <div class="mask">
+                                                    <p>进入功能项</p>
+                                                    <div class="tools tools-bottom">
+                                                        <a href="${path}/config/wx-mobile-edit.page"><i class="fa fa-pencil"></i></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="caption">
+                                                <a href="${path}/config/wx-mobile-edit.page">短信网关配置</a>
                                             </div>
                                         </div>
                                     </div>

@@ -448,7 +448,7 @@ if (typeof Object.create !== 'function') {
                                         <h4 class="modal-title">评分规则设置</h4>\
                                     </div>\
                                     <div class="modal-body">\
-                                        <table class="table table-striped table-bordered" id="table_4">\
+                                        <table class="table table-striped table-bordered" id="table_4" style="width:100%">\
                                             <thead>\
                                                 <tr>\
                                                     <th>关键字</th>\
@@ -654,14 +654,14 @@ if (typeof Object.create !== 'function') {
                                         <h4 class="modal-title">评分规则设置</h4>\
                                     </div>\
                                     <div class="modal-body">\
-                                        <table class="table table-striped table-bordered" id="table_5">\
+                                        <table class="table table-striped table-bordered" id="table_5" style="width:100%">\
                                             <thead>\
                                                 <tr>\
                                                     <th>性别</th>\
                                                     <th>起始值</th>\
                                                     <th>结束值</th>\
                                                     <th>分值</th>\
-                                                    <th>合格</th>\
+                                                    <th>视该区间为不合格</th>\
                                                     <th>操作</th>\
                                                 </tr>\
                                             </thead>\
@@ -686,17 +686,17 @@ if (typeof Object.create !== 'function') {
                                                 <div class="col-md-2 col-sm-2 col-xs-12">\
                                                     <input type="text" class="form-control" id="input5_end" placeholder="" />\
                                                 </div>\
-                                            </div>\
-                                            <div class="form-group">\
                                                 <label class="control-label col-md-1 col-sm-1 col-xs-12">得分值</label>\
                                                 <div class="col-md-2 col-sm-2 col-xs-12">\
                                                     <input type="text" class="form-control" id="input5_score" placeholder="" />\
                                                 </div>\
-                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">区间合格</label>\
+                                            </div>\
+                                            <div class="form-group">\
+                                                <label class="control-label col-md-2 col-sm-2 col-xs-12">视该区间为不合格</label>\
                                                 <div class="col-md-2 col-sm-2 col-xs-12">\
                                                     <select class="form-control" id="select5_flag">\
-                                                        <option>是</option>\
                                                         <option>否</option>\
+                                                        <option>是</option>\
                                                     </select>\
                                                 </div>\
                                                 <div class="col-md-2 col-sm-2 col-xs-12 col-md-offset-1 col-sm-offset-1">\
@@ -903,13 +903,13 @@ if (typeof Object.create !== 'function') {
                                         <h4 class="modal-title">评分规则设置</h4>\
                                     </div>\
                                     <div class="modal-body">\
-                                        <table class="table table-striped table-bordered" id="table_6">\
+                                        <table class="table table-striped table-bordered" id="table_6" style="width:100%">\
                                             <thead>\
                                                 <tr>\
                                                     <th>起始值</th>\
                                                     <th>结束值</th>\
                                                     <th>分值</th>\
-                                                    <th>合格</th>\
+                                                    <th>视该区间为不合格</th>\
                                                     <th>操作</th>\
                                                 </tr>\
                                             </thead>\
@@ -931,15 +931,15 @@ if (typeof Object.create !== 'function') {
                                                 <div class="col-md-2 col-sm-2 col-xs-12">\
                                                     <input type="text" class="form-control" id="input6_score" placeholder="" />\
                                                 </div>\
-                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">区间合格</label>\
-                                                <div class="col-md-2 col-sm-2 col-xs-12">\
-                                                    <select class="form-control" id="select6_flag">\
-                                                        <option>是</option>\
-                                                        <option>否</option>\
-                                                    </select>\
-                                                </div>\
                                             </div>\
                                             <div class="form-group">\
+                                                <label class="control-label col-md-2 col-sm-2 col-xs-12">视该区间为不合格</label>\
+                                                <div class="col-md-2 col-sm-2 col-xs-12">\
+                                                    <select class="form-control" id="select6_flag">\
+                                                        <option>否</option>\
+                                                        <option>是</option>\
+                                                    </select>\
+                                                </div>\
                                                 <div class="col-md-2 col-sm-2 col-xs-12 col-md-offset-1 col-sm-offset-1">\
                                                     <button type="button" class="btn btn-default" id="btn6_add">新增</button>\
                                                 </div>\
@@ -1127,7 +1127,7 @@ if (typeof Object.create !== 'function') {
                                         <h4 class="modal-title">评分规则设置</h4>\
                                     </div>\
                                     <div class="modal-body">\
-                                        <table class="table table-striped table-bordered" id="table_7">\
+                                        <table class="table table-striped table-bordered" id="table_7" style="width:100%">\
                                             <thead>\
                                                 <tr>\
                                                     <th>起始值</th>\
@@ -1358,7 +1358,7 @@ if (typeof Object.create !== 'function') {
                                         <h4 class="modal-title">评分规则设置</h4>\
                                     </div>\
                                     <div class="modal-body">\
-                                        <table class="table table-striped table-bordered" id="table_8">\
+                                        <table class="table table-striped table-bordered" id="table_8" style="width:100%">\
                                             <thead>\
                                                 <tr>\
                                                     <th>起始值</th>\

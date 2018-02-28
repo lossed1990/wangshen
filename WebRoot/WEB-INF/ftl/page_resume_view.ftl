@@ -179,11 +179,28 @@
                     <!--  begin 是否具有以下情况  -->
                     <#include "div/div_resume_view_promise.ftl" />
                     <!--  end 是否具有以下情况  -->
+
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_content">
+                                <!-- begin edit --> 
+                                <div class="form-horizontal form-label-left">
+                                    <div class="form-group">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <button type="button" class="btn btn-default" id="btn_print">打印</button>
+                                            <button type="button" class="btn btn-primary" id="btn_export">导出</button>
+                                        </div>
+                                    </div>
+                                </div >
+                                <!-- end edit --> 
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        
         <!-- /page content -->
-
         <div class="modal fade bs-example-modal-lg" id="modal_score" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -194,7 +211,7 @@
                     <div class="modal-body" id="chart_body">
                         <div>
                             <h5 class="fa fa-hand-o-right">总得分</h5>
-                            <h3 style="text-align:center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总得分：<span style="color:red">36</span></h3>
+                            <h3 style="text-align:center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总得分：<span id="totalscore" style="color:red">0</span></h3>
                         </div>
                         <div>
                             <h5 class="fa fa-bar-chart">网申各项得分柱状图</h5>
@@ -209,7 +226,6 @@
         </div>
 
         <#include "inc/inc_footer.ftl" />
-
     </div>
 </div>
 
@@ -243,68 +259,11 @@
     //用于使chart自适应高度和宽度,通过窗体高宽计算容器高宽
     var resizeChartContainer = function () {
         chartContainer.style.width = chartBody.clientWidth+'px';
-        console.log('width:' + chartContainer.style.width);
     };
 
     // 基于准备好的dom，初始化echarts实例
     var scoreChart = echarts.init(chartContainer);
 
-    // 指定图表的配置项和数据
-    var option = {
-        title: {
-            text: ''
-        },
-        tooltip: {},
-        legend: {
-            data:['销量'],
-            width: chartContainer.style.width
-        },
-        xAxis: {
-            axisLabel:{
-                interval:0,
-                rotate:-40,
-                fontSize:10
-            },
-            data: ["个人基本信息","教育背景","获奖阶段","外语能力描述","计算机能力描述","学生工作",
-                   "培训经历","实践经历","实习经历","资格证书","家庭背景","毕业论文",
-                   "职业规划","自我评价","特长爱好","自荐信","其他说明","报考银行","其他承诺"
-            ]
-        },
-        yAxis:{
-            axisLine: {
-                show: false
-            },
-            axisTick: {
-                show: false
-            },
-            axisLabel: {
-                textStyle: {
-                    color: '#999'
-                }
-            }
-        },
-        series: [{
-            name: '销量',
-            type: 'bar',
-            data: [5, 20, 36, 100, 10, 20,
-            5, 20, 36, 10, 10, 20,
-            5, 20, 36, 10, 10, 20,20],
-            itemStyle: {
-                normal: {
-                    color: function(params) {
-                        var colorList = [
-                            '#3398DB'
-                        ];
-                        return colorList[params.dataIndex]
-                    }
-                }
-            },
-        }]
-    };
-    
-    // 使用刚指定的配置项和数据显示图表。
-    scoreChart.setOption(option);
-    
     window.onresize = function () {
         //重置容器高宽
         resizeChartContainer();
@@ -316,6 +275,96 @@
     scoreChart.resize();
 
     ajaxGetResumeInfo(onGetResumeInfo);
+    ajaxGetScoreInfo();
+
+    /**
+     * @brief 获取评分信息
+     */
+    function ajaxGetScoreInfo() {
+        $.ajax({    
+            type: "GET",
+            url: "${path}/resume/resume-marks-caculation.json",
+            contentType: "application/json",
+            cache:  false,
+            data: { 'resume_id': '${RequestParameters.resume_guid}'},
+            dataType: "json",
+            success: function (result)  {
+                var items = [];
+                var datas = [];
+                var totalscore = 0;
+
+                if (result.ok) {
+                    for(var i=0; i<result.result.length; ++i){
+                        items.push(result.result[i].key);
+                        if(result.result[i].value){
+                            datas.push(result.result[i].value);
+                            totalscore += result.result[i].value; 
+                        }else{
+                            datas.push(0);
+                        }
+                    }
+                    
+                    $('#totalscore').html(totalscore);
+                }else{
+                    $('#totalscore').html(result.errorinfo);
+                }  
+
+                // 指定图表的配置项和数据
+                var option = {
+                    title: {
+                        text: ''
+                    },
+                    tooltip: {},
+                    legend: {
+                        data:['得分'],
+                        width: chartContainer.style.width
+                    },
+                    xAxis: {
+                        axisLabel:{
+                            interval:0,
+                            rotate:-40,
+                            fontSize:10
+                        },
+                        data: items
+                    },
+                    yAxis:{
+                        axisLine: {
+                            show: false
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: '#999'
+                            }
+                        }
+                    },
+                    series: [{
+                        name: '得分',
+                        type: 'bar',
+                        data: datas,
+                        itemStyle: {
+                            normal: {
+                                color: function(params) {
+                                    var colorList = [
+                                        '#3398DB'
+                                    ];
+                                    return colorList[params.dataIndex]
+                                }
+                            }
+                        },
+                    }]
+                };
+                
+                // 使用刚指定的配置项和数据显示图表。
+                scoreChart.setOption(option);          
+            },
+            error: function() {
+                toastr.error('简历评分获取失败，请刷新重试！');
+            } 
+        });
+    }
 
     /**
      * 获取简历信息回调,上数据
@@ -335,9 +384,9 @@
         $.ajax({    
             type: "GET",
             url: "${path}/resume/resume-part-detail.json",
+            contentType: "application/json",
             cache:  false,
-            data: { 'resume_id': '8234CF54-00D1-46E1-A4C5-62F2DB694E3B'},
-            <#--  data: { 'resume_id': '${resume_guid}'},  -->
+            data: { 'resume_id': '${RequestParameters.resume_guid}'},
             dataType: "json",
             success: function (result)  {
                 if (result.ok) {
@@ -414,6 +463,15 @@
             }
         }
     }
+
+    //打印 导出
+    $('#btn_print').click(function(){
+        window.location.href = '${path}/resume/resume-view-print.page?resume_id=${RequestParameters.resume_guid}';
+    });
+
+    $('#btn_export').click(function(){
+        window.location.href = '${path}/resume/resume-view-print.page?resume_id=${RequestParameters.resume_guid}&type=docx';
+    }); 
 </script>
 
 </body>

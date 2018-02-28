@@ -9,7 +9,7 @@
 <body class="nav-md">
 <div class="container body">
     <div class="main_container">
-        <#include "inc/inc_leftmenu_admin.ftl" />
+        <#include "inc/inc_leftmenu_user.ftl" />
 
         <#include "inc/inc_toprightnav.ftl" />
 
@@ -100,10 +100,8 @@
         even.preventDefault; 
                 
         var data = $m_ui_table.DataTable().row( $(this).parents('tr') ).data();  
-        //window.location.href = '${path}/resume/resume-view.page?resume_guid=' + data.resume_id;
-        window.location.href = '${path}/resume/resume-view-print.page?resume_id=' + data.resume_id;
-
-        
+        window.location.href = '${path}/resume/resume-view.page?resume_guid=' + data.resume_id;
+        //window.location.href = '${path}/resume/resume-view-print.page?resume_id=' + data.resume_id;
     });
 
     $m_ui_table.on( 'click', 'a#menu_edit', function (even)  {        
