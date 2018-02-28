@@ -227,6 +227,7 @@
         $.ajax({    
             type: "GET",
             url: "${path}/config/ads-get.json",
+            contentType: "application/json",
             dataType: "json",
             success: function (data)  {
                 if (data.ok) {

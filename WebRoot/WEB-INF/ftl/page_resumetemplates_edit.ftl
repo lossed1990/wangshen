@@ -61,6 +61,7 @@
     $.ajax({    
         type: "GET",
         url: "${path}/resumetmpl/resumetemplates-detail.json",
+        contentType: "application/json",
         cache:  false,
         data: { 'temp_id': ${RequestParameters['temp_id']} },
         dataType: "json",

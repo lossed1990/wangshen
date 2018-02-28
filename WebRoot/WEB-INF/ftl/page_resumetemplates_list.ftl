@@ -222,6 +222,7 @@
                     $.ajax({               
                         url: "${path}/resumetmpl/resumetemplates-purgeremove.json",
                         type: 'GET',
+                        contentType: "application/json",
                         dataType: 'json',
                         data:  {
                             "temp_id": data[0]
@@ -259,6 +260,7 @@
         $.ajax({               
             url: "${path}/resumetmpl/resumetemplates-mod-name.json",
             type: 'POST',
+            contentType: "application/json",
             dataType: 'json',
             data: JSON.stringify(param),
             success: function(result) {              
@@ -337,6 +339,7 @@
             $.ajax({               
                 url: "${path}/resumetmpl/resumetemplates-mod-cover.json",
                 type: 'POST',
+                contentType: "application/json",
                 dataType: 'json',
                 data: JSON.stringify(param),
                 success: function(result) {              

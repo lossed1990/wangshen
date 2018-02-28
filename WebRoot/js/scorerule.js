@@ -658,8 +658,8 @@ if (typeof Object.create !== 'function') {
                                             <thead>\
                                                 <tr>\
                                                     <th>性别</th>\
-                                                    <th>上限</th>\
-                                                    <th>下限</th>\
+                                                    <th>起始值</th>\
+                                                    <th>结束值</th>\
                                                     <th>分值</th>\
                                                     <th>合格</th>\
                                                     <th>操作</th>\
@@ -678,11 +678,11 @@ if (typeof Object.create !== 'function') {
                                                         <option>女</option>\
                                                     </select>\
                                                 </div>\
-                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">上限</label>\
+                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">起始值</label>\
                                                 <div class="col-md-2 col-sm-2 col-xs-12">\
                                                     <input type="text" class="form-control" id="input5_begin" placeholder="" />\
                                                 </div>\
-                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">下限</label>\
+                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">结束值</label>\
                                                 <div class="col-md-2 col-sm-2 col-xs-12">\
                                                     <input type="text" class="form-control" id="input5_end" placeholder="" />\
                                                 </div>\
@@ -906,8 +906,8 @@ if (typeof Object.create !== 'function') {
                                         <table class="table table-striped table-bordered" id="table_6">\
                                             <thead>\
                                                 <tr>\
-                                                    <th>上限</th>\
-                                                    <th>下限</th>\
+                                                    <th>起始值</th>\
+                                                    <th>结束值</th>\
                                                     <th>分值</th>\
                                                     <th>合格</th>\
                                                     <th>操作</th>\
@@ -919,11 +919,11 @@ if (typeof Object.create !== 'function') {
                                         <h5 class="fa fa-edit">新增</h5>\
                                         <div class="form-horizontal form-label-left">\
                                             <div class="form-group">\
-                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">上限</label>\
+                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">起始值</label>\
                                                 <div class="col-md-2 col-sm-2 col-xs-12">\
                                                     <input type="text" class="form-control" id="input6_begin" placeholder="" />\
                                                 </div>\
-                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">下限</label>\
+                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">结束值</label>\
                                                 <div class="col-md-2 col-sm-2 col-xs-12">\
                                                     <input type="text" class="form-control" id="input6_end" placeholder="" />\
                                                 </div>\
@@ -1130,8 +1130,8 @@ if (typeof Object.create !== 'function') {
                                         <table class="table table-striped table-bordered" id="table_7">\
                                             <thead>\
                                                 <tr>\
-                                                    <th>上限</th>\
-                                                    <th>下限</th>\
+                                                    <th>起始值</th>\
+                                                    <th>结束值</th>\
                                                     <th>分值</th>\
                                                     <th>操作</th>\
                                                 </tr>\
@@ -1142,11 +1142,11 @@ if (typeof Object.create !== 'function') {
                                         <h5 class="fa fa-edit">新增</h5>\
                                         <div class="form-horizontal form-label-left">\
                                             <div class="form-group">\
-                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">上限</label>\
+                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">起始值</label>\
                                                 <div class="col-md-2 col-sm-2 col-xs-12">\
                                                     <input type="text" class="form-control" id="input7_begin" placeholder="" />\
                                                 </div>\
-                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">下限</label>\
+                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">结束值</label>\
                                                 <div class="col-md-2 col-sm-2 col-xs-12">\
                                                     <input type="text" class="form-control" id="input7_end" placeholder="" />\
                                                 </div>\
@@ -1361,8 +1361,8 @@ if (typeof Object.create !== 'function') {
                                         <table class="table table-striped table-bordered" id="table_8">\
                                             <thead>\
                                                 <tr>\
-                                                    <th>上限</th>\
-                                                    <th>下限</th>\
+                                                    <th>起始值</th>\
+                                                    <th>结束值</th>\
                                                     <th>分值</th>\
                                                     <th>操作</th>\
                                                 </tr>\
@@ -1373,11 +1373,11 @@ if (typeof Object.create !== 'function') {
                                         <h5 class="fa fa-edit">新增</h5>\
                                         <div class="form-horizontal form-label-left">\
                                             <div class="form-group">\
-                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">上限</label>\
+                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">起始值</label>\
                                                 <div class="col-md-2 col-sm-2 col-xs-12">\
                                                     <input type="text" class="form-control" id="input8_begin" placeholder="" />\
                                                 </div>\
-                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">下限</label>\
+                                                <label class="control-label col-md-1 col-sm-1 col-xs-12">结束值</label>\
                                                 <div class="col-md-2 col-sm-2 col-xs-12">\
                                                     <input type="text" class="form-control" id="input8_end" placeholder="" />\
                                                 </div>\

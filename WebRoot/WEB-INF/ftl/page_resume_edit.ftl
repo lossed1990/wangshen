@@ -271,6 +271,7 @@
         $.ajax({    
             type: "GET",
             url: "${path}/resumetmpl/resumetemplates-detail.json",
+            contentType: "application/json",
             cache:  false,
             data: { 'temp_id': ${temp_id}},
             dataType: "json",
@@ -292,6 +293,7 @@
         $.ajax({    
             type: "GET",
             url: "${path}/resume/resume-part-detail.json",
+            contentType: "application/json",
             cache:  false,
             data: { 'resume_id': '${resume_guid}'},
             dataType: "json",
