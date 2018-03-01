@@ -89,8 +89,7 @@
             "contentType": "application/json",
             "dataType": 'json',
             "data": function ( d ) {
-                                
-                d.userid = 1;
+                d.userid = 0;
                 return JSON.stringify(d);
             }
         }

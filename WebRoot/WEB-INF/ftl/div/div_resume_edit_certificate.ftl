@@ -56,8 +56,6 @@
                 <div class="form-group" >
                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                         <button class="btn btn-primary btn-resume-additem" data="zigezhengshu">新增|修改</button>
-                        <button class="btn btn-default btn-pre" >上一项</button>
-                        <button class="btn btn-default btn-next" >下一项</button>
                     </div >
                 </div>
             </div >

@@ -645,13 +645,20 @@
         for(var i = 0;i < elems.length; ++i){
             var $elem = $(elems[i]);
             var elemid = $elem.attr('id');
+            var elemDataType = $elem.attr('datatype'); //表单数据类型
             if(elemid == 'score'){ //转浮点
                 value[elemid] = parseFloat($elem.val()); 
             } else if(elemid == 'scores'){ //转数组
                 value[elemid] = eval($elem.val());
+            } else if(elemDataType == "bool") {  //bool类型表单项
+                value[elemid] = ($elem.val() == "是") ? true : false;
             }
             else{
-                value[elemid] = $elem.val(); 
+                if($elem.val()){
+                    value[elemid] = $elem.val(); 
+                }else{
+                    value[elemid] = "";
+                }
             }
             if(clear){
                 $elem.val(""); 
@@ -674,7 +681,13 @@
         var elems = $('#' + pid).find('.' + subclass);
         for(var i = 0;i < elems.length; ++i){
             var $elem = $(elems[i]);
-            $elem.val(value[$elem.attr('id')]);
+            var elemDataType = $elem.attr('datatype'); //表单数据类型
+            if(elemDataType == "bool") {  //bool类型表单项
+                var info = (value[$elem.attr('id')]) ? "是" : "否";
+                $elem.val(info);
+            }else{
+                $elem.val(value[$elem.attr('id')]);
+            }
         }
     }
 
@@ -790,7 +803,7 @@
                 score: {
                     validators: {
                         regexp: {
-                            regexp: /^1?[1-9]?\d([.]\d)?$/,
+                            regexp: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/,
                             message: '得分不合法'
                         }
                     }
@@ -848,7 +861,7 @@
                 score: {
                     validators: {
                         regexp: {
-                            regexp: /^1?[1-9]?\d([.]\d)?$/,
+                            regexp: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/,
                             message: '得分不合法'
                         }
                     }
