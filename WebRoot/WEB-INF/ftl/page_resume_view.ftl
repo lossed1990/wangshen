@@ -446,8 +446,7 @@
                         $tbody.append($tr);
                     }
                 }
-            }
-            else{
+            }else{
                 $.each(data, function(name,value) {
                     var $item = $elem.find('#' + name); 
                     if($item.length > 0){ 
@@ -456,7 +455,13 @@
                                 $item.attr('src','${path}/file/download.page?fid=' + value);       
                             }
                         } else {
-                            $item.val(value);
+                            if(value == true) {
+                                $item.val('是');
+                            }else if(value == false) {
+                                $item.val('否');
+                            }else{
+                                $item.val(value);
+                            }
                         }  
                     }
                 });

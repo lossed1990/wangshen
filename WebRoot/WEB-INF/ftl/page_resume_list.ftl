@@ -85,7 +85,6 @@
             "contentType": "application/json",
             "dataType": 'json',
             "data": function ( d ) {
-                                
                 d.userid = ${Session.userss.nUserID};
                 return JSON.stringify(d);
             }
@@ -98,8 +97,6 @@
         var data = $m_ui_table.DataTable().row( $(this).parents('tr') ).data();  
         window.location.href = '${path}/resume/resume-view.page?resume_guid=' + data.resume_id;
         //window.location.href = '${path}/resume/resume-view-print.page?resume_id=' + data.resume_id;
-
-        
     });
 
     $m_ui_table.on( 'click', 'a#menu_edit', function (even)  {        

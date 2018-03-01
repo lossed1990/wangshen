@@ -11,14 +11,14 @@
                 <div class="form-group">
                     <label class="control-label col-md-2 col-sm-2 col-xs-12">是否曾受过处罚或处分</label>
                     <div class="col-md-2 col-sm-2 col-xs-12">
-                        <select class="form-control resume-data" id="is_punished">
+                        <select class="form-control resume-data" id="is_punished" datatype="bool">
                             <option>是</option>
                             <option>否</option>
                         </select>
                     </div>
                     <label class="control-label col-md-2 col-sm-2 col-xs-12">是否曾患过重大疾病</label>
                     <div class="col-md-2 col-sm-2 col-xs-12">
-                        <select class="form-control resume-data" id="is_disease">
+                        <select class="form-control resume-data" id="is_disease" datatype="bool">
                             <option>是</option>
                             <option>否</option>
                         </select>
@@ -27,14 +27,14 @@
                 <div class="form-group">
                     <label class="control-label col-md-2 col-sm-2 col-xs-12">是否是本行员工</label>
                     <div class="col-md-2 col-sm-2 col-xs-12">
-                        <select class="form-control resume-data" id="is_thisbank_worker">
+                        <select class="form-control resume-data" id="is_thisbank_worker" datatype="bool">
                             <option>是</option>
                             <option>否</option>
                         </select>
                     </div>
                     <label class="control-label col-md-2 col-sm-2 col-xs-12">是否有亲属在本行工作</label>
                     <div class="col-md-2 col-sm-2 col-xs-12">
-                        <select class="form-control resume-data" id="is_relative_worker">
+                        <select class="form-control resume-data" id="is_relative_worker" datatype="bool">
                             <option>是</option>
                             <option>否</option>
                         </select>
