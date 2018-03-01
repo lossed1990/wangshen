@@ -8,7 +8,7 @@
 <body class="nav-md">
 <div class="container body">
     <div class="main_container">
-        <#include "inc/inc_leftmenu_admin.ftl" />
+        <#include "inc/inc_leftmenu_user.ftl" />
 
         <#include "inc/inc_toprightnav.ftl" />
 

@@ -286,6 +286,13 @@ public class UserAction {
     	return "redirect:login.page";
     }
     
+    //修改密码页
+    @RequestMapping(value = "/changepw.page", method=RequestMethod.GET)
+    public String changeUserPassword(Model model) {
+        
+    	return "page_user_changepw";
+    }
+    
     //用户修改自身密码
     @RequestMapping(value = "/change-user-password.json", method=RequestMethod.POST, consumes = "application/json")
     @ResponseBody

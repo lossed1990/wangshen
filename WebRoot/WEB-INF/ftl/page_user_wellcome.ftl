@@ -36,9 +36,9 @@
                                                     <div class="">
                                                         <div class="pricing_features">
                                                         <ul class="list-unstyled text-left">
-                                                            <li><i class="fa fa-check text-success"></i> 中国银行模板</li>
-                                                            <li><i class="fa fa-check text-success"></i> 中国银行模板</li>
-                                                            <li><i class="fa fa-check text-success"></i> 中国银行模板</li>
+                                                            <li><i class="fa fa-check text-success"></i> 工商银行模板</li>
+                                                            <li><i class="fa fa-check text-success"></i> 农业银行模板</li>
+                                                            <li><i class="fa fa-check text-success"></i> 建设银行模板</li>
                                                             <li><i class="fa fa-check text-success"></i> 中国银行模板</li>
                                                             <li><i class="fa fa-check text-success"></i> ......</li>
                                                         </ul>
