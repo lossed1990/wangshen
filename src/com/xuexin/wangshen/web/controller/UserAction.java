@@ -185,8 +185,16 @@ public class UserAction {
     		return "page_user_reg_failed";
     	}
     	
-    	//调用service执行插入，事物层级在该层，可能会抛出用户重复的异常
+    	//检查手机验证码
     	try {
+    		
+    		String strValidateCode = (String)session.getAttribute(ConstConfigDefine.SESSION_CODE_WXVAL);
+    		if(user.getPhonevalidate().compareToIgnoreCase(strValidateCode) != 0) {
+	    		
+    			throw new RuntimeException(Integer.toHexString(ErrorDefines.E_SVR_VALIDATE_MISMATCH));
+	    	}
+    	
+    		//调用service执行插入，事物层级在该层，可能会抛出用户重复的异常
     		service_user.saveUserInfo(user);
     		
     	} catch(RuntimeException e) {
