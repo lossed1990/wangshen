@@ -35,7 +35,7 @@
 				<th>姓名</th>
 				<td>${baseinfo.name!}</td>
 				<td style="width: 160px; padding: 0px; margin: 0px;" rowspan="7">
-					<#if (baseinfo.head_pic)??>
+					<#if (baseinfo.head_pic)?? && baseinfo.head_pic?length gt 0>
 					<img src="${path}/file/download.page?fid=${baseinfo.head_pic}" style="width: 160px; height: 224px;"/>
 					</#if>
 				</td>
@@ -144,7 +144,7 @@
 			<tr>
 				<th>近期生活照</th>
 				<td>
-				<#if (baseinfo.live_pic)??>
+				<#if (baseinfo.live_pic)?? && baseinfo.student_pic?length gt 0>
 					<img src="${path}/file/download.page?fid=${baseinfo.live_pic}" style="width: 400px; height: 300px;"/>
 				</#if>
 				</td>
@@ -152,7 +152,7 @@
 			<tr>
 				<th>学生证/学生卡照</th>
 				<td>
-				<#if (baseinfo.student_pic)??>
+				<#if (baseinfo.student_pic)?? && baseinfo.student_pic?length gt 0>
 					<img src="${path}/file/download.page?fid=${baseinfo.student_pic}" style="width: 400px; height: 300px;"/>
 				</#if>
 				</td>
