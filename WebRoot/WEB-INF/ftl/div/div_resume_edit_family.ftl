@@ -30,18 +30,18 @@
             <h2>新增|修改 <small>  </small></h2>
             <div class="form-horizontal form-label-left">
                 <div class="form-group">
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12">姓名</label>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>姓名</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <input type="text" class="form-control resume-data" id="name" placeholder="">
                     </div>
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12">性别</label>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>性别</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <select class="form-control resume-data" id="sex">
                             <option>男</option>
                             <option>女</option>
                         </select>
                     </div>
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12">关系</label>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>关系</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <select class="form-control resume-data" id="relation">
                             <option>父</option>
@@ -72,13 +72,13 @@
                             <option>已辞世</option>
                         </select>
                     </div>
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12">工作单位</label>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>工作单位</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <input type="text" class="form-control resume-data" id="work_place" placeholder="">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12">担任职务</label>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>担任职务</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <input type="text" class="form-control resume-data" id="work" placeholder="">
                     </div>
@@ -108,6 +108,7 @@
                 <div class="form-group" >
                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                         <button class="btn btn-primary btn-resume-savetable" data="family">保存</button>
+                        <button class="btn btn-primary btn-resume-score" data="家庭背景与社会资源">评分</button>
                         <button class="btn btn-default btn-pre" >上一项</button>
                         <button class="btn btn-default btn-next" >下一项</button>
                     </div >

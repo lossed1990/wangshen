@@ -35,21 +35,21 @@
             <div class="form-horizontal form-label-left">
                 <form id="form_shixi">
                     <div class="form-group">
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12">开始时间</label>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>开始时间</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <input class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" id="start_date" required="required" type="text">
                         </div>
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12">结束时间</label>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>结束时间</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <input class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" id="end_date" required="required" type="text">
                         </div>
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12">所在行业</label>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>所在行业</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <input type="text" class="form-control resume-data" id="hangye" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12">所在单位及部门</label>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>所在单位及部门</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <input type="text" class="form-control resume-data" id="apartment" placeholder="">
                         </div>
@@ -57,7 +57,7 @@
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <input type="text" class="form-control resume-data" id="work" placeholder="">
                         </div>
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12">单位性质</label>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>单位性质</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <select class="form-control resume-data" id="company_type">
                                 <option>国有企业</option>
@@ -96,18 +96,18 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12">工作经历描述</label>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>工作经历描述</label>
                         <div class="col-md-11 col-sm-11 col-xs-12">
                             <textarea required="required" class="form-control resume-data" id="work_memo" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
                                 data-parsley-validation-threshold="10"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12">证明人</label>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>证明人</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <input type="text" class="form-control resume-data" id="zhengming_people" placeholder="">
                         </div>
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12">证明人职务</label>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>证明人职务</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <input type="text" class="form-control resume-data" id="zhengming_work" placeholder="">
                         </div>
@@ -136,6 +136,7 @@
                 <div class="form-group" >
                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                         <button class="btn btn-primary btn-resume-savetable" data="shixi">保存</button>
+                        <button class="btn btn-primary btn-resume-score" data="实习经历">评分</button>
                         <button class="btn btn-default btn-pre" >上一项</button>
                         <button class="btn btn-default btn-next" >下一项</button>
                     </div >

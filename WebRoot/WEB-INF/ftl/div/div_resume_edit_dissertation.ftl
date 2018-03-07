@@ -77,6 +77,7 @@
                 <div class="form-group" >
                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                         <button class="btn btn-primary btn-resume-savetable" data="dissertation">保存</button>
+                        <button class="btn btn-primary btn-resume-score" data="毕业论文及发表期刊">评分</button>
                         <button class="btn btn-default btn-pre" >上一项</button>
                         <button class="btn btn-default btn-next" >下一项</button>
                     </div >

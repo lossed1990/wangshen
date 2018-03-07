@@ -29,7 +29,10 @@ var DivModule = {
             console.log('hide sub key:' + self.hideSubs[i]);
             var keys = self.hideSubs[i].split('-');
             if (keys.length >= 2) {
-                $('#' + keys[0]).find($('#' + keys[1])).hide();
+                //$('#' + keys[0]).find($('#' + keys[1])).hide();
+                var theElem = $('#' + keys[0]).find($('#' + keys[1]));
+                theElem.attr("disabled","disabled");
+                theElem.attr('placeholder','此项不用填');
             }
         }
         self.hide();
@@ -177,10 +180,12 @@ var ModuleManager = {
             }
         });
 
-        $('.resume_menu').click(function() {
+        $('.resume_menu').click(function() {          
             var index = $(this).attr('data');
             self.selectModule(parseInt(index));
         });
+
+        $('#resume_menus').click();
     },
 
     selectModule: function(index) {
@@ -191,9 +196,11 @@ var ModuleManager = {
 
         if (self.curIndex != -1) {
             self.subs[self.curIndex].hide();
+            $('.resume_menu').eq(self.curIndex).css("color","rgba(255,255,255,0.75)");
         }
         self.subs[index].show();
         self.curIndex = index;
+        $('.resume_menu').eq(self.curIndex).css("color","red");
     },
 
     preModule: function() {

@@ -26,11 +26,11 @@
             <div class="form-horizontal form-label-left">
                 <form id="form_rewards">
                     <div class="form-group">
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12">获奖名称</label>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>获奖名称</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <input type="text" class="form-control resume-data" id="name" placeholder="">
                         </div>
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12">获奖级别</label>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>获奖级别</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <select class="form-control resume-data" id="level">
                                 <option>国家级</option>
@@ -53,7 +53,7 @@
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <input type="text" class="form-control resume-data" id="times" name="times" placeholder="">
                         </div>
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12">获奖时间</label>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>获奖时间</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <input class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" id="date" required="required" type="text">
                         </div>
@@ -71,6 +71,7 @@
                 <div class="form-group" >
                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                         <button class="btn btn-primary btn-resume-savetable" data="rewards">保存</button>
+                        <button class="btn btn-primary btn-resume-score" data="获奖经历">评分</button>
                         <button class="btn btn-default btn-pre" >上一项</button>
                         <button class="btn btn-default btn-next" >下一项</button>
                     </div >

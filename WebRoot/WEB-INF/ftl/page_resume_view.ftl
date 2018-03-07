@@ -201,7 +201,7 @@
         </div>
         
         <!-- /page content -->
-        <div class="modal fade bs-example-modal-lg" id="modal_score" tabindex="-1" role="dialog" aria-hidden="true">
+        <#--  <div class="modal fade bs-example-modal-lg" id="modal_score" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -223,7 +223,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>  -->
 
         <#include "inc/inc_footer.ftl" />
     </div>
@@ -233,11 +233,12 @@
 <#include "inc/inc_datatablejs.ftl" />
 
  <!-- 引入 ECharts 文件 -->
-<script src="${path}/js/echarts.simple.min.js"></script>
-<script type="text/javascript" src="${path}/js/jquery.base64.js"></script>
+<#--  <script src="${path}/js/echarts.simple.min.js"></script>
+<script type="text/javascript" src="${path}/js/jquery.base64.js"></script>  -->
 
 <script>
-    getAdsConfig();
+    ajaxGetResumeInfo(onGetResumeInfo);
+    <#--  getAdsConfig();
 
     function getAdsConfig() {
         $.ajax({    
@@ -274,7 +275,7 @@
     resizeChartContainer();
     scoreChart.resize();
 
-    ajaxGetResumeInfo(onGetResumeInfo);
+    
     ajaxGetScoreInfo();
 
     /**
@@ -364,7 +365,7 @@
                 toastr.error('简历评分获取失败，请刷新重试！');
             } 
         });
-    }
+    }  -->
 
     /**
      * 获取简历信息回调,上数据

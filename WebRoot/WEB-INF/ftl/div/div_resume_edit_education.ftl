@@ -10,7 +10,7 @@
             <div class="form-horizontal form-label-left">
                 <form id="form_education">
                     <div class="form-group">
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12">最高学历</label>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>最高学历</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <select class="form-control resume-edudata" id="top_grade">
                                 <option>博士研究生</option>
@@ -37,7 +37,7 @@
                 </form>    
             </div>
             <div class="ln_solid"></div>
-            <h2>教育经历 <small>  </small></h2>
+            <h2>教育经历 <small> (请从最高学历依次往下填，填写至高中) </small></h2>
             <table class="table table-striped table-bordered resume-table" data="education" style="width:100%">
                 <thead>
                     <tr>
@@ -66,11 +66,11 @@
             <h2>新增|修改 <small>  </small></h2>
             <div class="form-horizontal form-label-left">
                 <div class="form-group">
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12">起始日期</label>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>起始日期</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <input class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" id="start_date" required="required" type="text">
                     </div>
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12">结束日期</label>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>结束日期</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <input class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" id="end_date" required="required" type="text">
                     </div>
@@ -90,7 +90,7 @@
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <input type="text" class="form-control resume-data" id="province" placeholder="">
                     </div>
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12">学校</label>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>学校</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <input type="text" class="form-control resume-data" id="school" placeholder="">
                     </div>
@@ -115,7 +115,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12">所获学位</label>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>所获学位</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <select class="form-control resume-data" id="xuewei">
                             <option>学士</option>
@@ -126,7 +126,7 @@
                             <option>双博士</option>
                         </select>
                     </div>
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12">学习形式</label>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>学习形式</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <select class="form-control resume-data" id="study_type">
                             <option>全日制本科</option>
@@ -135,7 +135,7 @@
                             <option>双学历、双学位</option>
                         </select>
                     </div>
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12">教育类型</label>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>教育类型</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <select class="form-control resume-data" id="edu_type">
                             <option>全日制</option>
@@ -165,7 +165,7 @@
                 </form>  
                 <div class="form-group" id="educationscores">
                     <div class="form-group">
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12">所学课程及成绩</label>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>所学课程及成绩</label>
                         <div class="col-md-11 col-sm-11 col-xs-12">
                             <table class="table table-striped table-bordered resume-mintable" data="educationscores" style="width:100%">
                                 <thead>
@@ -211,6 +211,7 @@
                 <div class="form-group" >
                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                         <button class="btn btn-primary" id="btn-saveeducation" data="education">保存</button>
+                        <button class="btn btn-primary btn-resume-score" data="教育背景">评分</button>
                         <button class="btn btn-default btn-pre" >上一项</button>
                         <button class="btn btn-default btn-next" >下一项</button>
                     </div >

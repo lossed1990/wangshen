@@ -30,7 +30,7 @@
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <input type="text" class="form-control resume-data" id="type" placeholder="">
                     </div>
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12">证书名称</label>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>证书名称</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <input type="text" class="form-control resume-data" id="name" placeholder="">
                     </div>
@@ -44,7 +44,7 @@
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <input type="text" class="form-control resume-data" id="source" placeholder="">
                     </div>
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12">认证时间</label>
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>认证时间</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <input class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" id="cert_date" required="required" type="text">
                     </div>
@@ -65,6 +65,7 @@
                 <div class="form-group" >
                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                         <button class="btn btn-primary btn-resume-savetable" data="zigezhengshu">保存</button>
+                        <button class="btn btn-primary btn-resume-score" data="专业职业资格证书">评分</button>
                         <button class="btn btn-default btn-pre" >上一项</button>
                         <button class="btn btn-default btn-next" >下一项</button>
                     </div >

@@ -53,7 +53,7 @@
                                 <!-- begin edit --> 
                                 <div class="form-horizontal form-label-left">
                                     <div class="form-group">
-                                        <label class="control-label col-md-1 col-sm-1 col-xs-12">未来五年职业规划</label>
+                                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>未来五年职业规划</label>
                                         <div class="col-md-11 col-sm-11 col-xs-12">
                                             <textarea required="required" class="form-control resume-data" id="plan" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
                                                 data-parsley-validation-threshold="10"></textarea>
@@ -62,6 +62,7 @@
                                     <div class="form-group" >
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                                             <button type="submit" class="btn btn-primary btn-resume-save" data="workplan" >保存</button>
+                                            <button class="btn btn-primary btn-resume-score" data="职业规划">评分</button>
                                             <button class="btn btn-default btn-pre" >上一项</button>
                                             <button class="btn btn-default btn-next" >下一项</button>
                                         </div >
@@ -83,15 +84,17 @@
                                 <!-- begin edit --> 
                                 <div class="form-horizontal form-label-left">
                                     <div class="form-group">
-                                        <label class="control-label col-md-1 col-sm-1 col-xs-12">自我评价</label>
+                                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>自我评价</label>
                                         <div class="col-md-11 col-sm-11 col-xs-12">
-                                            <textarea required="required" class="form-control resume-data" id="info" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
+                                            <textarea required="required" class="form-control resume-data" id="info" data="textarea-tip1" data-parsley-trigger="keyup" data-parsley-minlength="0" data-parsley-maxlength="500"
                                                 data-parsley-validation-threshold="10"></textarea>
                                         </div>
+                                        <label class="col-md-offset-1 col-md-11 col-sm-offset-1 col-sm-12 col-xs-12"><span class="small" id="textarea-tip1">（限500字以内，已输入0字）</span></label>
                                     </div>
                                     <div class="form-group" >
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                                             <button type="submit" class="btn btn-primary btn-resume-save" data="selfjudge" >保存</button>
+                                            <button class="btn btn-primary btn-resume-score" data="自我评价">评分</button>
                                             <button class="btn btn-default btn-pre" >上一项</button>
                                             <button class="btn btn-default btn-next" >下一项</button>
                                         </div >
@@ -113,15 +116,17 @@
                                 <!-- begin edit --> 
                                 <div class="form-horizontal form-label-left">
                                     <div class="form-group">
-                                        <label class="control-label col-md-1 col-sm-1 col-xs-12">特长爱好</label>
+                                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>特长爱好</label>
                                         <div class="col-md-11 col-sm-11 col-xs-12">
-                                            <textarea required="required" class="form-control resume-data" id="info" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
+                                            <textarea required="required" class="form-control resume-data" id="info" data="textarea-tip2" data-parsley-trigger="keyup" data-parsley-minlength="0" data-parsley-maxlength="300"
                                                 data-parsley-validation-threshold="10"></textarea>
                                         </div>
+                                        <label class="col-md-offset-1 col-md-11 col-sm-offset-1 col-sm-12 col-xs-12"><span class="small" id="textarea-tip2">（限300字以内，已输入0字）</span></label>
                                     </div>
                                     <div class="form-group" >
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                                             <button type="submit" class="btn btn-primary btn-resume-save" data="speciality" >保存</button>
+                                            <button class="btn btn-primary btn-resume-score" data="特长爱好">评分</button>
                                             <button class="btn btn-default btn-pre" >上一项</button>
                                             <button class="btn btn-default btn-next" >下一项</button>
                                         </div >
@@ -145,13 +150,15 @@
                                     <div class="form-group">
                                         <label class="control-label col-md-1 col-sm-1 col-xs-12">自荐信</label>
                                         <div class="col-md-11 col-sm-11 col-xs-12">
-                                            <textarea required="required" class="form-control resume-data" id="info" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
+                                            <textarea required="required" class="form-control resume-data" id="info" data="textarea-tip3" data-parsley-trigger="keyup" data-parsley-minlength="0" data-parsley-maxlength="800"
                                                 data-parsley-validation-threshold="10"></textarea>
                                         </div>
+                                        <label class="col-md-offset-1 col-md-11 col-sm-offset-1 col-sm-12 col-xs-12"><span class="small" id="textarea-tip3">（限800字以内，已输入0字）</span></label>
                                     </div>
                                     <div class="form-group" >
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                                             <button type="submit" class="btn btn-primary btn-resume-save" data="selfrecomadation" >保存</button>
+                                            <button class="btn btn-primary btn-resume-score" data="自荐信">评分</button>
                                             <button class="btn btn-default btn-pre" >上一项</button>
                                             <button class="btn btn-default btn-next" >下一项</button>
                                         </div >
@@ -182,6 +189,7 @@
                                     <div class="form-group" >
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                                             <button type="submit" class="btn btn-primary btn-resume-save" data="otherinfo">保存</button>
+                                            <button class="btn btn-primary btn-resume-score" data="其他说明">评分</button>
                                             <button class="btn btn-default btn-pre" >上一项</button>
                                             <button class="btn btn-default btn-next" >下一项</button>
                                         </div >
@@ -203,6 +211,48 @@
         </div>
         <!-- /page content -->
 
+        <!-- /page content -->
+        <div class="modal fade bs-example-modal-lg" id="modal_score" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">网申简历评分</h4>
+                    </div>
+                    <div class="modal-body" id="chart_body">
+                        <div>
+                            <h5 class="fa fa-hand-o-right">总得分</h5>
+                            <h3 style="text-align:center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总得分：<span id="totalscore" style="color:red">0</span></h3>
+                        </div>
+                        <div>
+                            <h5 class="fa fa-bar-chart">网申各项得分柱状图</h5>
+                            <div id="chart_score" style="width: 890px;height:300px;"></div> 
+                        </div>
+                        <hr />
+                        <div id="ads">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade bs-example-modal-sm" id="modal_score_sm" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title">网申简历评分</h4>
+                    </div>
+                    <div class="modal-body" id="chart_body">
+                        <div>
+                            <h5 class="fa fa-hand-o-right">得分</h5>
+                            <h3 style="text-align:center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;得分：<span id="totalscore_sm" style="color:red">0</span></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <#include "inc/inc_footer.ftl" />
 
     </div>
@@ -215,6 +265,9 @@
 <script src="${path}/vendors/bootstrapvalidator/js/language/zh_CN.js"></script>
 <script src="${path}/vendors/bootstrap-fileinput/js/fileinput.min.js"></script>
 <script src="${path}/vendors/bootstrap-fileinput/js/locales/zh.js"></script>
+
+<script src="${path}/js/echarts.simple.min.js"></script>
+<script type="text/javascript" src="${path}/js/jquery.base64.js"></script>
 
 <script src="${path}/js/resumeedit.js"></script>
 <script>
@@ -908,6 +961,184 @@
                 }
             }
         });
+
+        //总评分
+        $('.btn-resume-score-all').click(function(){
+            ajaxGetScoreInfo();
+            $('#modal_score').modal();
+        });
+
+        //总评分
+        $('.btn-resume-score').click(function(){
+            ajaxGetScoreInfoSm($(this).attr('data'));
+            $('#modal_score_sm').modal();
+        });
+
+        getAdsConfig();
+
+        function getAdsConfig() {
+            $.ajax({    
+                type: "GET",
+                url: "${path}/config/ads-get.json",
+                contentType: "application/json",
+                dataType: "json",
+                success: function (data)  {
+                    if (data.ok) {
+                        $('#ads').html($.base64.atob(data.result, true));
+                    }
+                } 
+            }); 
+        }
+
+        var chartContainer = document.getElementById('chart_score');
+        var chartBody = document.getElementById('chart_body');
+
+        //用于使chart自适应高度和宽度,通过窗体高宽计算容器高宽
+        var resizeChartContainer = function () {
+            chartContainer.style.width = chartBody.clientWidth+'px';
+        };
+
+        // 基于准备好的dom，初始化echarts实例
+        var scoreChart = echarts.init(chartContainer);
+
+        window.onresize = function () {
+            //重置容器高宽
+            resizeChartContainer();
+            scoreChart.resize();
+        };
+
+    
+        resizeChartContainer();
+        scoreChart.resize();
+
+        /**
+        * @brief 获取评分信息
+        */
+        function ajaxGetScoreInfo() {
+            $.ajax({    
+                type: "GET",
+                url: "${path}/resume/resume-marks-caculation.json",
+                contentType: "application/json",
+                cache:  false,
+                data: { 'resume_id': '${resume_guid}'},
+                dataType: "json",
+                success: function (result)  {
+                    var items = [];
+                    var datas = [];
+                    var totalscore = 0;
+
+                    if (result.ok) {
+                        for(var i=0; i<result.result.length; ++i){
+                            items.push(result.result[i].key);
+                            if(result.result[i].value){
+                                datas.push(result.result[i].value);
+                                totalscore += result.result[i].value; 
+                            }else{
+                                datas.push(0);
+                            }
+                        }
+                        
+                        $('#totalscore').html(totalscore);
+                    }else{
+                        $('#totalscore').html(result.errorinfo);
+                    }  
+
+                    // 指定图表的配置项和数据
+                    var option = {
+                        title: {
+                            text: ''
+                        },
+                        tooltip: {},
+                        legend: {
+                            data:['得分'],
+                            width: chartContainer.style.width
+                        },
+                        xAxis: {
+                            axisLabel:{
+                                interval:0,
+                                rotate:-40,
+                                fontSize:10
+                            },
+                            data: items
+                        },
+                        yAxis:{
+                            axisLine: {
+                                show: false
+                            },
+                            axisTick: {
+                                show: false
+                            },
+                            axisLabel: {
+                                textStyle: {
+                                    color: '#999'
+                                }
+                            }
+                        },
+                        series: [{
+                            name: '得分',
+                            type: 'bar',
+                            data: datas,
+                            itemStyle: {
+                                normal: {
+                                    color: function(params) {
+                                        var colorList = [
+                                            '#3398DB'
+                                        ];
+                                        return colorList[params.dataIndex]
+                                    }
+                                }
+                            },
+                        }]
+                    };
+                    
+                    // 使用刚指定的配置项和数据显示图表。
+                    scoreChart.setOption(option);          
+                },
+                error: function() {
+                    toastr.error('简历评分获取失败，请刷新重试！');
+                } 
+            });
+        }
+
+        function ajaxGetScoreInfoSm(itemname) {
+            $.ajax({    
+                type: "GET",
+                url: "${path}/resume/resume-marks-caculation.json",
+                contentType: "application/json",
+                cache:  false,
+                data: { 'resume_id': '${resume_guid}'},
+                dataType: "json",
+                success: function (result)  {
+                    var totalscore = 0;
+                    if (result.ok) {
+                        for(var i=0; i<result.result.length; ++i){
+                            if(result.result[i].key == itemname)
+                            {
+                                if(result.result[i].value){
+                                totalscore = result.result[i].value;
+                                }else{
+                                   totalscore=0; 
+                                }
+                                break;
+                            }
+                        }
+                        $('#totalscore_sm').html(totalscore);
+                    }else{
+                        $('#totalscore_sm').html(result.errorinfo);
+                    }  
+                },
+                error: function() {
+                    toastr.error('简历评分获取失败，请刷新重试！');
+                } 
+            });
+        }
+
+        $("textarea").bind('input propertychange', function(){  
+            var id = $(this).attr('data');
+            var maxlen = $(this).attr('data-parsley-maxlength');
+            var curlen = $(this).val().length;
+            $('#'+id).html('（限'+ maxlen +'字以内，已输入'+ curlen +'字）'); 
+        });  
     }
   
 </script>
