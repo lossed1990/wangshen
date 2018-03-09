@@ -131,24 +131,27 @@ public class ResumesAction {
 	@RequestMapping(value = "/resume-edit.page", method = RequestMethod.GET)
 	public String resumeEdit(Model model, HttpServletRequest request, HttpSession session,
 							@RequestParam(value = "temp_id", required = false) Integer nTemplateID, 
-							@RequestParam(value = "resume_guid", required = false) String strResumeGUID) {
+							@RequestParam(value = "resume_guid", required = false) String strResumeGUID,
+							@RequestParam(value = "preview", required = false) Boolean bIsPreview) {
 
 		ResumeDO resume = new ResumeDO();
 		UserInSessionDTO user = (UserInSessionDTO) session.getAttribute(ConstConfigDefine.SESSION_NAME_USER);
 		
 		//通过参数判断是否新建
 		if(nTemplateID != null) {
-			
-			resume.setnTemplateID(nTemplateID);
-			resume.setnUserID(user.getnUserID());
-			
-			if(service_resume.saveNewResume(resume) == 0) {
-				// 作为运行时错误，数据库操作失败
-				model.addAttribute("error", WebContextResouceBundleReader
-						.makeRuntimeErrorInfoByCode(Integer.toHexString(ErrorDefines.E_SVR_RUNTIME_DBFAILED), request));
-
-				return "page_runtime_exception";
-			}		
+			//非预览模式，直接新建
+			if(bIsPreview != null && !bIsPreview.booleanValue()) {
+				resume.setnTemplateID(nTemplateID);
+				resume.setnUserID(user.getnUserID());
+				
+				if(service_resume.saveNewResume(resume) == 0) {
+					// 作为运行时错误，数据库操作失败
+					model.addAttribute("error", WebContextResouceBundleReader
+							.makeRuntimeErrorInfoByCode(Integer.toHexString(ErrorDefines.E_SVR_RUNTIME_DBFAILED), request));
+	
+					return "page_runtime_exception";
+				}		
+			}
 		} else if(strResumeGUID != null && strResumeGUID.length() > 0) {
 			
 			//编辑页面

@@ -619,6 +619,10 @@
 			<th>教育情况</th>
 			<td>${family_value.edu_status!}</td>
 		</tr>
+		<tr>
+			<th>联系方式</th>
+			<td>${family_value.contact!}</td>
+		</tr>
 	</table>
 	</#list>
 	</div>
@@ -795,6 +799,10 @@
 		<tr>
 			<th>是否有亲属在本行工作</th>
 			<td>${promise.is_relative_worker ? string ("是","否")}</td>
+		</tr>
+		<tr>
+			<th>是否愿意选择调剂</th>
+			<td>${promise.is_obey_tiaoji ? string ("是","否")}</td>
 		</tr>
 	</table>
 	</p>

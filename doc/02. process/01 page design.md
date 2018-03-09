@@ -624,7 +624,8 @@ $('#personal_scorerule').scorerule(['姓名','曾用名#1',...]);
 			"work_place": "浙江",
 			"work": "经理",
 			"zhengzhimianmao": "党员",
-			"edu_status": "本科"
+			"edu_status": "本科",
+			"contact":"15921212121"
 		},
 		{
 			"name": "西门吹雪",
@@ -635,7 +636,8 @@ $('#personal_scorerule').scorerule(['姓名','曾用名#1',...]);
 			"work_place": "浙江",
 			"work": "专员",
 			"zhengzhimianmao": "党员",
-			"edu_status": "本科"
+			"edu_status": "本科",
+			"contact":"15921212121"
 		}
 	],
 	"dissertation": [{
@@ -680,7 +682,8 @@ $('#personal_scorerule').scorerule(['姓名','曾用名#1',...]);
 		"is_punished": true,
 		"is_disease": true,
 		"is_thisbank_worker": true,
-		"is_relative_worker": true
+		"is_relative_worker": true,
+		"is_obey_tiaoji": true
 	}
 }
 ```
