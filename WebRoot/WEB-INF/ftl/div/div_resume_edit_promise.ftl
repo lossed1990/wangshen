@@ -40,6 +40,15 @@
                         </select>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-2 col-xs-12"><span class="impstar">*</span>是否愿意选择调剂</label>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <select class="form-control resume-data" id="is_obey_tiaoji" datatype="bool">
+                            <option>是</option>
+                            <option>否</option>
+                        </select>
+                    </div>
+                </div>
                 <div class="form-group" >
                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                         <button class="btn btn-primary btn-resume-save" data="promise">保存</button>

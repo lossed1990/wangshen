@@ -18,6 +18,7 @@
                         <th>担任职务</th>
                         <th>政治面貌</th>
                         <th>教育情况</th>
+                        <th>联系方式</th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -94,6 +95,12 @@
                     <label class="control-label col-md-1 col-sm-1 col-xs-12">教育情况</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
                         <input type="text" class="form-control resume-data" id="edu_status" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-1 col-sm-1 col-xs-12">联系方式</label>
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <input type="text" class="form-control resume-data" id="contact" placeholder="">
                     </div>
                 </div>
                 <div class="form-group" >

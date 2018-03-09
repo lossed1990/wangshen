@@ -16,6 +16,21 @@
             <div class="">
                 <div class="row" id="config_body">
                 </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_content">
+                                <div class="form-horizontal form-label-left">
+                                    <div class="form-group" >
+                                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-2" >
+                                            <button class="btn btn-primary" id="btn_view">预览</button>
+                                        </div >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- /page content -->
@@ -76,6 +91,10 @@
             init(null, savePart);
         } 
     }); 
+
+    $("#btn_view").click(function(){
+        window.location.href = '${path}/resume/resume-edit.page?temp_id=' + ${RequestParameters['temp_id']} +'&preview=true';
+    });
 </script>
 
 </body>

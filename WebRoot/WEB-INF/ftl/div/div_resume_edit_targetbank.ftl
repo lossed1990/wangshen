@@ -26,9 +26,18 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>期望年薪</label>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>期望年薪（税前含福利）</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="expect_salary" name="expect_salary" placeholder="（税前含福利）万元/年（RMB）">
+                            <select class="form-control resume-data" id="expect_salary">
+                                <option>50000以下</option>
+                                <option>50000-100000</option>
+                                <option>100000-150000</option>
+                                <option>150000-200000</option>
+                                <option>200000-250000</option>
+                                <option>250000-500000</option>
+                                <option>500000以上</option>
+                            </select>
+                            <#--  <input type="text" class="form-control resume-data" id="expect_salary" name="expect_salary" placeholder="（税前含福利）万元/年（RMB）">  -->
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12">期望参加笔试地点</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">

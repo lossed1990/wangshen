@@ -28,6 +28,12 @@
                         <input type="text" class="form-control" id="is_relative_worker" readonly>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2 col-sm-2 col-xs-12">是否愿意选择调剂</label>
+                    <div class="col-md-2 col-sm-2 col-xs-12">
+                        <input type="text" class="form-control" id="is_obey_tiaoji" readonly>
+                    </div>
+                </div>
             </div >
             <!-- end edit --> 
         </div>

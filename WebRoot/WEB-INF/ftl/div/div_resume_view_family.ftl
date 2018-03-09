@@ -16,9 +16,10 @@
                 <th>担任职务</th>
                 <th>政治面貌</th>
                 <th>教育情况</th>
+                <th>联系方式</th>
             </tr>
         </thead>
-        <tbody data="name-sex-relation-birthdate-status-work_place-work-zhengzhimianmao-edu_status">
+        <tbody data="name-sex-relation-birthdate-status-work_place-work-zhengzhimianmao-edu_status-contact">
         </tbody>
     </table>
 </div>

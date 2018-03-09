@@ -343,52 +343,56 @@
      * @brief 获取简历信息
      */
     function ajaxGetResumeInfo(callback) {
-        $.ajax({    
-            type: "GET",
-            url: "${path}/resume/resume-part-detail.json",
-            contentType: "application/json",
-            cache:  false,
-            data: { 'resume_id': '${resume_guid}'},
-            dataType: "json",
-            success: function (result)  {
-                if (result.ok) {
-                    callback(result.result);
-                }            
-            },
-            error: function() {
-                toastr.error('简历信息获取失败，请刷新重试！');
-            } 
-        });
+        <#if resume_guid??>
+            $.ajax({    
+                type: "GET",
+                url: "${path}/resume/resume-part-detail.json",
+                contentType: "application/json",
+                cache:  false,
+                data: { 'resume_id': '${resume_guid}'},
+                dataType: "json",
+                success: function (result)  {
+                    if (result.ok) {
+                        callback(result.result);
+                    }            
+                },
+                error: function() {
+                    toastr.error('简历信息获取失败，请刷新重试！');
+                } 
+            }); 
+        </#if>
     }
 
     /**
      * @brief 保存简历
      */
     function ajaxSaveResumePart(section,value) {
-        var param = {
-            "resume_id"		: '${resume_guid}',
-            "section_name"	: section,
-            "value"		: value
-        };
+        <#if resume_guid??>
+            var param = {
+                "resume_id"		: '${resume_guid}',
+                "section_name"	: section,
+                "value"		: value
+            };
 
-        $.ajax({    
-            type: "POST",
-            url: "${path}/resume/resume-part-save.json",
-            contentType: "application/json",
-            cache:  false,
-            data: JSON.stringify(param),
-            dataType: "json",
-            success: function (result)  {
-                if (result.ok) {
-                    toastr.success('信息保存成功！');
-                } else {
-                    toastr.error('信息保存失败，' + result.errorinfo);
-                }           
-            },
-            error: function() {
-                toastr.error('信息保存失败，请稍后重试！');
-            } 
-        });    
+            $.ajax({    
+                type: "POST",
+                url: "${path}/resume/resume-part-save.json",
+                contentType: "application/json",
+                cache:  false,
+                data: JSON.stringify(param),
+                dataType: "json",
+                success: function (result)  {
+                    if (result.ok) {
+                        toastr.success('信息保存成功！');
+                    } else {
+                        toastr.error('信息保存失败，' + result.errorinfo);
+                    }           
+                },
+                error: function() {
+                    toastr.error('信息保存失败，请稍后重试！');
+                } 
+            });    
+        </#if>
     }
 
     //所有非表格模块保存按钮事件
@@ -951,14 +955,14 @@
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
-                expect_salary: {
+                <#--  expect_salary: {
                     validators: {
                         regexp: {
                             regexp: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/,
                             message: '金额不合法'
                         }
                     }
-                }
+                }  -->
             }
         });
 
@@ -1015,6 +1019,7 @@
         * @brief 获取评分信息
         */
         function ajaxGetScoreInfo() {
+            <#if resume_guid??>
             $.ajax({    
                 type: "GET",
                 url: "${path}/resume/resume-marks-caculation.json",
@@ -1098,9 +1103,11 @@
                     toastr.error('简历评分获取失败，请刷新重试！');
                 } 
             });
+            </#if>
         }
 
         function ajaxGetScoreInfoSm(itemname) {
+            <#if resume_guid??>
             $.ajax({    
                 type: "GET",
                 url: "${path}/resume/resume-marks-caculation.json",
@@ -1131,6 +1138,7 @@
                     toastr.error('简历评分获取失败，请刷新重试！');
                 } 
             });
+            </#if>
         }
 
         $("textarea").bind('input propertychange', function(){  
