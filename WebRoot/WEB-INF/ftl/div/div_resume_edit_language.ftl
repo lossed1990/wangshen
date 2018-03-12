@@ -12,11 +12,9 @@
                     <div class="form-group">
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>证书级别</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <select class="form-control resume-data" id="level">
-                                <option>专业4级</option>
-                                <option>专业8级</option>
+                            <select class="form-control resume-data" id="level" name="level">
                                 <option>英语4级</option>
-                                <option>专业6级</option>
+                                <option>英语6级</option>
                                 <option>其他</option>
                             </select>
                         </div>

@@ -2720,6 +2720,11 @@ if (typeof Object.create !== 'function') {
             "ruletype": "",
             "keypath": "family-edu_status",
             // "enable": false
+        }, {
+            "label": "联系方式",
+            "ruletype": "",
+            "keypath": "family-contact",
+            // "enable": false
         }]
     };
 
@@ -2867,6 +2872,11 @@ if (typeof Object.create !== 'function') {
             "label": "是否有亲属在本行工作",
             "ruletype": "",
             "keypath": "promise-is_relative_worker",
+            // "enable": false
+        }, {
+            "label": "是否愿意选择调剂",
+            "ruletype": "",
+            "keypath": "promise-is_obey_tiaoji",
             // "enable": false
         }]
     };

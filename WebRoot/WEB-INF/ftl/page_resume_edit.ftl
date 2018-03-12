@@ -52,13 +52,15 @@
                             <div class="x_content">
                                 <!-- begin edit --> 
                                 <div class="form-horizontal form-label-left">
+                                    <form id="form_workplan">
                                     <div class="form-group">
                                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>未来五年职业规划</label>
                                         <div class="col-md-11 col-sm-11 col-xs-12">
-                                            <textarea required="required" class="form-control resume-data" id="plan" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
+                                            <textarea required="required" class="form-control resume-data" id="plan" name="plan" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
                                                 data-parsley-validation-threshold="10"></textarea>
                                         </div>
                                     </div>
+                                    </form>
                                     <div class="form-group" >
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                                             <button type="submit" class="btn btn-primary btn-resume-save" data="workplan" >保存</button>
@@ -83,14 +85,16 @@
                             <div class="x_content">
                                 <!-- begin edit --> 
                                 <div class="form-horizontal form-label-left">
+                                    <form id="form_selfjudge">
                                     <div class="form-group">
                                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>自我评价</label>
                                         <div class="col-md-11 col-sm-11 col-xs-12">
-                                            <textarea required="required" class="form-control resume-data" id="info" data="textarea-tip1" data-parsley-trigger="keyup" data-parsley-minlength="0" data-parsley-maxlength="500"
+                                            <textarea required="required" class="form-control resume-data" id="info" name="info" data="textarea-tip1" data-parsley-trigger="keyup" data-parsley-minlength="0" data-parsley-maxlength="500"
                                                 data-parsley-validation-threshold="10"></textarea>
                                         </div>
                                         <label class="col-md-offset-1 col-md-11 col-sm-offset-1 col-sm-12 col-xs-12"><span class="small" id="textarea-tip1">（限500字以内，已输入0字）</span></label>
                                     </div>
+                                    </form>
                                     <div class="form-group" >
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                                             <button type="submit" class="btn btn-primary btn-resume-save" data="selfjudge" >保存</button>
@@ -115,14 +119,16 @@
                             <div class="x_content">
                                 <!-- begin edit --> 
                                 <div class="form-horizontal form-label-left">
+                                    <form id="form_speciality">
                                     <div class="form-group">
                                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>特长爱好</label>
                                         <div class="col-md-11 col-sm-11 col-xs-12">
-                                            <textarea required="required" class="form-control resume-data" id="info" data="textarea-tip2" data-parsley-trigger="keyup" data-parsley-minlength="0" data-parsley-maxlength="300"
+                                            <textarea required="required" class="form-control resume-data" id="info" name="info" data="textarea-tip2" data-parsley-trigger="keyup" data-parsley-minlength="0" data-parsley-maxlength="300"
                                                 data-parsley-validation-threshold="10"></textarea>
                                         </div>
                                         <label class="col-md-offset-1 col-md-11 col-sm-offset-1 col-sm-12 col-xs-12"><span class="small" id="textarea-tip2">（限300字以内，已输入0字）</span></label>
                                     </div>
+                                    </form>
                                     <div class="form-group" >
                                         <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                                             <button type="submit" class="btn btn-primary btn-resume-save" data="speciality" >保存</button>
@@ -246,7 +252,7 @@
                     <div class="modal-body" id="chart_body">
                         <div>
                             <h5 class="fa fa-hand-o-right">得分</h5>
-                            <h3 style="text-align:center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;得分：<span id="totalscore_sm" style="color:red">0</span></h3>
+                            <h3 style="text-align:center;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;此项得分：<span id="totalscore_sm" style="color:red">0</span></h3>
                         </div>
                     </div>
                 </div>
@@ -520,6 +526,18 @@
 
     //所有表格新增按钮事件
     $('.btn-resume-additem').click(function(){
+        //触发验证
+        var moduleid = $(this).attr('data');
+        //触发验证
+        var $eleForm = $('#form_' + moduleid);
+        if($eleForm.length > 0){
+            $eleForm.data("bootstrapValidator").validate();
+            var flag = $eleForm.data("bootstrapValidator").isValid();
+            if(!flag){
+                return;  
+            }
+        }
+
         var moduleid = $(this).attr('data');
         var $table = $('#' + moduleid).find('table.resume-table').DataTable();
         var value = formatFromData(moduleid,'resume-data',true);
@@ -812,8 +830,130 @@
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
+                name: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                birth_date: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                nation: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                birthplace: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                heath: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                gaokao_place: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                living_place: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                address: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                hukou_place: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                graduate_date: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                work_date: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                idcard_num: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                mobile: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                email: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                emergency_contact: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                emergency_phone: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                head_pic_fileinput: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
                 height_cm: {
                     validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        },
                         digits: {
                             message: '该值只能包含数字。'
                         }
@@ -821,6 +961,9 @@
                 },
                 weight_kg: {
                     validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        },
                         digits: {
                             message: '该值只能包含数字。'
                         }
@@ -877,6 +1020,27 @@
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
+                start_date: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                end_date: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                school: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
                 graduate_pos: {
                     validators: {
                         digits: {
@@ -896,6 +1060,27 @@
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
+                name: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                level: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                date: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
                 times: {
                     validators: {
                         digits: {
@@ -915,11 +1100,120 @@
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
+                level:{
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
                 score: {
                     validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        },
                         regexp: {
                             regexp: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/,
                             message: '得分不合法'
+                        }
+                    }
+                }
+            }
+        });
+
+        $('#form_computer').bootstrapValidator({
+            container: 'tooltip',
+            message: '有部分内容填写错误',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                name:{
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                date: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                }
+            }
+        });
+        
+        $('#form_student_ganbu').bootstrapValidator({
+            container: 'tooltip',
+            message: '有部分内容填写错误',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                start_date:{
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                end_date: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                zhiwu_name: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                zhiwu_type: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                }
+            }
+        });
+
+        $('#form_trainning').bootstrapValidator({
+            container: 'tooltip',
+            message: '有部分内容填写错误',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                start_date:{
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                end_date: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                name: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
                         }
                     }
                 }
@@ -935,11 +1229,197 @@
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
+                start_date: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                end_date: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                hangye: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                apartment: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                company_type: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                work_memo: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                zhengming_people: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                zhengming_work: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
                 salary: {
                     validators: {
                         regexp: {
                             regexp: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/,
                             message: '金额不合法'
+                        }
+                    }
+                }
+            }
+        });
+
+        $('#form_zigezhengshu').bootstrapValidator({
+            container: 'tooltip',
+            message: '有部分内容填写错误',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                name:{
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                cert_date: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                }
+            }
+        });
+        
+        $('#form_family').bootstrapValidator({
+            container: 'tooltip',
+            message: '有部分内容填写错误',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                name:{
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                sex: {
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                relation:{
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                work_place:{
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                work:{
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                }
+            }
+        });
+
+        $('#form_workplan').bootstrapValidator({
+            container: 'tooltip',
+            message: '有部分内容填写错误',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                plan:{
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                }
+            }
+        });
+
+        $('#form_selfjudge').bootstrapValidator({
+            container: 'tooltip',
+            message: '有部分内容填写错误',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                info:{
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                }
+            }
+        });
+
+        $('#form_speciality').bootstrapValidator({
+            container: 'tooltip',
+            message: '有部分内容填写错误',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                info:{
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
                         }
                     }
                 }
@@ -955,6 +1435,27 @@
                 validating: 'glyphicon glyphicon-refresh'
             },
             fields: {
+                bank:{
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                area:{
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                },
+                expect_salary:{
+                    validators: {
+                        notEmpty: {
+                            message: '该字段必填。'
+                        }
+                    }
+                }
                 <#--  expect_salary: {
                     validators: {
                         regexp: {

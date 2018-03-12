@@ -12,7 +12,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>姓名</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="name" placeholder="">
+                            <input type="text" class="form-control resume-data" id="name" name="name" placeholder="">
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12">曾用名</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
@@ -29,15 +29,15 @@
                     <div class="form-group">
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>出生年月</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input id="birth_date" class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" required="required" type="text">
+                            <input id="birth_date" name="birth_date" class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" required="required" type="text">
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>民族</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="nation" placeholder="">
+                            <input type="text" class="form-control resume-data" id="nation" name="nation" placeholder="">
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>籍贯</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="birthplace" placeholder="">
+                            <input type="text" class="form-control resume-data" id="birthplace" name="birthplace" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
@@ -93,25 +93,25 @@
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>健康状况</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="heath" placeholder="">
+                            <input type="text" class="form-control resume-data" id="heath" name="heath" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>生源地</label>
                         <div class="col-md-7 col-sm-11 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="gaokao_place" placeholder="">
+                            <input type="text" class="form-control resume-data" id="gaokao_place" name="gaokao_place" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>现居住地</label>
                         <div class="col-md-7 col-sm-11 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="living_place" placeholder="">
+                            <input type="text" class="form-control resume-data" id="living_place" name="living_place" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>通讯地址</label>
                         <div class="col-md-7 col-sm-11 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="address" placeholder="">
+                            <input type="text" class="form-control resume-data" id="address" name="address" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
@@ -123,7 +123,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>户口所在地</label>
                         <div class="col-md-7 col-sm-7 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="hukou_place" placeholder="">
+                            <input type="text" class="form-control resume-data" id="hukou_place" name="hukou_place" placeholder="">
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>户口类别</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
@@ -139,11 +139,11 @@
                     <div class="form-group">
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>毕业时间</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input id="graduate_date" class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" required="required" type="text">
+                            <input id="graduate_date" name="graduate_date" class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" required="required" type="text">
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>参加工作时间</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input id="work_date" class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" required="required" type="text">
+                            <input id="work_date" name="work_date" class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" required="required" type="text">
                         </div>
                     </div>
                     <div class="form-group">
@@ -159,11 +159,11 @@
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>证件号</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="idcard_num" placeholder="">
+                            <input type="text" class="form-control resume-data" id="idcard_num" name="idcard_num" placeholder="">
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>移动电话</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="mobile" placeholder="">
+                            <input type="text" class="form-control resume-data" id="mobile" name="mobile" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
@@ -173,7 +173,7 @@
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>E-mail</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="email" placeholder="">
+                            <input type="text" class="form-control resume-data" id="email" name="email" placeholder="">
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12">邮编</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
@@ -183,11 +183,11 @@
                     <div class="form-group">
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>紧急联系人</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="emergency_contact" placeholder="">
+                            <input type="text" class="form-control resume-data" id="emergency_contact" name="emergency_contact" placeholder="">
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>联系人电话</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="emergency_phone" placeholder="">
+                            <input type="text" class="form-control resume-data" id="emergency_phone" name="emergency_phone" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">

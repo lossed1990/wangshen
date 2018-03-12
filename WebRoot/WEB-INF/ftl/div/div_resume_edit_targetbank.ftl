@@ -12,11 +12,11 @@
                     <div class="form-group">
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>报考银行</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="bank" placeholder="">
+                            <input type="text" class="form-control resume-data" id="bank" name="bank" placeholder="">
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>报考地区</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="area" placeholder="">
+                            <input type="text" class="form-control resume-data" id="area" name="area" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
@@ -28,7 +28,7 @@
                     <div class="form-group">
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>期望年薪（税前含福利）</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <select class="form-control resume-data" id="expect_salary">
+                            <select class="form-control resume-data" id="expect_salary" name="expect_salary">
                                 <option>50000以下</option>
                                 <option>50000-100000</option>
                                 <option>100000-150000</option>

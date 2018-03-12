@@ -24,42 +24,44 @@
             <div class="ln_solid"></div>
             <h2>新增|修改 <small>  </small></h2>
             <div class="form-horizontal form-label-left">
-                <div class="form-group">
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>开始时间</label>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                        <input class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" id="start_date" required="required" type="text">
+                <form id="form_student_ganbu">
+                    <div class="form-group">
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>开始时间</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" id="start_date" name="start_date" required="required" type="text">
+                        </div>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>结束时间</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" id="end_date" name="end_date" required="required" type="text">
+                        </div>
                     </div>
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>结束时间</label>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                        <input class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" id="end_date" required="required" type="text">
+                    <div class="form-group">
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>职务名称</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input type="text" class="form-control resume-data" id="zhiwu_name" name="zhiwu_name" placeholder="">
+                        </div>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>职务类别</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <select class="form-control resume-data" id="zhiwu_type" name="zhiwu_type">
+                                <option>学生会干部</option>
+                                <option>党团干部</option>
+                                <option>其他</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>职务名称</label>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                        <input type="text" class="form-control resume-data" id="zhiwu_name" placeholder="">
+                    <div class="form-group">
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12">工作业绩</label>
+                        <div class="col-md-11 col-sm-11 col-xs-12">
+                            <textarea required="required" class="form-control resume-data" id="memo" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
+                                data-parsley-validation-threshold="10"></textarea>
+                        </div>
                     </div>
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>职务类别</label>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                        <select class="form-control resume-data" id="zhiwu_type">
-                            <option>学生会干部</option>
-                            <option>党团干部</option>
-                            <option>其他</option>
-                        </select>
+                    <div class="form-group" >
+                        <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
+                            <button class="btn btn-primary btn-resume-additem" data="student_ganbu">新增|修改</button>
+                        </div >
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12">工作业绩</label>
-                    <div class="col-md-11 col-sm-11 col-xs-12">
-                        <textarea required="required" class="form-control resume-data" id="memo" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
-                            data-parsley-validation-threshold="10"></textarea>
-                    </div>
-                </div>
-                <div class="form-group" >
-                    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
-                        <button class="btn btn-primary btn-resume-additem" data="student_ganbu">新增|修改</button>
-                    </div >
-                </div>
+                </form>
             </div >
             <!-- end edit --> 
             <div class = "ln_solid" ></div>

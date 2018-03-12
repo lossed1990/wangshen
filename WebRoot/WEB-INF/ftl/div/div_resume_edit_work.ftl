@@ -37,21 +37,21 @@
                     <div class="form-group">
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>开始时间</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" id="start_date" required="required" type="text">
+                            <input class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" id="start_date" name="start_date" required="required" type="text">
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>结束时间</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" id="end_date" required="required" type="text">
+                            <input class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" id="end_date" name="end_date" required="required" type="text">
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>所在行业</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="hangye" placeholder="">
+                            <input type="text" class="form-control resume-data" id="hangye" name="hangye" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>所在单位及部门</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="apartment" placeholder="">
+                            <input type="text" class="form-control resume-data" id="apartment" name="apartment" placeholder="">
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12">所在岗位</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
@@ -59,7 +59,7 @@
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>单位性质</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <select class="form-control resume-data" id="company_type">
+                            <select class="form-control resume-data" id="company_type" name="company_type">
                                 <option>国有企业</option>
                                 <option>国有控股企业</option>
                                 <option>外资企业</option>
@@ -98,18 +98,18 @@
                     <div class="form-group">
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>工作经历描述</label>
                         <div class="col-md-11 col-sm-11 col-xs-12">
-                            <textarea required="required" class="form-control resume-data" id="work_memo" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
+                            <textarea required="required" class="form-control resume-data" id="work_memo" name="work_memo" data-parsley-trigger="keyup" data-parsley-minlength="20" data-parsley-maxlength="100"
                                 data-parsley-validation-threshold="10"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>证明人</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="zhengming_people" placeholder="">
+                            <input type="text" class="form-control resume-data" id="zhengming_people" name="zhengming_people" placeholder="">
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>证明人职务</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="zhengming_work" placeholder="">
+                            <input type="text" class="form-control resume-data" id="zhengming_work" name="zhengming_work" placeholder="">
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12">证明人电话</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">

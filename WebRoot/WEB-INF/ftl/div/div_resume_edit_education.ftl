@@ -65,14 +65,15 @@
             <!-- begin edit --> 
             <h2>新增|修改 <small>  </small></h2>
             <div class="form-horizontal form-label-left">
+            <form id="form_educationhistory">
                 <div class="form-group">
                     <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>起始日期</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
-                        <input class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" id="start_date" required="required" type="text">
+                        <input class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" id="start_date" name="start_date" required="required" type="text">
                     </div>
                     <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>结束日期</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
-                        <input class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" id="end_date" required="required" type="text">
+                        <input class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" id="end_date" name="end_date" required="required" type="text">
                     </div>
                     <label class="control-label col-md-1 col-sm-1 col-xs-12">阶段</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
@@ -92,7 +93,7 @@
                     </div>
                     <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>学校</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
-                        <input type="text" class="form-control resume-data" id="school" placeholder="">
+                        <input type="text" class="form-control resume-data" id="school" name="school" placeholder="">
                     </div>
                     <label class="control-label col-md-1 col-sm-1 col-xs-12">学院</label>
                     <div class="col-md-3 col-sm-3 col-xs-12">
@@ -146,22 +147,22 @@
                         </select>
                     </div>
                 </div>
-                <form id="form_educationhistory">
-                <div class="form-group">
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12">毕业方式</label>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                        <select class="form-control resume-data" id="graduate_type">
-                            <option>毕业</option>  
-                            <option>结业</option>
-                            <option>肄业</option>
-                        </select>
+                
+                    <div class="form-group">
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12">毕业方式</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <select class="form-control resume-data" id="graduate_type">
+                                <option>毕业</option>  
+                                <option>结业</option>
+                                <option>肄业</option>
+                            </select>
+                        </div>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12">毕业排名</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input type="text" class="form-control resume-data" id="graduate_pos" name="graduate_pos" placeholder="">
+                        </div>
+                        <input class="resume-data" id="scores" type="hidden" value="">
                     </div>
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12">毕业排名</label>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                        <input type="text" class="form-control resume-data" id="graduate_pos" name="graduate_pos" placeholder="">
-                    </div>
-                    <input class="resume-data" id="scores" type="hidden" value="">
-                </div>
                 </form>  
                 <div class="form-group" id="educationscores">
                     <div class="form-group">

@@ -25,34 +25,36 @@
             <div class="ln_solid"></div>
             <h2>新增|修改 <small>  </small></h2>
             <div class="form-horizontal form-label-left">
-                <div class="form-group">
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12">证书类别</label>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                        <input type="text" class="form-control resume-data" id="type" placeholder="">
+                <form id="form_zigezhengshu">
+                    <div class="form-group">
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12">证书类别</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input type="text" class="form-control resume-data" id="type" placeholder="">
+                        </div>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>证书名称</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input type="text" class="form-control resume-data" id="name" name="name" placeholder="">
+                        </div>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12">获得年份</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input type="text" class="form-control resume-data" id="got_date" placeholder="">
+                        </div>
                     </div>
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>证书名称</label>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                        <input type="text" class="form-control resume-data" id="name" placeholder="">
+                    <div class="form-group">
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12">认证机构</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input type="text" class="form-control resume-data" id="source" placeholder="">
+                        </div>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>认证时间</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" id="cert_date" name="cert_date" required="required" type="text">
+                        </div>
+                        <label class="control-label col-md-1 col-sm-1 col-xs-12">证书编号</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input type="text" class="form-control resume-data" id="zhengshu_code" placeholder="">
+                        </div>
                     </div>
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12">获得年份</label>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                        <input type="text" class="form-control resume-data" id="got_date" placeholder="">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12">认证机构</label>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                        <input type="text" class="form-control resume-data" id="source" placeholder="">
-                    </div>
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>认证时间</label>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                        <input class="date-picker form-control col-md-7 col-xs-12 resume-data-picker resume-data" id="cert_date" required="required" type="text">
-                    </div>
-                    <label class="control-label col-md-1 col-sm-1 col-xs-12">证书编号</label>
-                    <div class="col-md-3 col-sm-3 col-xs-12">
-                        <input type="text" class="form-control resume-data" id="zhengshu_code" placeholder="">
-                    </div>
-                </div>
+                </form>                    
                 <div class="form-group" >
                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1" >
                         <button class="btn btn-primary btn-resume-additem" data="zigezhengshu">新增|修改</button>
