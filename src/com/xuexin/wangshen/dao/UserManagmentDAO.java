@@ -30,4 +30,9 @@ public interface UserManagmentDAO {
 	 * 修改用户密码
 	 */
 	int updatePasswordByUserID(UserInfoDO user);
+	
+	/*
+	 * 通过用户手机获取用户id
+	 */
+	Integer getUserIDByMobileNumber(String strUserPhoneNumber);
 }

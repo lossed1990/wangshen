@@ -143,8 +143,8 @@ public class ResumesAction {
 			resume.setnTemplateID(nTemplateID);
 			resume.setnUserID(user.getnUserID());
 			
-			//非预览模式，直接新建
-			if(bIsPreview != null && !bIsPreview.booleanValue()) {
+			//非预览模式，直接新建，如果未传递preview参数，也视作新建
+			if(bIsPreview == null || !bIsPreview.booleanValue()) {
 						
 				if(service_resume.saveNewResume(resume) == 0) {
 					// 作为运行时错误，数据库操作失败

@@ -67,4 +67,18 @@ public class UserInfoServiceImpl implements UserInfoService {
 		//直接调用DAO，成功返回1
 		return dao_userinfo.updatePasswordByUserID(user);
 	}
+
+	@Override
+	public int getUserIDByMobileNumber(String strUserPhoneNumber) {
+		
+		Integer nID = dao_userinfo.getUserIDByMobileNumber(strUserPhoneNumber);
+		
+		if(nID == null) 
+		{
+			//如果用户不存在，则返回-1
+			nID = -1;
+		}
+		
+		return nID.intValue();
+	}
 }

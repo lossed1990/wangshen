@@ -10,6 +10,7 @@ public class ConstConfigDefine {
 	public static final String SESSION_NAME_USER	= "userss";		//用户Session名
 	public static final String SESSION_PREV_WXVAL	= "prev_rec";	//Session内短信验证时间戳
 	public static final String SESSION_CODE_WXVAL	= "wx_code";	//Session短信码
+	public static final String SESSION_MOBILE_WXVAL	= "wx_phone";	//Session对应手机号码
 	
 	public static final String CONFIG_KEY_WXMOBILE	= "wx_mobile";		//短信网关配置key
 	public static final String CONFIG_KEY_BASSECS	= "base_sections";	//简历区块配置

@@ -22,6 +22,7 @@ public class UserSessionFilter extends OncePerRequestFilter {
 		String[] notFilter = new String[] { "/user/admin-login.page", 
 											"/user/login.page", 
 											"/user/user-register.page",
+											"/user/reset-user-password.page",
 											"/user/check-captcha.json", 
 											"/user/check-user-validation.json",
 											"/user/send-mobile-validation.json",

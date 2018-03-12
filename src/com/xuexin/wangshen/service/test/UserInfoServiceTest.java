@@ -34,6 +34,8 @@ public class UserInfoServiceTest {
 	public void testSaveUserInfo() {
 		
 		
+		user_service.getUserIDByMobileNumber("159216148321");
+		
 		String strTestJSON = "{\"key\":1, \"a\":2}";
 		JSONObject jsonObjnew = JSON.parseObject(strTestJSON);
 		UserInfoInputFormDTO newthing = new UserInfoInputFormDTO();

@@ -9,6 +9,7 @@ public class ErrorDefines {
 	public static final int E_SVR_PHONE_NOEXIST				= 0x2003;		//手机号码未注册
 	public static final int E_SVR_LOGIN_MISMATCH			= 0x2004;		//用户密码错误
 	public static final int E_SVR_VALIDATE_MISMATCH			= 0x2005;		//手机校验码不一致
+	public static final int E_SVR_PHONE_MISMATCH			= 0x2006;		//验证手机号不一致
 	
 	public static final int E_SVR_RUNTIME_BADINPUT			= 0x5001;		//填写有误
 	public static final int E_SVR_RUNTIME_DBFAILED			= 0x5002;		//数据库操作失败

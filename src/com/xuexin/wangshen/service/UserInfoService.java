@@ -32,4 +32,9 @@ public interface UserInfoService {
 	 * 修改密码
 	 */
 	int updatePassword(UserInfoDO user);
+	
+	/*
+	 * 通过手机号获取用户id
+	 */
+	int getUserIDByMobileNumber(String strUserPhoneNumber);
 }

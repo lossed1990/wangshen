@@ -67,7 +67,7 @@
                                 class="btn btn-primary"><@spring.message code="page.user.login.login"/></button>
 
                     </div>
-                    <a class="reset_pass" href="#"><@spring.message code="page.user.login.forgetpass"/></a>
+                    <a class="reset_pass" href="${path}/user/reset-user-password.page"><@spring.message code="page.user.login.forgetpass"/></a>
 
                     <div class="clearfix"></div>
 

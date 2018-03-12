@@ -209,6 +209,7 @@ public class UserAction {
     	//用户注册成功，清除短信验证码，防止用户利用同一验证码在session有效期内重复注册
     	session.removeAttribute(ConstConfigDefine.SESSION_PREV_WXVAL);
     	session.removeAttribute(ConstConfigDefine.SESSION_CODE_WXVAL);
+    	session.removeAttribute(ConstConfigDefine.SESSION_MOBILE_WXVAL);
 
         return "page_user_reg_ok";
     }
@@ -286,9 +287,72 @@ public class UserAction {
     	return "redirect:login.page";
     }
     
+    //重置密码页
+    @RequestMapping(value = "/reset-user-password.page", method=RequestMethod.GET)
+    public String resetUserPasswordPage(Model model) {
+        
+    	return "page_user_resetpass";
+    }
+    
+    //重置密码页
+    @RequestMapping(value = "/reset-user-password.page", method=RequestMethod.POST)
+    public String resetUserPasswordPost(Model model, @ModelAttribute("user") @Valid UserInfoInputFormDTO user, 
+    		BindingResult bindingResult, HttpServletRequest request, HttpSession session) {
+        
+    	//服务端输入验证已完成
+    	if(bindingResult.hasErrors()) {
+    		return "page_user_resetpass";
+    	}
+    	
+    	//检查手机验证码
+    	try {
+    		
+    		String strValidateCode = (String)session.getAttribute(ConstConfigDefine.SESSION_CODE_WXVAL);
+    		if(user.getPhonevalidate().compareToIgnoreCase(strValidateCode) != 0) {
+	    		
+    			throw new RuntimeException(Integer.toHexString(ErrorDefines.E_SVR_VALIDATE_MISMATCH));
+	    	}
+    		
+    		//验证号码是否是当前发送手机号，以免利用漏洞重置他人密码
+    		String strValidateMobile = (String)session.getAttribute(ConstConfigDefine.SESSION_MOBILE_WXVAL);
+    		if(user.getPhonenumber().compareToIgnoreCase(strValidateMobile) != 0) {
+    			throw new RuntimeException(Integer.toHexString(ErrorDefines.E_SVR_PHONE_MISMATCH));
+    		}
+    		
+    		//号码是否已经注册
+    		int nUID = service_user.getUserIDByMobileNumber(user.getPhonenumber());
+    		if(nUID == -1) {
+    			//尚未注册，视作错误
+    			throw new RuntimeException(Integer.toHexString(ErrorDefines.E_SVR_PHONE_NOEXIST));
+    		}
+    		
+    		//修改密码
+    		UserInfoDO userreset = new UserInfoDO();
+    		userreset.setnUID(nUID);
+    		userreset.setStrMobileNum(user.getPhonenumber());
+    		userreset.setStrPassHash(user.getPassword());
+    		service_user.updatePassword(userreset);
+    		
+    	} catch(RuntimeException e) {
+    		
+    		//解析错误码
+    		model.addAttribute("error", WebContextResouceBundleReader.makeRuntimeErrorInfoByCode(e.getMessage(), request));
+    		logger.error(e.getMessage());
+
+            return "page_runtime_exception";  
+    	}
+    	
+    	//重置密码成功，清除短信验证码，防止用户利用同一验证码在session有效期内重复注册
+    	session.removeAttribute(ConstConfigDefine.SESSION_PREV_WXVAL);
+    	session.removeAttribute(ConstConfigDefine.SESSION_CODE_WXVAL);
+    	session.removeAttribute(ConstConfigDefine.SESSION_MOBILE_WXVAL);
+
+        return "page_user_reg_ok";
+    }
+    
     //修改密码页
     @RequestMapping(value = "/changepw.page", method=RequestMethod.GET)
-    public String changeUserPassword(Model model) {
+    public String changeUserPasswordPage(Model model) {
         
     	return "page_user_changepw";
     }
@@ -296,7 +360,7 @@ public class UserAction {
     //用户修改自身密码
     @RequestMapping(value = "/change-user-password.json", method=RequestMethod.POST, consumes = "application/json")
     @ResponseBody
-    public CommonResultDTO changeUserPassword(Model model, HttpSession session, 
+    public CommonResultDTO changeUserPasswordJSON(Model model, HttpSession session, 
     												@RequestBody UserPassChangeDTO changepass) {
     		    	
     	CommonResultDTO result = new CommonResultDTO();
@@ -401,6 +465,7 @@ public class UserAction {
 				//记录session时间戳和验证码
 				session.setAttribute(ConstConfigDefine.SESSION_PREV_WXVAL, Long.valueOf(System.currentTimeMillis()));
 				session.setAttribute(ConstConfigDefine.SESSION_CODE_WXVAL, strValidateNum);
+				session.setAttribute(ConstConfigDefine.SESSION_MOBILE_WXVAL, mobile);
 				
 				return result;
 			}

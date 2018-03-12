@@ -87,5 +87,14 @@
 		  un_uid = #{nUID}
 		;
 	</update>
+	
+	<!-- 通过用户手机号获取用户id -->
+	<select id="getUserIDByMobileNumber" resultType="java.lang.Integer" parameterType="java.lang.String" statementType="PREPARED">
+		SELECT
+			  un_uid
+		FROM users
+		WHERE bi_deleteflag = 0 
+		AND c_mobilenumder = #{value} ;
+	</select>
 
 </mapper>
