@@ -727,6 +727,8 @@
                 value[elemid] = eval($elem.val());
             } else if(elemDataType == "bool") {  //bool类型表单项
                 value[elemid] = ($elem.val() == "是") ? true : false;
+            } else if(elemDataType == "int") {  //bool类型表单项
+                value[elemid] = parseInt($elem.val()); 
             }
             else{
                 if($elem.val()){
@@ -1469,8 +1471,8 @@
 
         //总评分
         $('.btn-resume-score-all').click(function(){
-            ajaxGetScoreInfo();
             $('#modal_score').modal();
+            ajaxGetScoreInfo();
         });
 
         //总评分
@@ -1511,10 +1513,6 @@
             resizeChartContainer();
             scoreChart.resize();
         };
-
-    
-        resizeChartContainer();
-        scoreChart.resize();
 
         /**
         * @brief 获取评分信息
@@ -1598,7 +1596,8 @@
                     };
                     
                     // 使用刚指定的配置项和数据显示图表。
-                    scoreChart.setOption(option);          
+                    resizeChartContainer();
+                    scoreChart.setOption(option);        
                 },
                 error: function() {
                     toastr.error('简历评分获取失败，请刷新重试！');

@@ -31,7 +31,7 @@
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12">高考分数</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" class="form-control resume-edudata" id="gaokao_point" name="gaokao_point" placeholder="">
+                            <input type="text" class="form-control resume-edudata" id="gaokao_point" datatype="int" name="gaokao_point" placeholder="">
                         </div>
                     </div>
                 </form>    

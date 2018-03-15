@@ -58,11 +58,11 @@
                     <div class="form-group">
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>身高(cm)</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="height_cm" name="height_cm" placeholder="">
+                            <input type="text" class="form-control resume-data" id="height_cm" name="height_cm" datatype="int" placeholder="">
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12"><span class="impstar">*</span>体重(kg)</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <input type="text" class="form-control resume-data" id="weight_kg" name="weight_kg" placeholder="">
+                            <input type="text" class="form-control resume-data" id="weight_kg" name="weight_kg" datatype="int" placeholder="">
                         </div>
                         <label class="control-label col-md-1 col-sm-1 col-xs-12">血型</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
