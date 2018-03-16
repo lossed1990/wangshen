@@ -26,7 +26,7 @@ public class MarksCaculator1IsFilled extends MarksCaculator {
 		}
 		
 		//其他情况得分
-		return (double)objJudge.getIntValue("score");
+		return (double)objJudge.getFloatValue("score");
 	}
 
 }

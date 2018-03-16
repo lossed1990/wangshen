@@ -60,7 +60,7 @@ public class MarksCaculator5HummanHeight extends MarksCaculator {
 			
 			int nBegin = objLevel.getIntValue("begin");
 			int nEnd = objLevel.getIntValue("end");
-			int nScore = objLevel.getIntValue("score");
+			double dbScore = (double)objLevel.getFloatValue("score");
 			boolean bFlag = objLevel.getBooleanValue("flag");
 			
 			//满足区间
@@ -70,7 +70,7 @@ public class MarksCaculator5HummanHeight extends MarksCaculator {
 					return Double.NEGATIVE_INFINITY;
 				}
 				
-				return (double)nScore;
+				return dbScore;
 			}
 		}
 		

@@ -37,6 +37,6 @@ public class MarksCaculator2IsMobileNumber extends MarksCaculator {
         }
 		
 		//其他情况得分
-		return (double)objJudge.getIntValue("score");
+		return (double)objJudge.getFloatValue("score");
 	}
 }

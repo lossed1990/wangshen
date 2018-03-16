@@ -32,10 +32,10 @@ public class MarksCaculator4KeyWords extends MarksCaculator {
 			JSONObject word = arrWords.getJSONObject(i);
 			
 			String keyWord = word.getString("key");
-			int nScore = word.getIntValue("score");
+			double dbScore = (double)word.getFloatValue("score");
 			
 			if(strValue.indexOf(keyWord) != -1) {
-				dbTotal += (double)nScore;
+				dbTotal += dbScore;
 			}
 		}
 		

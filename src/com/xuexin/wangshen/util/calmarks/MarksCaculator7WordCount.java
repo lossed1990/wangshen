@@ -42,11 +42,11 @@ public class MarksCaculator7WordCount extends MarksCaculator {
 			
 			int nBegin = objLevel.getIntValue("begin");
 			int nEnd = objLevel.getIntValue("end");
-			int nScore = objLevel.getIntValue("score");
+			double dbScore = (double)objLevel.getFloatValue("score");
 			
 			//满足区间
 			if(nLength >= nBegin && nLength <= nEnd) {			
-				return (double)nScore;
+				return dbScore;
 			}
 		}
 		

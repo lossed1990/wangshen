@@ -47,7 +47,7 @@ public class MarksCaculator8DigitalRange extends MarksCaculator {
 			
 			int nBegin = objLevel.getIntValue("begin");
 			int nEnd = objLevel.getIntValue("end");
-			double dbScore = objLevel.getDoubleValue("score");
+			double dbScore = (double)objLevel.getFloatValue("score");
 			
 			//满足区间
 			if(nValue >= nBegin && nValue <= nEnd) {			
