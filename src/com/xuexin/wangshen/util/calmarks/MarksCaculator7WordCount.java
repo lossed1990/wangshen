@@ -1,5 +1,7 @@
 package com.xuexin.wangshen.util.calmarks;
 
+import java.util.List;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
@@ -18,17 +20,12 @@ public class MarksCaculator7WordCount extends MarksCaculator {
 		//未填写，得0分
 		if(o == null) return 0;
 		
-		//非字符串，得0分
-		if(!(o instanceof String)) {
-			return 0;
+		if(o instanceof String) {
+			return calSingle((String) o, objJudge);
 		}
-		
-		String strValue = (String)o;
-		int nLength = strValue.length();
-		
-		//计算分数
-		if(objJudge.containsKey("rule")) {
-			return calWordCountStep(nLength, objJudge.getJSONArray("rule"));
+		else if(o instanceof List<?>)
+		{
+			return calList((List<?>) o, objJudge);
 		}
 		
 		return 0;
@@ -51,6 +48,40 @@ public class MarksCaculator7WordCount extends MarksCaculator {
 		}
 		
 		return 0;
+	}
+	
+	//单个
+	private double calSingle(String strValue, JSONObject objJudge) {
+		int nLength = strValue.length();
+		
+		//计算分数
+		if(objJudge.containsKey("rule")) {
+			return calWordCountStep(nLength, objJudge.getJSONArray("rule"));
+		}
+		
+		return 0;
+	}
+
+	//数组
+	private double calList(List<?> lstValues, JSONObject objJudge) {
+		
+		double dbTotal = 0;
+		for (int i = 0; i < lstValues.size(); i++) {
+			Object c = lstValues.get(i);
+			
+			//一维数组，直接累加
+			if(c instanceof String) 
+			{
+				dbTotal += calSingle((String)c, objJudge);
+			}
+			else if(c instanceof List<?>)
+			{
+				//多维数组，递归遍历
+				dbTotal += calList((List<?>) c, objJudge);
+			}
+		}
+		
+		return dbTotal;
 	}
 
 }
