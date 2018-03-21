@@ -72,7 +72,7 @@
         },        {    
             "data":  null,
             "className":   "center",
-            "defaultContent":   '<a id="menu_view" href="#"><i class="fa fa-trash-o"></i>预览</a>&nbsp;&nbsp;<a id="menu_edit" href="#"><i class="fa fa-trash-o"></i>修改</a>'      
+            "defaultContent":   '<a id="menu_view" href="#"><i class="fa fa-television"></i>预览</a>&nbsp;&nbsp;<a id="menu_edit" href="#"><i class="fa fa-edit"></i>修改</a>&nbsp;&nbsp;<a id="menu_export" href="#"><i class="fa fa-share-square-o"></i>导出</a>&nbsp;&nbsp;<a id="menu_del" href="#"><i class="fa fa-trash-o"></i>删除</a>'      
         }];
 
     $m_ui_table.DataTable({
@@ -104,6 +104,55 @@
                 
         var data = $m_ui_table.DataTable().row( $(this).parents('tr') ).data();  
         window.location.href = '${path}/resume/resume-edit.page?resume_guid=' + data.resume_id;
+    });
+
+    $m_ui_table.on( 'click', 'a#menu_export', function (even)  {        
+        even.preventDefault; 
+                
+        var data = $m_ui_table.DataTable().row( $(this).parents('tr') ).data();  
+        window.location.href = '${path}/resume/resume-edit.page?resume_guid=' + data.resume_id;
+
+        window.location.href = '${path}/resume/resume-view-print.page?resume_id=' + data.resume_id + '&type=docx';
+    });
+
+    $m_ui_table.on( 'click', 'a#menu_del', function (even)  {        
+        even.preventDefault; 
+        var data = $m_ui_table.DataTable().row( $(this).parents('tr') ).data();     
+        var textInfoStr = "确定要删除此条简历吗？";     
+        swal({  
+                title: "提示",
+                text: textInfoStr,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定删除",
+                cancelButtonText: "取消"
+            },
+            function(isConfirm) {  
+                if (isConfirm) {           
+                    $.ajax({               
+                        url: "${path}/resume/resume-remove.json",
+                        type: 'GET',
+                        contentType: "application/json",
+                        dataType: 'json',
+                        data:  {
+                            "resume_id": data.resume_id
+                        },
+                        success:  function(result) {              
+                            if (result.ok) {  
+                                //刷新页面
+                                window.location.reload();  
+                            } 
+                            else {
+                                toastr.error('删除失败,' + result.result); 
+                            }              
+                        },
+                        error: function() {              
+                            toastr.error('删除失败,请检查服务器及网络后重试！');            
+                        }           
+                    })  
+                }
+            });
     });
 
 </script>

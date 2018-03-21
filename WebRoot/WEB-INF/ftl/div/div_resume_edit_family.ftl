@@ -122,6 +122,9 @@
                         <button class="btn btn-default btn-next" >下一项</button>
                     </div >
                 </div>
+                <div class="form-group">
+                    <label class="col-md-9 col-sm-9 col-xs-12 col-md-offset-1"><span class="impstar fa fa-star">新增内容填好后，再点击“新增修改”，然后保存，才能进行评分。（系统只评保存到表格里的内容）</span></label>
+                </div>
             </div>
         </div>
     </div>

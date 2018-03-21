@@ -15,7 +15,7 @@
                             <select class="form-control resume-data" id="level" name="level">
                                 <option>英语4级</option>
                                 <option>英语6级</option>
-								<option>专业4级</option>
+				<option>专业4级</option>
                                 <option>专业8级</option>
                                 <option>其他</option>
                             </select>
