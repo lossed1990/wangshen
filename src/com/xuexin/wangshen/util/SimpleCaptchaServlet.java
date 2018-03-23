@@ -31,7 +31,7 @@ public class SimpleCaptchaServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
-    private static int _width = 200;
+    private static int _width = 250;
     private static int _height = 50;
     
     private static final List<Color> COLORS = new ArrayList<Color>(2);

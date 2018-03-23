@@ -68,7 +68,7 @@
         <servlet-class>com.xuexin.wangshen.util.SimpleCaptchaServlet</servlet-class>
         <init-param>
             <param-name>captcha-width</param-name>
-            <param-value>100</param-value>
+            <param-value>120</param-value>
         </init-param>
         <init-param>
             <param-name>captcha-height</param-name>
