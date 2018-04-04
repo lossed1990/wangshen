@@ -15,6 +15,11 @@
     <div class="login_wrapper">
         <div class="animate form login_form">
             <section class="login_content">
+                <div>
+                    <p style="font-size:28px;"><i class="fa fa-paw"></i> 学信银行网申智能系统</p>
+                    <p style="font-size:16px;"><i class=""></i> 30家银行网申系统模板 一键提交全智能打分</p>
+                    <br/>
+                </div>
                 <form id="loginform" action="${path}/user/admin-login.page" method="POST"
                       enctype="application/x-www-form-urlencoded">
                     <h1>管理员登陆</h1>
@@ -74,8 +79,7 @@
                         <div class="clearfix"></div>
                         <br/>
                         <div>
-                            <h1><i class="fa fa-paw"></i> <@spring.message code="page.user.systemname"/></h1>
-                            <p>©<@spring.message code="page.user.copyrightinfo"/> </p>
+                            <p>© 2018 江苏学信职业培训学院版权设计 </p>
                         </div>
                     </div>
                 </form>
